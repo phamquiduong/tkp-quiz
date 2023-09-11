@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}
+Đăng nhập
+{% endblock title %}
+
+{% block navigation %}
+{% endblock navigation %}
+
+{% block main %}
+{% if request.user.is_authenticated %}
+<script>
+    window.location.href = "/";
+</script>
+{% endif %}
+
+<form class="col-4 border p-4 m-auto mt-5" method="POST">
+    <h3 class="mb-4 text-center">Đăng nhập</h3>
+
+    <div class="form-outline mb-4">
+        <input type="email" id="form-login-email" class="form-control" name="username"
+            value="{{form.username.value|default:""}}" />
+        <label class="form-label" for="form-login-email">Địa chỉ email</label>
+    </div>
+
+    <div class="form-outline mb-4">
+        <input type="password" id="form-login-password" class="form-control" name="password"
+            value="{{form.password.value|default:""}}" />
+        <label class="form-label" for="form-login-password">Mật khẩu</label>
+    </div>
+
+    {% include 'form.html' %}
+
+    <button type="submit" class="btn btn-primary btn-block mb-4">Đăng nhập</button>
+</form>
+{% endblock main %}
+
+{% block style %}
+<style></style>
+{% endblock style %}
+
+{% block script %}
+<script></script>
+{% endblock script %}

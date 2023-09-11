@@ -47,7 +47,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     def __str__(self):
-        return f'<{self.email}>'
+        return f"{self.email} - {'Teacher' if self.is_superuser else 'Student'}"
 
     def is_teacher(self):
         return self.is_superuser

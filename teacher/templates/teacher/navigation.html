@@ -1,0 +1,14 @@
+<ul class="nav nav-tabs nav-fill mb-3">
+    <li class="nav-item">
+        <a class="nav-link {% if path == 'home' %}active{% endif %}" href="{% url 'teacher_home' %}">Trang chủ</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {% if path == 'student' %}active{% endif %}" href="#">Danh sách học sinh</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {% if path == 'contest' %}active{% endif %}" href="#">Danh sách Bài thi</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {% if path == 'profile' %}active{% endif %}" href="#">Chỉnh sửa trang cá nhân</a>
+    </li>
+</ul>
