@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}
+Giáo viên - Quản lý học sinh
+{% endblock title %}
+
+{% block navigation %}
+{% include 'teacher/navigation.html' with path='student' %}
+{% endblock navigation %}
+
+{% block main %}
+<div class="container pt-4 pb-2 mb-4 shadow-3">
+    {% if classes_room %}
+    <div class="d-flex flex-wrap justify-content-around">
+        {% for class in classes_room %}
+        <div class="card ms-1 me-1 mb-4" style="width: 300px;">
+            <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/111.webp" class="img-fluid" />
+                <a href="#">
+                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                </a>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Lớp: {{ class.name }}</h5>
+                <p class="card-text">Khóa học năm: {{ class.year }}</p>
+                <div class="btn-group w-100" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-primary">Xem thông tin</button>
+                    <button type="button" class="btn btn-danger">Xóa</button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    Không có lớp học nào
+    {% endif %}
+</div>
+
+<!-- Add new classroom -->
+<div class="fixed-action-btn">
+    <button class="btn btn-primary btn-rounded" data-mdb-toggle="modal" data-mdb-target="#addNewClassModal"
+        id="add-class-button">
+        <i class="fas fa-circle-plus"></i> Thêm lớp học mới
+    </button>
+</div>
+
+<div class="modal fade" id="addNewClassModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thêm lớp học mới</h5>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="add-class-form" class="needs-validation" method="POST">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">Tên lớp học</span>
+                        <input type="text" class="form-control text-center" aria-describedby="basic-addon1" required
+                            value="{{ form.name.value|default:'' }}" name="name">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">Năm học</span>
+                        {% now "Y" as current_year %}
+                        <input type="number" class="form-control text-center" aria-describedby="basic-addon1" required
+                            value="{{ form.year.value|default:current_year }}" name="year">
+                    </div>
+                    {% include 'form.html' %}
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary"
+                    onclick="document.getElementById('add-class-form').submit()">Thêm lớp học</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if form.errors %}
+<script>document.getElementById('add-class-button').click()</script>
+{% endif %}
+
+{% endblock main %}
+
+{% block style %}
+<style></style>
+{% endblock style %}
+
+{% block script %}
+<script></script>
+{% endblock script %}

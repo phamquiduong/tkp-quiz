@@ -14,18 +14,18 @@
 </script>
 {% endif %}
 
-<form class="col-4 border p-4 m-auto mt-5" method="POST">
+<form class="col-4 border p-4 m-auto mt-5" style="min-width: 480px;" method="POST">
     <h3 class="mb-4 text-center">Đăng nhập</h3>
 
     <div class="form-outline mb-4">
         <input type="email" id="form-login-email" class="form-control" name="username"
-            value="{{form.username.value|default:""}}" />
+            required value="{{form.username.value|default:""}}" />
         <label class="form-label" for="form-login-email">Địa chỉ email</label>
     </div>
 
     <div class="form-outline mb-4">
         <input type="password" id="form-login-password" class="form-control" name="password"
-            value="{{form.password.value|default:""}}" />
+            required value="{{form.password.value|default:""}}" />
         <label class="form-label" for="form-login-password">Mật khẩu</label>
     </div>
 

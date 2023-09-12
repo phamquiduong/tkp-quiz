@@ -3,12 +3,18 @@
         <a class="nav-link {% if path == 'home' %}active{% endif %}" href="{% url 'teacher_home' %}">Trang chủ</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link {% if path == 'student' %}active{% endif %}" href="#">Danh sách học sinh</a>
+        <a class="nav-link {% if path == 'student' %}active{% endif %}" href="{% url 'teacher_class' %}">Quản lý học sinh</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link {% if path == 'contest' %}active{% endif %}" href="#">Danh sách Bài thi</a>
+        <a class="nav-link {% if path == 'contest' %}active{% endif %}" href="{% url 'teacher_contest' %}">Quản lý bài thi</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link {% if path == 'profile' %}active{% endif %}" href="#">Chỉnh sửa trang cá nhân</a>
+        <a class="nav-link {% if path == 'profile' %}active{% endif %}" href="{% url 'teacher_profile' %}">Chỉnh sửa trang cá nhân</a>
+    </li>
+    <li class="nav-item">
+        <button class="btn btn-primary mt-1" onclick="window.open('/admin', '_blank');">Chuyển đến trang admin</button>
+    </li>
+    <li class="nav-item">
+        <button class="btn btn-danger mt-1" onclick="window.location.href='{% url 'logout' %}';">Đăng xuất</button>
     </li>
 </ul>
