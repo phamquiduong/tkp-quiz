@@ -21,9 +21,9 @@ Giáo viên - Quản lý học sinh
             <div class="card-body">
                 <p class="card-text">Khóa học năm: {{ class.year }}</p>
                 <hr>
-                <button type="button" class="btn btn-danger float-end" id="delete-class-button"
+                <button type="button" class="btn btn-danger float-end delete-class-btn"
                     onclick="removeClassModalHanlder(event, '{{class.id}}', '{{class.name}}')">
-                    <i class="fa-solid fa-trash me-2" id="delete-class-icon"></i> Xóa
+                    <i class="fa-solid fa-trash me-2"></i> Xóa
                 </button>
             </div>
         </div>
@@ -128,6 +128,14 @@ Giáo viên - Quản lý học sinh
         box-shadow: 5px 5px 5px #bbbbbb;
         border: solid 1px #bbbbbb;
         cursor: pointer;
+    }
+
+    .delete-class-btn {
+        transition: transform 0.3s;
+    }
+
+    .delete-class-btn:hover {
+        transform: scale(1.2);
     }
 </style>
 {% endblock style %}
