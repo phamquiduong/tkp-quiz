@@ -14,24 +14,24 @@
 </script>
 {% endif %}
 
-<form class="col-4 border p-4 m-auto mt-5" style="min-width: 480px;" method="POST">
+<form class="container border p-4" style="max-width: 450px;" method="POST">
     <h3 class="mb-4 text-center">Đăng nhập</h3>
 
-    <div class="form-outline mb-4">
-        <input type="email" id="form-login-email" class="form-control" name="username"
-            required value="{{form.username.value|default:""}}" />
-        <label class="form-label" for="form-login-email">Địa chỉ email</label>
+    <div class="input-group mb-4">
+        <span class="input-group-text" id="basic-addon1" style="min-width: 95px;">Email</span>
+        <input type="email" class="form-control" name="username" required>
     </div>
 
-    <div class="form-outline mb-4">
-        <input type="password" id="form-login-password" class="form-control" name="password"
-            required value="{{form.password.value|default:""}}" />
-        <label class="form-label" for="form-login-password">Mật khẩu</label>
+    <div class="input-group mb-4">
+        <span class="input-group-text" id="basic-addon1" style="min-width: 95px;">Mật khẩu</span>
+        <input type="password" class="form-control" name="password" required>
     </div>
 
     {% include 'form.html' %}
 
-    <button type="submit" class="btn btn-primary btn-block mb-4">Đăng nhập</button>
+    <div class="d-grid gap-2">
+        <button type="submit" class="btn btn-primary">Đăng nhập</button>
+    </div>
 </form>
 {% endblock main %}
 

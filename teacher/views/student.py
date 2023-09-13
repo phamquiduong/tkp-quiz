@@ -16,5 +16,8 @@ def class_room(request):
             context['form'] = None
 
     context['classes_room'] = ClassRoom.objects.all()
+    filter_class = request.GET.get('filter_class', None)
+    if filter_class:
+        context['classes_room'] = context['classes_room'].filter(name__contains=filter_class)
 
     return render(request, 'teacher/class.html', context=context)
