@@ -1,4 +1,4 @@
-# TKP Quiz
+# TKP Quiz (chưa hoàn thành)
 Website thi trắc nghiệm mẫu được dựng bằng Python Django và SQLite3
 
 
