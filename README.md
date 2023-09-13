@@ -6,7 +6,7 @@ Website thi trắc nghiệm mẫu được dựng bằng Python Django và SQLit
 Các bạn tham khảo video [Hướng dẫn cài đặt Python cho hệ điều hành Windows 7, 8, 10, 11 (32 bit & 64 bit); MacOS; Linux](https://www.youtube.com/watch?v=tCjlrIowuDk)
 
 
-## Cài dặt môi trường ảo
+## Cài đặt môi trường ảo
 Các bạn có thể tham khảo một số video sau:
 - [Hướng dẫn Tạo Virtual Environment trong Python](https://www.youtube.com/watch?v=jOUUqDGogAo)
 - [Nếu bạn dùng VScode bạn có thể tham khảo các sau](https://code.visualstudio.com/docs/python/environments)
