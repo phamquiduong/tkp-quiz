@@ -3,7 +3,13 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from authenticate.models.class_room_model import ClassRoom
+
+class ClassRoom(models.Model):
+    name = models.CharField(max_length=255, unique=True, verbose_name='Tên lớp học')
+    year = models.PositiveIntegerField(verbose_name='Năm học')
+
+    def __str__(self):
+        return f'{self.name}'
 
 
 class UserManager(BaseUserManager):
