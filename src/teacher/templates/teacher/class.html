@@ -10,105 +10,95 @@ Giáo viên - Quản lý học sinh
 
 {% block main %}
 <div class="container pt-4 pb-3 mb-4 mt-4 border rounded">
-    {% if classes_room %}
-    <div class="d-flex flex-wrap justify-content-around">
-        {% for class in classes_room %}
-        <div class="card ms-1 me-1 mb-4" style="width: 260px;"
-            onclick="location.href=`{% url 'teacher_class_student' class_id=class.id %}`">
-            <div class="card-header">
-                <h5>{{ class.name }}</h5>
-            </div>
-            <div class="card-body">
-                <p class="card-text">Khóa học năm: {{ class.year }}</p>
-                <hr>
-                <button type="button" class="btn btn-danger float-end delete-class-btn"
-                    onclick="removeClassModalHanlder(event, '{{class.id}}', '{{class.name}}')">
-                    <i class="fa-solid fa-trash me-2"></i> Xóa
-                </button>
-            </div>
-        </div>
-        {% endfor %}
+  {% if classes_room %}
+  <div class="d-flex flex-wrap justify-content-around">
+    {% for class in classes_room %}
+    <div class="card ms-1 me-1 mb-4" style="width: 260px;" onclick="location.href=`{% url 'teacher_class_student' class_id=class.id %}`">
+      <div class="card-header">
+        <h5>{{ class.name }}</h5>
+      </div>
+      <div class="card-body">
+        <p class="card-text">Khóa học năm: {{ class.year }}</p>
+        <hr>
+        <button type="button" class="btn btn-danger float-end delete-class-btn" onclick="removeClassModalHanlder(event, '{{class.id}}', '{{class.name}}')">
+          <i class="fa-solid fa-trash me-2"></i> Xóa
+        </button>
+      </div>
     </div>
-    {% else %}
-    <h6 class="text-center">Không có lớp học nào <i class="fa-solid fa-face-sad-tear" style="color: black;"></i></h6>
-    {% endif %}
+    {% endfor %}
+  </div>
+  {% else %}
+  <h6 class="text-center">Không có lớp học nào <i class="fa-solid fa-face-sad-tear" style="color: black;"></i></h6>
+  {% endif %}
 </div>
 
 <!-- Search class -->
 <div style="position: fixed; right: 40px; bottom: 120px">
-    <div class="input-group">
-        <input type="text" class="form-control text-center rounded-start-pill" style="width: 70px;"
-            id="class-search-input" required>
-        <button class="btn btn-outline-primary rounded-end-pill p-2" type="button" id="button-addon2"
-            onclick="searchClass()">
-            <i class="fa-solid fa-magnifying-glass"></i>
-        </button>
-    </div>
+  <div class="input-group">
+    <input type="text" class="form-control text-center rounded-start-pill" style="width: 70px;" id="class-search-input" required>
+    <button class="btn btn-outline-primary rounded-end-pill p-2" type="button" id="button-addon2" onclick="searchClass()">
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </button>
+  </div>
 </div>
 
 <!-- Add new classroom -->
 <div style="position: fixed; right: 40px; bottom: 50px;">
-    <button class="btn btn-primary btn-rounded p-3 rounded-pill shadow" data-bs-toggle="modal"
-        data-bs-target="#addNewClassModal" id="add-class-button">
-        <i class="fas fa-circle-plus me-2"></i> Thêm
-    </button>
+  <button class="btn btn-primary btn-rounded p-3 rounded-pill shadow" data-bs-toggle="modal" data-bs-target="#addNewClassModal" id="add-class-button">
+    <i class="fas fa-circle-plus me-2"></i> Thêm
+  </button>
 </div>
 
 <!-- Modal -->
 <div class="modal fade" id="addNewClassModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Thêm lớp học mới</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="add-class-form" class="needs-validation" method="POST">
-                    <div class="input-group mb-3">
-                        <span class="input-group-text" id="basic-addon1" style="width: 115px;">Tên lớp học</span>
-                        <input type="text" class="form-control text-center" aria-describedby="basic-addon1"
-                            value="{{ form.name.value|default:'' }}" name="name" required>
-                    </div>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text" id="basic-addon1" style="width: 110px;">Năm học</span>
-                        <input type="number" class="form-control text-center" aria-describedby="basic-addon1"
-                            value="{{ form.year.value|default:"" }}" name="year" id="create-class-year" required>
-                        <button class="btn btn-outline-secondary" type="button" id="button-addon2"
-                            onclick="document.getElementById('create-class-year').value = new Date().getFullYear()">
-                            Lấy năm hiện tại</button>
-                    </div>
-                    {% include 'form.html' %}
-                    <button type="submit" style="display: none;" id="add-new-class-submit-button"></button>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary"
-                    onclick="document.getElementById('add-new-class-submit-button').click()">Thêm lớp học</button>
-            </div>
-        </div>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Thêm lớp học mới</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="add-class-form" class="needs-validation" method="POST">
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1" style="width: 115px;">Tên lớp học</span>
+            <input type="text" class="form-control text-center" aria-describedby="basic-addon1" value="{{ form.name.value|default:'' }}" name="name" required>
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1" style="width: 110px;">Năm học</span>
+            <input type="number" class="form-control text-center" aria-describedby="basic-addon1" value="{{ form.year.value|default:"" }}" name="year" id="create-class-year" required>
+            <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="document.getElementById('create-class-year').value = new Date().getFullYear()">
+              Lấy năm hiện tại</button>
+          </div>
+          {% include 'form.html' %}
+          <button type="submit" style="display: none;" id="add-new-class-submit-button"></button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+        <button type="button" class="btn btn-primary" onclick="document.getElementById('add-new-class-submit-button').click()">Thêm lớp học</button>
+      </div>
     </div>
+  </div>
 </div>
 
-<button data-bs-toggle="modal" data-bs-target="#removeClassModal" id="show-remove-class-button"
-    style="display: none;"></button>
+<button data-bs-toggle="modal" data-bs-target="#removeClassModal" id="show-remove-class-button" style="display: none;"></button>
 <div class="modal fade" id="removeClassModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Xóa lớp học</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Bạn đang thực hiện lệnh xóa lớp
-                <span class="fw-medium" id="remove-class-name"></span>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-danger" id="remove-class-button">Xóa lớp học</button>
-            </div>
-        </div>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Xóa lớp học</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Bạn đang thực hiện lệnh xóa lớp "<span class="fw-medium" id="remove-class-name"></span>"</p>
+        <p>Sau khi thực hiện xong, bạn sẽ <span class="fw-medium text-decoration-underline">không thể khôi phục lại</span> dữ liệu này nữa.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+        <button type="button" class="btn btn-danger" id="remove-class-button">Xóa lớp học</button>
+      </div>
     </div>
+  </div>
 </div>
 
 {% if form.errors %}
@@ -119,55 +109,51 @@ Giáo viên - Quản lý học sinh
 
 {% block style %}
 <style>
-    .card {
-        animation: fade 0.3s linear;
-        transition: 0.3s;
-    }
+  .card {
+    animation: fade 0.3s linear;
+    transition: 0.3s;
+  }
 
-    .card:hover {
-        box-shadow: 5px 5px 5px #bbbbbb;
-        border: solid 1px #bbbbbb;
-        cursor: pointer;
-    }
+  .card:hover {
+    box-shadow: 0 0 0 0.35rem rgba(13, 110, 253, .25);
+    border: solid 1px #bbbbbb;
+    cursor: pointer;
+  }
 
-    .delete-class-btn {
-        transition: transform 0.3s;
-    }
-
-    .delete-class-btn:hover {
-        transform: scale(1.2);
-    }
+  #class-search-input:focus {
+    box-shadow: none;
+  }
 </style>
 {% endblock style %}
 
 {% block script %}
 <script>
-    // Search class handler
-    let params = new URLSearchParams(document.location.search)
-    var searchInput = document.getElementById('class-search-input')
-    searchInput.value = params.get('filter_class')
-    searchInput.focus()
+  // Search class handler
+  let params = new URLSearchParams(document.location.search)
+  var searchInput = document.getElementById('class-search-input')
+  searchInput.value = params.get('filter_class')
+  searchInput.focus()
 
-    function searchClass() {
-        location.href = `{% url 'teacher_class' %}${searchInput.value ? `?filter_class=${searchInput.value}` : ''}`
-    }
+  const searchClass = () => {
+    location.href = `{% url 'teacher_class' %}${searchInput.value ? `?filter_class=${searchInput.value}` : ''}`
+  }
 
-    searchInput.addEventListener("keypress", (event) => {
-        if (event.key === "Enter") searchClass();
+  searchInput.addEventListener("keypress", (event) => {
+    if (event.key === "Enter") searchClass();
+  })
+
+
+  // Remove class handler
+  var removeClassName = document.getElementById('remove-class-name')
+  var removeClassButton = document.getElementById('remove-class-button')
+  var showRemoveClassButton = document.getElementById('show-remove-class-button')
+  const removeClassModalHanlder = (event, id, name) => {
+    event.stopPropagation();
+    removeClassName.innerHTML = name
+    removeClassButton.addEventListener("click", () => {
+      location.href = `{% url 'teacher_class' %}/${id}/remove`
     })
-
-
-    // Remove class handler
-    var removeClassName = document.getElementById('remove-class-name')
-    var removeClassButton = document.getElementById('remove-class-button')
-    var showRemoveClassButton = document.getElementById('show-remove-class-button')
-    function removeClassModalHanlder(event, id, name) {
-        event.stopPropagation();
-        removeClassName.innerHTML = name
-        removeClassButton.addEventListener("click", () => {
-            location.href = `{% url 'teacher_class' %}/${id}/remove`
-        })
-        showRemoveClassButton.click()
-    }
+    showRemoveClassButton.click()
+  }
 </script>
 {% endblock script %}
