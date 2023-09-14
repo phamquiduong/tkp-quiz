@@ -7,3 +7,7 @@ pylint_django
 
 # Image handling
 Pillow
+
+# Excel reader
+pandas
+openpyxl

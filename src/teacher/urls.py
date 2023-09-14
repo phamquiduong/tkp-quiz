@@ -12,6 +12,7 @@ urlpatterns = [
 
     # Classroom student get and create
     path('class/<int:class_id>/student', views.class_room_student, name='teacher_class_student'),
+    path('class/<int:class_id>/student/import', views.class_room_student_import, name='teacher_class_student_import'),
 
     path('contest', views.contest, name='teacher_contest'),
     path('profile', views.profile, name='teacher_profile'),
