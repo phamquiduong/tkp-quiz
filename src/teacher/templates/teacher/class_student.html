@@ -21,6 +21,7 @@ Giáo viên - Quản lý học sinh
         <th style="width: 100px;">Có đang hoạt động</th>
         <th style="width: 150px;">Ngày tham gia</th>
         <th style="width: 150px;">Lần đăng nhập cuối</th>
+        <th style="width: 100px;">Đổi mật khẩu</th>
         <th style="width: 100px;">Chỉnh sửa</th>
         <th style="width: 70px;">Xóa</th>
       </tr>
@@ -35,12 +36,17 @@ Giáo viên - Quản lý học sinh
         <td>{{student.date_joined|date:"H:i d/m/Y"}}</td>
         <td>{{student.last_login|date:"H:i d/m/Y"}}</td>
         <td class="text-center">
-          <button class="btn btn-secondary" onclick="window.open(`/admin/authenticate/user/${'{{student.id}}'}/change/`, '_blank');"">
+          <button class="btn btn-secondary" onclick="window.open(`/admin/authenticate/user/${'{{student.id}}'}/password/`, '', 'width=800,height=600');"">
+            <i class=" fa-solid fa-key"></i>
+          </button>
+        </td>
+        <td class="text-center">
+          <button class="btn btn-secondary" onclick="window.open(`/admin/authenticate/user/${'{{student.id}}'}/change/`, '', 'width=1280,height=720');"">
             <i class=" fa-solid fa-pen-to-square"></i>
           </button>
         </td>
         <td class="text-center">
-          <button class="btn btn-danger"><i class="fa-solid fa-user-slash"></i></button>
+          <button class="btn btn-danger" onclick="removeStudentModalHanlder('{{student.id}}', '{{student.email}}')"><i class="fa-solid fa-user-slash"></i></button>
         </td>
       </tr>
       {% endfor %}
@@ -51,31 +57,22 @@ Giáo viên - Quản lý học sinh
   {% endif %}
 </div>
 
-<!-- Class update -->
-<div style="position: fixed; right: 40px; bottom: 120px;">
-  <button class="btn btn-secondary btn-rounded p-3 rounded-pill shadow" data-bs-toggle="modal" data-bs-target="#updateClassModal" id="add-class-button">
-    <i class=" fa-solid fa-pen-to-square me-2"></i> Sửa
-  </button>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="updateClassModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Remove student -->
+<button data-bs-toggle="modal" data-bs-target="#removeStudentModal" id="show-remove-student-btn" style="display: none;"></button>
+<div class="modal fade" id="removeStudentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Cập nhật thông tin lớp học</h1>
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Xóa lớp học</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form id="add-class-form" class="needs-validation" method="POST" enctype="multipart/form-data" action="{% url 'teacher_class_student_import' class_id=class_id %}">
-
-          {% include 'form.html' %}
-          <button type="submit" style="display: none;" id="update-class-submit-button"></button>
-        </form>
+        <p>Bạn đang thực hiện lệnh xóa học sinh "<span class="fw-medium" id="remove-student-name"></span>"</p>
+        <p>Sau khi thực hiện xong, bạn sẽ <span class="fw-medium text-decoration-underline">không thể khôi phục lại</span> dữ liệu này nữa.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-        <button type="button" class="btn btn-primary" onclick="document.getElementById('update-class-submit-button').click()">Cập nhật</button>
+        <button type="button" class="btn btn-danger" id="remove-student-button">Xóa học sinh</button>
       </div>
     </div>
   </div>
@@ -97,7 +94,7 @@ Giáo viên - Quản lý học sinh
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form id="add-class-form" class="needs-validation" method="POST" enctype="multipart/form-data" action="{% url 'teacher_class_student_import' class_id=class_id %}">
+        <form id="add-class-form" class="needs-validation" method="POST" enctype="multipart/form-data" action="{% url 'teacher_class_student_import' class_id=class_room.id %}">
           <div class="mb-3">
             <label for="formFile" class="form-label">
               Nhập danh sách học sinh bằng file excel -
@@ -124,9 +121,25 @@ Giáo viên - Quản lý học sinh
 {% endblock main %}
 
 {% block style %}
-<style></style>
+<style>
+  .table {
+    animation: fade 0.3s linear;
+    transition: 0.3s;
+  }
+</style>
 {% endblock style %}
 
 {% block script %}
-<script></script>
+<script>
+  var removeStudentName = document.getElementById('remove-student-name')
+  var removeStudentButton = document.getElementById('remove-student-button')
+  var showRemoveClassButton = document.getElementById('show-remove-student-btn')
+  const removeStudentModalHanlder = (id, email) => {
+    removeStudentName.innerHTML = email
+    removeStudentButton.addEventListener("click", () => {
+      location.href = `{% url 'teacher_class_student' class_id=class_room.id %}/${id}/remove`
+    })
+    showRemoveClassButton.click()
+  }
+</script>
 {% endblock script %}

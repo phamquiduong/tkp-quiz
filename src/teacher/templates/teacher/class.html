@@ -20,9 +20,14 @@ Giáo viên - Quản lý học sinh
       <div class="card-body">
         <p class="card-text">Khóa học năm: {{ class.year }}</p>
         <hr>
-        <button type="button" class="btn btn-danger float-end delete-class-btn" onclick="removeClassModalHanlder(event, '{{class.id}}', '{{class.name}}')">
-          <i class="fa-solid fa-trash me-2"></i> Xóa
-        </button>
+        <div class="text-end">
+          <button type="button" class="btn btn-secondary me-3" onclick="updateClassHandler(event, '{{class.id}}')">
+            <i class="fa-solid fa-pen-to-square me-2"></i> Sửa
+          </button>
+          <button type="button" class="btn btn-danger float-end delete-class-btn" onclick="removeClassModalHanlder(event, '{{class.id}}', '{{class.name}}')">
+            <i class="fa-solid fa-trash me-2"></i> Xóa
+          </button>
+        </div>
       </div>
     </div>
     {% endfor %}
@@ -154,6 +159,11 @@ Giáo viên - Quản lý học sinh
       location.href = `{% url 'teacher_class' %}/${id}/remove`
     })
     showRemoveClassButton.click()
+  }
+
+  const updateClassHandler = (event, class_id) => {
+    event.stopPropagation();
+    window.open(`/admin/authenticate/classroom/${class_id}/change/`, '', 'width=800,height=600')
   }
 </script>
 {% endblock script %}

@@ -38,14 +38,14 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     email = models.EmailField(_('email address'), unique=True)
 
-    name = models.CharField(max_length=30, null=True, blank=True)
-    full_name = models.CharField(max_length=255, null=True, blank=True)
+    name = models.CharField(max_length=30, null=True, blank=True, verbose_name="Tên")
+    full_name = models.CharField(max_length=255, null=True, blank=True, verbose_name="Họ và tên")
 
-    is_staff = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
-    date_joined = models.DateTimeField(default=timezone.now)
+    is_staff = models.BooleanField(default=False, verbose_name="Trạng thái vào được trang quản trị")
+    is_active = models.BooleanField(default=True, verbose_name="Trạng thái hoạt động")
+    date_joined = models.DateTimeField(default=timezone.now, verbose_name="Thời gian đăng ký")
 
-    class_room = models.ForeignKey(ClassRoom, on_delete=models.SET_NULL, null=True, blank=True)
+    class_room = models.ForeignKey(ClassRoom, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Lớp học")
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

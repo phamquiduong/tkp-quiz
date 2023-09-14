@@ -11,7 +11,7 @@ User = get_user_model()
 
 
 @require_teacher
-def class_room(request):
+def class_room_view(request):
     context = {}
 
     if request.method == 'POST':
@@ -38,9 +38,10 @@ def remove_class_room(_, class_id: int):
 @require_teacher
 @require_GET
 def class_room_student(request, class_id: int):
+    class_room = ClassRoom.objects.get(id=class_id)
     context = {
-        'class_id': class_id,
-        'students': User.objects.filter(class_room__id=class_id),
+        'class_room': class_room,
+        'students': User.objects.filter(class_room=class_room),
     }
     return render(request, 'teacher/class_student.html', context)
 
@@ -70,4 +71,11 @@ def class_room_student_import(request, class_id: int):
         except Exception:
             pass
 
+    return redirect('teacher_class_student', class_id=class_id)
+
+
+@require_teacher
+@require_GET
+def class_student_remove(request, class_id, student_id: int):
+    User.objects.get(id=student_id).delete()
     return redirect('teacher_class_student', class_id=class_id)
