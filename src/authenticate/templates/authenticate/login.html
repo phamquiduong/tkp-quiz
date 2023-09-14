@@ -10,28 +10,27 @@
 {% block main %}
 {% if request.user.is_authenticated %}
 <script>
-    window.location.href = "/";
+  window.location.href = "{% url 'home' %}";
 </script>
 {% endif %}
 
 <form class="container border p-4" style="max-width: 450px;" method="POST">
-    <h3 class="mb-4 text-center">Đăng nhập</h3>
+  <h3 class="mb-4 text-center">Đăng nhập</h3>
 
-    <div class="input-group mb-4">
-        <span class="input-group-text" id="basic-addon1" style="min-width: 95px;">Email</span>
-        <input type="email" class="form-control" name="username" required>
-    </div>
+  <div class="form-floating mb-4">
+    <input type="email" class="form-control" id="floatingEmailInput" placeholder="name@email.com" name="username" required>
+    <label for="floatingEmailInput">Địa chỉ email</label>
+  </div>
+  <div class="form-floating mb-4">
+    <input type="password" class="form-control" id="floatingPasswordInput" placeholder="Mật khẩu" name="password" required>
+    <label for="floatingPasswordInput">Mật khẩu</label>
+  </div>
 
-    <div class="input-group mb-4">
-        <span class="input-group-text" id="basic-addon1" style="min-width: 95px;">Mật khẩu</span>
-        <input type="password" class="form-control" name="password" required>
-    </div>
+  {% include 'form.html' %}
 
-    {% include 'form.html' %}
-
-    <div class="d-grid gap-2">
-        <button type="submit" class="btn btn-primary">Đăng nhập</button>
-    </div>
+  <div class="d-grid gap-2">
+    <button type="submit" class="btn btn-primary">Đăng nhập</button>
+  </div>
 </form>
 {% endblock main %}
 
