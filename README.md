@@ -38,7 +38,7 @@ python manage.py migrate
 Xóa thư mục static files nếu có
 ```bash
 # Với hệ điều hành Windows. Chạy lệnh sau xác nhận lại bằng cách nhấn ENTER
-rmdir ../static/
+rmdir ../.static/
 ```
 Thu thập lại static files mới
 ```bash

@@ -80,11 +80,12 @@ WSGI_APPLICATION = 'app_core.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
+DB_FOLDER = BASE_DIR / '../.database/'
+DB_FOLDER.mkdir(parents=True, exist_ok=True)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / '../db.sqlite3',
+        'NAME': DB_FOLDER / 'db.sqlite3',
     }
 }
 
@@ -120,12 +121,14 @@ USE_I18N = True
 
 USE_TZ = True
 
+DATETIME_FORMAT = "H:i d-m-y"
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, '../static/')
+STATIC_ROOT = os.path.join(BASE_DIR, '../.static/')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

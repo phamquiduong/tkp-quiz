@@ -1,5 +1,13 @@
+# Virtual environments folder
 .venv/
+venv/
+
+# Python cache folder
 __pycache__/
-db.sqlite3
+
+# Evironment file
 .env
-/static/
+
+# Code generation folder
+.static/
+.database/
