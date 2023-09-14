@@ -31,6 +31,18 @@
   <div id="root"> {% block main %} {%endblock main %} </div>
 </body>
 
+<script>
+  const baseOpenWindowHandler = (url) => {
+    let windows = window.open(url, '', 'width=600,height=700')
+    let timer = setInterval(() => {
+      if (windows.closed) {
+        clearInterval(timer);
+        location.reload();
+      }
+    }, 1000);
+  }
+</script>
+
 {% block script %} {% endblock script %}
 
 </html>

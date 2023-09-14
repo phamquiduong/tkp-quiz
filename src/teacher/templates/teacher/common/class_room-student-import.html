@@ -1,0 +1,41 @@
+{% load static %}
+
+<!-- Student import button -->
+<div style="position: fixed; right: 40px; bottom: 50px;">
+  <button class="btn btn-primary btn-rounded p-3 rounded-pill shadow" data-bs-toggle="modal" data-bs-target="#importStudentModal">
+    <i class="fa-solid fa-file-import me-2"></i> Nhập
+  </button>
+</div>
+
+<!-- Student import modal -->
+<div class="modal fade" id="importStudentModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Nhập danh sách học sinh</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="needs-validation" method="POST" enctype="multipart/form-data" action="{% url 'teacher_class_room__student__import' class_room__id=class_room.id %}">
+          <div class="mb-3">
+            <label for="formFile" class="form-label">
+              Nhập danh sách học sinh bằng file excel -
+              <a href="{% static 'teacher/documents/Mẫu danh sách học sinh.xlsx' %}">ấn để tải file mẫu</a>
+            </label>
+            <input class="form-control" type="file" id="formFile" name="student_file" required accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+          </div>
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" id="deleteOldStudent" name="is_delete_old">
+            <label class="form-check-label" for="deleteOldStudent">Xóa danh sách cũ</label>
+          </div>
+          {% include 'form.html' %}
+          <button type="submit" style="display: none;" id="importStudentSubmitBtn"></button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+        <button type="button" class="btn btn-primary" onclick="document.getElementById('importStudentSubmitBtn').click()">Nhập danh sách</button>
+      </div>
+    </div>
+  </div>
+</div>

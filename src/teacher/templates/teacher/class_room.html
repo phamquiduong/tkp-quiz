@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}
+Giáo viên - Quản lý lớp học
+{% endblock title %}
+
+{% block navigation %}
+{% include 'teacher/navigation.html' with path='class_room' %}
+{% endblock navigation %}
+
+{% block main %}
+<div class="container pt-4 pb-3 mb-4 mt-4 border rounded">
+  {% if classes_room %}
+  <div class="d-flex flex-wrap justify-content-around">
+    {% for class_room in classes_room %}
+    {% include 'teacher/common/class_room-item.html' with class_room=class_room %}
+    {% endfor %}
+  </div>
+  {% else %}
+  <h6 class="text-center">Không có lớp học nào <i class="fa-solid fa-face-sad-tear" style="color: black;"></i></h6>
+  {% endif %}
+</div>
+
+{% include 'teacher/common/class_room-search.html' %}
+{% include 'teacher/common/class_room-create.html' %}
+{% include 'teacher/common/class_room-delete.html' %}
+{% endblock main %}
+
+{% block style %}
+<style>
+  .card {
+    animation: fade 0.3s linear;
+    transition: 0.3s;
+  }
+
+  .card:hover {
+    box-shadow: 0 0 0 0.35rem rgba(13, 110, 253, .25);
+    border: solid 1px #bbbbbb;
+    cursor: pointer;
+  }
+</style>
+{% endblock style %}
+
+{% block script %}
+<script>
+  const updateClassHandler = (event, url) => {
+    event.stopPropagation()
+    baseOpenWindowHandler(url)
+  }
+</script>
+{% endblock script %}

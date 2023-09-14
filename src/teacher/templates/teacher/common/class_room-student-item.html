@@ -1,0 +1,23 @@
+<tr class="align-middle">
+  <td>{{student.email}}</td>
+  <td>{{student.full_name}}</td>
+  <td class="text-center">{{student.name}}</td>
+  <td class="text-center"><input class="form-check-input" type="checkbox" disabled {% if student.is_active %} checked {% endif %}></td>
+  <td>{{student.date_joined|date:"H:i d/m/Y"}}</td>
+  <td>{{student.last_login|date:"H:i d/m/Y"}}</td>
+  <td class="text-center">
+    <button class="btn btn-secondary" onclick="baseOpenWindowHandler(`/admin/authenticate/user/${'{{student.id}}'}/password/`);"">
+      <i class=" fa-solid fa-key"></i>
+    </button>
+  </td>
+  <td class="text-center">
+    <button class="btn btn-secondary" onclick="baseOpenWindowHandler(`/admin/authenticate/user/${'{{student.id}}'}/change/`);"">
+      <i class=" fa-solid fa-pen-to-square"></i>
+    </button>
+  </td>
+  <td class="text-center">
+    <button class="btn btn-danger" onclick="deleteStudentHanlder(`{% url 'teacher_class_room__student__delete' class_room__id=class_room.id student__id=student.id %}`, '{{student.email}}')">
+      <i class="fa-solid fa-user-slash"></i>
+    </button>
+  </td>
+</tr>

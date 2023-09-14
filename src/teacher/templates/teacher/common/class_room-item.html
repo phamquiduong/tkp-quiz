@@ -1,0 +1,18 @@
+<div class="card ms-1 me-1 mb-4" style="width: 260px;" onclick="location.href=`{% url 'teacher_class_room__student__list' class_room__id=class_room.id %}`">
+  <div class="card-header">
+    <h5>{{ class_room.name }}</h5>
+  </div>
+  <div class="card-body">
+    <p class="card-text">Khóa học năm: {{ class_room.year }}</p>
+    <hr>
+    <div class="text-end">
+      <button type="button" class="btn btn-secondary me-3" onclick="updateClassHandler(event, '/admin/authenticate/classroom/{{class_room.id}}/change/')">
+        <i class="fa-solid fa-pen-to-square me-2"></i> Sửa
+      </button>
+      <button type="button" class="btn btn-danger float-end delete-class-btn"
+        onclick="deleteClassRoomHanlder(event, `{% url 'teacher_class_room__delete' class_room__id=class_room.id %}`, '{{class_room.name}}')">
+        <i class="fa-solid fa-trash me-2"></i> Xóa
+      </button>
+    </div>
+  </div>
+</div>

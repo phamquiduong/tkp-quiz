@@ -1,21 +1,25 @@
 from django.urls import path
 
-from teacher import views
+from teacher.views.class_room import class_room__delete_view, class_room__list_create_view
+from teacher.views.class_room__student import (class_room__student__delete_view, class_room__student__import_view,
+                                               class_room__student__list_view)
+from teacher.views.contest import contest_view
+from teacher.views.home import home_view
+from teacher.views.profile import profile_view
 
 urlpatterns = [
-    path('', views.home, name='teacher_home'),
+    path('', home_view, name='teacher_home'),
 
-    # Classroom get and create
-    path('class', views.class_room_view, name='teacher_class'),
-    # Classroom delete
-    path('class/<int:class_id>/remove', views.remove_class_room, name='teacher_class_remove'),
+    path('class_room', class_room__list_create_view, name='teacher_class_room__list_create'),
+    path('class_room/<int:class_room__id>/delete', class_room__delete_view, name='teacher_class_room__delete'),
 
-    # Classroom student get and create
-    path('class/<int:class_id>/student', views.class_room_student, name='teacher_class_student'),
-    path('class/<int:class_id>/student/import', views.class_room_student_import, name='teacher_class_student_import'),
-    path('class/<int:class_id>/student/<int:student_id>/remove',
-         views.class_student_remove, name='teacher_class_student_remove'),
+    path('class_room/<int:class_room__id>/student', class_room__student__list_view,
+         name='teacher_class_room__student__list'),
+    path('class_room/<int:class_room__id>/student/import', class_room__student__import_view,
+         name='teacher_class_room__student__import'),
+    path('class_room/<int:class_room__id>/student/<int:student__id>/delete', class_room__student__delete_view,
+         name='teacher_class_room__student__delete'),
 
-    path('contest', views.contest, name='teacher_contest'),
-    path('profile', views.profile, name='teacher_profile'),
+    path('contest', contest_view, name='teacher_contest'),
+    path('profile', profile_view, name='teacher_profile'),
 ]
