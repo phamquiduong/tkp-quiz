@@ -14,9 +14,14 @@ Các bạn có thể tham khảo một số video sau:
 
 ## Dựng server
 ### Cài đặt gói thư viện
-Các bạn chạy lệnh
 ```bash
 pip install -r requirements.txt
+```
+
+### Tạo file `.env`
+Sao chép file `.env.example` thành file `.env`
+```bash
+cp .env.example .env
 ```
 
 ### Sau đó có các bạn chuyển đến thư mục src/
