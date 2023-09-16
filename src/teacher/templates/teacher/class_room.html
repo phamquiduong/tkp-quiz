@@ -29,7 +29,7 @@ Giáo viên - Quản lý lớp học
 {% block style %}
 <style>
   .card {
-    animation: fade 0.3s linear;
+    animation: fade 0.1s linear;
     transition: 0.3s;
   }
 
@@ -45,7 +45,7 @@ Giáo viên - Quản lý lớp học
 <script>
   const updateClassHandler = (event, url) => {
     event.stopPropagation()
-    baseOpenWindowHandler(url)
+    openWindowAndReloadPage(url)
   }
 </script>
 {% endblock script %}

@@ -33,9 +33,13 @@
 
 <script>
   const baseOpenWindowHandler = (url) => {
-    let windows = window.open(url, '', 'width=600,height=700')
+    return window.open(url, '', 'width=600,height=700')
+  }
+
+  const openWindowAndReloadPage = (url) => {
+    let window = baseOpenWindowHandler(url)
     let timer = setInterval(() => {
-      if (windows.closed) {
+      if (window.closed) {
         clearInterval(timer);
         location.reload();
       }
