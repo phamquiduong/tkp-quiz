@@ -3,9 +3,9 @@ from typing import Any
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_http_methods, require_POST
 
+from authenticate.forms import ClassRoomForm
 from authenticate.models import ClassRoom
 from teacher.decorator.require_teacher import require_teacher
-from teacher.forms.class_room_form import ClassRoomForm
 
 
 @require_http_methods(['GET', 'POST'])

@@ -11,7 +11,7 @@ Giáo viên - Quản lý lớp học
 {% block main %}
 <div class="container pt-4 pb-3 mb-4 mt-4 border rounded">
   {% if classes_room %}
-  <div class="d-flex flex-wrap justify-content-around">
+  <div class="d-flex flex-wrap">
     {% for class_room in classes_room %}
     {% include 'teacher/common/class_room-item.html' with class_room=class_room %}
     {% endfor %}

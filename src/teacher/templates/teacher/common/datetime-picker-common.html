@@ -1,0 +1,53 @@
+<script>
+  const NOW = new Date()
+  const CURRENT_YEAR = NOW.getFullYear()
+  const MIN_YEAR = CURRENT_YEAR - 5, MAX_YEAR = CURRENT_YEAR + 5
+
+  const createOptionElement = (value, selected = false) => {
+    let optionElement = document.createElement("OPTION")
+    optionElement.setAttribute("value", value)
+    optionElement.selected = selected
+    let textNode = document.createTextNode(value)
+    optionElement.appendChild(textNode)
+    return optionElement
+  }
+
+  const isLeapYear = (year) => {
+    if (year % 400 == 0) return true
+    if (year % 4 == 0 && year % 100 != 0) return true
+    return false
+  }
+
+  const MONTH_31_DAYS = [1, 3, 5, 7, 8, 10, 12]
+  const MONTH_30_DAYS = [4, 6, 9, 11]
+  const getNumberDayOfMonth = (month, year) => {
+    if (MONTH_31_DAYS.includes(month)) return 31
+    if (MONTH_30_DAYS.includes(month)) return 30
+    if (isLeapYear(year)) return 29
+    return 28
+  }
+
+  const updateDateTimePickerValue = (daySelect, monthSelect, yearSelect, hourSelect, minuteSelect, dateTimePicker) => {
+    let currentDaySelect = parseInt(daySelect.value)
+    let currentMonthSelect = parseInt(monthSelect.value) - 1
+    let currentYearSelect = parseInt(yearSelect.value)
+    let currentHourSelect = parseInt(hourSelect.value)
+    let currentMinuteSelect = parseInt(minuteSelect.value)
+
+    let dateTimeNow = new Date(currentYearSelect, currentMonthSelect, currentDaySelect, currentHourSelect, currentMinuteSelect)
+    dateTimePicker.value = dateTimeNow.toISOString()
+  }
+
+  const updateDay = (daySelect, monthSelect, yearSelect, hourSelect, minuteSelect, dateTimePicker) => {
+    let currentDaySelect = parseInt(daySelect.value) || NOW.getDay()
+    let currentMonthSelect = parseInt(monthSelect.value)
+    let currentYearSelect = parseInt(yearSelect.value)
+
+    let numberDayOfMonth = getNumberDayOfMonth(currentMonthSelect, currentYearSelect)
+    let daySelected = Math.min(currentDaySelect, numberDayOfMonth)
+    daySelect.innerHTML = ""
+    for (let day = 1; day <= numberDayOfMonth; day++) daySelect.appendChild(createOptionElement(day, day == daySelected))
+
+    updateDateTimePickerValue(daySelect, monthSelect, yearSelect, hourSelect, minuteSelect, dateTimePicker)
+  }
+</script>

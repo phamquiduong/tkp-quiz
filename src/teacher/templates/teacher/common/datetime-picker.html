@@ -1,0 +1,39 @@
+<select class="form-select" id="{{name}}_daySelect" required></select>
+<span class="input-group-text">/</span>
+
+<select class="form-select" id="{{name}}_monthSelect" required></select>
+<span class="input-group-text">/</span>
+
+<select class="form-select" id="{{name}}_yearSelect" required></select>
+<span class="input-group-text"></span>
+
+<select class="form-select" id="{{name}}_hourSelect" required></select>
+<span class="input-group-text">:</span>
+
+<select class="form-select" id="{{name}}_minuteSelect" required></select>
+
+<input type="hidden" id="{{name}}_dateTimePicker" name="{{name}}" required>
+
+
+
+<script>
+  var {{name}}_dateTimePicker = document.getElementById("{{name}}_dateTimePicker")
+
+  var {{name}}_yearSelect = document.getElementById("{{name}}_yearSelect")
+  var {{name}}_monthSelect = document.getElementById("{{name}}_monthSelect")
+  var {{name}}_daySelect = document.getElementById("{{name}}_daySelect")
+  var {{name}}_hourSelect = document.getElementById("{{name}}_hourSelect")
+  var {{name}}_minuteSelect = document.getElementById("{{name}}_minuteSelect")
+
+  {{name}}_monthSelect.addEventListener("change", () => { updateDay({{name}}_daySelect, {{name}}_monthSelect, {{name}}_yearSelect, {{name}}_hourSelect, {{name}}_minuteSelect, {{name}}_dateTimePicker) })
+  {{name}}_yearSelect.addEventListener("change", () => { updateDay({{name}}_daySelect, {{name}}_monthSelect, {{name}}_yearSelect, {{name}}_hourSelect, {{name}}_minuteSelect, {{name}}_dateTimePicker) })
+  {{name}}_daySelect.addEventListener("change", () => { updateDateTimePickerValue({{name}}_daySelect, {{name}}_monthSelect, {{name}}_yearSelect, {{name}}_hourSelect, {{name}}_minuteSelect, {{name}}_dateTimePicker) })
+  {{name}}_hourSelect.addEventListener("change", () => { updateDateTimePickerValue({{name}}_daySelect, {{name}}_monthSelect, {{name}}_yearSelect, {{name}}_hourSelect, {{name}}_minuteSelect, {{name}}_dateTimePicker) })
+  {{name}}_minuteSelect.addEventListener("change", () => { updateDateTimePickerValue({{name}}_daySelect, {{name}}_monthSelect, {{name}}_yearSelect, {{name}}_hourSelect, {{name}}_minuteSelect, {{name}}_dateTimePicker) })
+
+  for (let year = MIN_YEAR; year <= MAX_YEAR; year++) {{name}}_yearSelect.appendChild(createOptionElement(year, year == CURRENT_YEAR))
+  for (let month = 1; month <= 12; month++) {{name}}_monthSelect.appendChild(createOptionElement(month, month == NOW.getMonth() + 1))
+  for (let hour = 0; hour <= 23; hour++) {{name}}_hourSelect.appendChild(createOptionElement(hour, hour == NOW.getHours()))
+  for (let minute = 0; minute <= 59; minute++) {{name}}_minuteSelect.appendChild(createOptionElement(minute, minute == NOW.getMinutes()))
+  updateDay({{name}}_daySelect, {{name}}_monthSelect, {{name}}_yearSelect, {{name}}_hourSelect, {{name}}_minuteSelect, {{name}}_dateTimePicker)
+</script>

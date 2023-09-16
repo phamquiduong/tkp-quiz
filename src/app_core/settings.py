@@ -121,7 +121,7 @@ USE_I18N = True
 
 USE_TZ = True
 
-DATETIME_FORMAT = "H:i d-m-y"
+DATETIME_FORMAT = "H:i d-m-Y"
 
 
 # Static files (CSS, JavaScript, Images)

@@ -9,13 +9,44 @@ Giáo viên - Quản lý cuộc thi
 {% endblock navigation %}
 
 {% block main %}
-Hướng dẫn sử dụng phần mềm
+{% include 'teacher/common/datetime-picker-common.html' %}
+
+{% if not contests_present and not contests_future and not contests_past %}
+<div class="container pt-4 pb-3 mb-4 mt-4 border rounded">
+  <h6 class="text-center">Không có cuộc thi nào <i class="fa-solid fa-face-sad-tear" style="color: black;"></i></h6>
+</div>
+{% endif %}
+
+{% include 'teacher/common/contest-group.html' with contest=contests_present contest_group__name='Cuộc thi đang diễn ra <i class="fa-solid fa-hourglass-half ms-1"></i>' %}
+{% include 'teacher/common/contest-group.html' with contest=contests_future contest_group__name='Cuộc thi sắp diễn ra <i class="fa-solid fa-hourglass-start ms-1"></i>' %}
+{% include 'teacher/common/contest-group.html' with contest=contests_past contest_group__name='Cuộc thi đã diễn ra <i class="fa-solid fa-hourglass-end ms-1"></i>' %}
+
+{% include 'teacher/common/contest-search.html' %}
+{% include 'teacher/common/contest-create.html' %}
+{% include 'teacher/common/contest-delete.html' %}
+
 {% endblock main %}
 
 {% block style %}
-<style></style>
+<style>
+  .card {
+    animation: fade 0.1s linear;
+    transition: 0.3s;
+  }
+
+  .card:hover {
+    box-shadow: 0 0 0 0.35rem rgba(13, 110, 253, .25);
+    border: solid 1px #bbbbbb;
+    cursor: pointer;
+  }
+</style>
 {% endblock style %}
 
 {% block script %}
-<script></script>
+<script>
+  const updateContestHandler = (event, url) => {
+    event.stopPropagation()
+    openWindowAndReloadPage(url)
+  }
+</script>
 {% endblock script %}

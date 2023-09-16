@@ -1,0 +1,11 @@
+{% if contest %}
+<div class="container pt-4 pb-3 mb-4 mt-4 border rounded">
+  <h5>{{contest_group__name}}</h5>
+  <hr>
+  <div class="d-flex flex-wrap">
+    {% for contest in contest %}
+    {% include 'teacher/common/contest-item.html' with contest=contest %}
+    {% endfor %}
+  </div>
+</div>
+{% endif %}

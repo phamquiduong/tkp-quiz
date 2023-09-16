@@ -1,0 +1,53 @@
+<!-- Add new contest button -->
+<div style="position: fixed; right: 40px; bottom: 50px;">
+  <button class="btn btn-primary btn-rounded p-3 rounded-pill shadow" data-bs-toggle="modal" data-bs-target="#createClassRoomModal" id="createClassRoomShowModalBtn">
+    <i class="fas fa-circle-plus me-2"></i> Thêm
+  </button>
+</div>
+
+<!-- Add new contest modal -->
+<div class="modal fade modal-lg" id="createClassRoomModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">Thêm cuộc thi mới</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="needs-validation" method="POST" action="{% url 'teacher_contest__list_create' %}">
+          <div class="input-group mb-3">
+            <span class="input-group-text" style="width: 115px;">Tên cuộc thi</span>
+            <input type="text" class="form-control text-center" value="{{ form.name.value|default:'' }}" name="name" required>
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text" style="width: 155px;">Thời gian bắt đầu</span>
+            {% include 'teacher/common/datetime-picker.html' with name='start_time' %}
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text" style="width: 155px;">Thời gian kết thúc</span>
+            {% include 'teacher/common/datetime-picker.html' with name='end_time' %}
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text" style="width: 155px;">Hệ số</span>
+            <select class="form-select" name="coefficient" required>
+              <option value="1">Hệ số 1</option>
+              <option value="2">Hệ số 2</option>
+              <option value="3">Hệ số 3</option>
+            </select>
+          </div>
+          {% include 'form.html' %}
+          <button type="submit" style="display: none;" id="createClassRoomSubmitBtn"></button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+        <button type="button" class="btn btn-primary" onclick="document.getElementById('createClassRoomSubmitBtn').click()">Thêm cuộc thi</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Re-open modal when have error -->
+{% if form.errors %}
+<script>document.getElementById('createClassRoomShowModalBtn').click()</script>
+{% endif %}
