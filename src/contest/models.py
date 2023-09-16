@@ -11,38 +11,50 @@ class Contest(models.Model):
         (3, 'Hệ số 3'),
     ]
 
-    name = models.CharField(max_length=255)
-    coefficient = models.PositiveSmallIntegerField(choices=COEFFICIENT, default=1)
+    name = models.CharField(max_length=255, verbose_name='Tên cuộc thi')
+    coefficient = models.PositiveSmallIntegerField(choices=COEFFICIENT, default=1, verbose_name='Hệ số')
 
-    start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
+    start_time = models.DateTimeField(verbose_name='Thời gian bắt đầu')
+    end_time = models.DateTimeField(verbose_name='Thời gian kết thúc')
 
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Người tạo cuộc thi')
 
     def __str__(self) -> str:
         return f'{self.name}'
 
+    class Meta:
+        verbose_name = "Bài kiểm tra"
+        verbose_name_plural = "Bài kiểm tra"
+
 
 class Question(models.Model):
-    contest = models.ForeignKey(Contest, on_delete=models.CASCADE)
+    contest = models.ForeignKey(Contest, on_delete=models.CASCADE, verbose_name='Cuộc thi')
 
-    content = models.TextField()
-    image = models.ImageField(null=True, blank=True)
+    content = models.TextField(verbose_name='Nội dung câu hỏi')
+    image = models.ImageField(null=True, blank=True, verbose_name='Hình ảnh câu hỏi')
 
-    difficult_level = models.PositiveSmallIntegerField(default=0)
-    is_select_multiple = models.BooleanField(default=False)
+    difficult_level = models.PositiveSmallIntegerField(default=0, verbose_name='Độ khó')
+    is_select_multiple = models.BooleanField(default=False, verbose_name='Cho phép chọn nhiều đáp án')
 
     def __str__(self) -> str:
         return f'{self.contest} - Question {self.id}'
 
+    class Meta:
+        verbose_name = "Câu hỏi"
+        verbose_name_plural = "Câu hỏi"
+
 
 class Answer(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, verbose_name='Câu hỏi')
 
-    content = models.TextField()
-    image = models.ImageField(null=True, blank=True)
+    content = models.TextField(verbose_name='Nội dung câu trả lời')
+    image = models.ImageField(null=True, blank=True, verbose_name='Hình ảnh câu trả lời')
 
-    is_correct = models.BooleanField(default=False)
+    is_correct = models.BooleanField(default=False, verbose_name='Đây là đáp án đúng')
 
     def __str__(self) -> str:
         return f'{self.question} - Answer {self.id}'
+
+    class Meta:
+        verbose_name = "Câu trả lời"
+        verbose_name_plural = "Câu trả lời"

@@ -11,10 +11,10 @@ from teacher.forms.class_room_form import ClassRoomForm
 @require_http_methods(['GET', 'POST'])
 @require_teacher
 def class_room__list_create_view(request):
-    classes_room = ClassRoom.objects.all().order_by('-year', 'name')
-    class_room__name_filter = request.GET.get('class_room__name_filter', None)
+    classes_room = ClassRoom.objects.all().order_by('name')
+    class_room__name_filter: str | None = request.GET.get('class_room__name_filter', None)
     if class_room__name_filter:
-        classes_room = classes_room.filter(name__contains=class_room__name_filter)
+        classes_room = classes_room.filter(name__contains=class_room__name_filter.upper())
 
     context: dict[str, Any] = {'classes_room': classes_room}
 

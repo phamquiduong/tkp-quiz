@@ -3,8 +3,6 @@
     <h5>{{ class_room.name }}</h5>
   </div>
   <div class="card-body">
-    <p class="card-text">Khóa học năm: {{ class_room.year }}</p>
-    <hr>
     <div class="text-end">
       <button type="button" class="btn btn-secondary me-3" onclick="updateClassHandler(event, '/admin/authenticate/classroom/{{class_room.id}}/change/')">
         <i class="fa-solid fa-pen-to-square me-2"></i> Sửa

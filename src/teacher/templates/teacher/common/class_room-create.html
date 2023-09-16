@@ -19,11 +19,6 @@
             <span class="input-group-text" style="width: 115px;">Tên lớp học</span>
             <input type="text" class="form-control text-center" value="{{ form.name.value|default:'' }}" name="name" required>
           </div>
-          <div class="input-group mb-3">
-            <span class="input-group-text" style="width: 110px;">Năm học</span>
-            <input type="number" class="form-control text-center" value="{{ form.year.value|default:'' }}" name="year" id="createClassRoomYearInput" required min="2000" max="2050" step="1">
-            <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('createClassRoomYearInput').value = new Date().getFullYear()">Lấy năm hiện tại</button>
-          </div>
           {% include 'form.html' %}
           <button type="submit" style="display: none;" id="createClassRoomSubmitBtn"></button>
         </form>

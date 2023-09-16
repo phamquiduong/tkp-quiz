@@ -3,7 +3,7 @@
 {% if form.errors %}
 <div class="alert alert-warning" role="alert">
     {% for key, errors in form.errors.items %}
-    {% if key != '__all__' %} {{ key }} {% endif %}
+    {% if key != '__all__' %} {{ key.label }} {% endif %}
     {% for error in errors %}
     <ul class="list-unstyled">
         <li>

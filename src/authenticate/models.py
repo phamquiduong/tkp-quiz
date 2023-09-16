@@ -6,10 +6,13 @@ from django.utils.translation import gettext_lazy as _
 
 class ClassRoom(models.Model):
     name = models.CharField(max_length=255, unique=True, verbose_name='Tên lớp học')
-    year = models.PositiveIntegerField(verbose_name='Năm học')
 
     def __str__(self):
         return f'{self.name}'
+
+    class Meta:
+        verbose_name = "Lớp học"
+        verbose_name_plural = "Lớp học"
 
 
 class UserManager(BaseUserManager):
@@ -41,9 +44,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=30, null=True, blank=True, verbose_name="Tên")
     full_name = models.CharField(max_length=255, null=True, blank=True, verbose_name="Họ và tên")
 
-    is_staff = models.BooleanField(default=False, verbose_name="Trạng thái vào được trang quản trị")
+    is_staff = models.BooleanField(default=False, verbose_name="Truy cập được trang quản trị")
     is_active = models.BooleanField(default=True, verbose_name="Trạng thái hoạt động")
-    date_joined = models.DateTimeField(default=timezone.now, verbose_name="Thời gian đăng ký")
+    date_joined = models.DateTimeField(default=timezone.now, verbose_name="Thời gian được tạo")
 
     class_room = models.ForeignKey(ClassRoom, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Lớp học")
 
@@ -53,10 +56,14 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     def __str__(self):
-        return f"{self.email} - {'Teacher' if self.is_superuser else 'Student'}"
+        return f"{self.name or self.full_name or self.email} - {'Giáo viên' if self.is_superuser else 'Học sinh'}"
 
     def is_teacher(self):
         return self.is_superuser
 
     def is_student(self):
         return not self.is_superuser
+
+    class Meta:
+        verbose_name = "Người dùng"
+        verbose_name_plural = "Người dùng"

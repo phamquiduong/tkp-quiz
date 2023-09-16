@@ -32,11 +32,17 @@ class MyUserAdmin(UserAdmin):
     )
     form = MyUserChangeForm
     add_form = MyUserCreationForm
-    list_display = ('email', 'full_name', 'class_room')
+    list_display = ('email', 'full_name', 'class_room', 'is_active')
     list_filter = ('is_staff', 'is_superuser', 'is_active', 'class_room')
-    search_fields = ('email', 'name')
+    search_fields = ('email', 'full_name')
     ordering = ('email',)
 
 
+class ClassRoomAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    search_fields = ('name',)
+    ordering = ('name',)
+
+
 admin.site.register(User, MyUserAdmin)
-admin.site.register(ClassRoom)
+admin.site.register(ClassRoom, ClassRoomAdmin)
