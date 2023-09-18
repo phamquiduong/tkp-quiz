@@ -4,11 +4,32 @@
 {% url 'teacher_profile' as teacher_profile_url %}
 {% url 'auth_logout' as auth_logout_url %}
 
-<ul class="nav nav-pills nav-fill p-2 shadow">
-  {% include 'teacher/common/nav-item.html' with path=path is_back=is_back nav_item_path='home' nav_item_name='Trang chủ' nav_item_url=teacher_home_url %}
-  {% include 'teacher/common/nav-item.html' with path=path is_back=is_back nav_item_path='class_room' nav_item_name='Quản lý lớp học' nav_item_url=teacher_class_room__list_create_url %}
-  {% include 'teacher/common/nav-item.html' with path=path is_back=is_back nav_item_path='contest' nav_item_name='Quản lý cuộc thi' nav_item_url=teacher_contest_url %}
-  {% include 'teacher/common/nav-item.html' with path=path is_back=is_back nav_item_path='profile' nav_item_name='Trang cá nhân' nav_item_url=teacher_profile_url %}
-  <li class="nav-item"> <button class="btn btn-secondary" onclick="window.open('/admin', '_blank');">Chuyển đến trang admin</button> </li>
-  <li class="nav-item"> <button class="btn btn-danger" onclick="location.href='{{auth_logout_url}}'">Đăng xuất</button> </li>
-</ul>
+<style>
+  @media only screen and (max-width: 1060px) {
+    .nav-fa-icon {
+      display: none;
+    }
+  }
+</style>
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary shadow" style="position: fixed; top:0; z-index: 10; width: 100%;">
+  <div class="container-fluid">
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav nav-underline">
+        {% include 'teacher/common/nav-item.html' with path=path is_back=is_back nav_item_path='home' nav_item_name='Trang chủ <i class="fa-solid fa-house nav-fa-icon"></i>' nav_item_url=teacher_home_url %}
+        {% include 'teacher/common/nav-item.html' with path=path is_back=is_back nav_item_path='class_room' nav_item_name='Quản lý lớp học <i class="fa-solid fa-people-group nav-fa-icon"></i>' nav_item_url=teacher_class_room__list_create_url %}
+        {% include 'teacher/common/nav-item.html' with path=path is_back=is_back nav_item_path='contest' nav_item_name='Quản lý cuộc thi <i class="fa-solid fa-feather-pointed nav-fa-icon"></i>' nav_item_url=teacher_contest_url %}
+        {% include 'teacher/common/nav-item.html' with path=path is_back=is_back nav_item_path='profile' nav_item_name='Trang cá nhân <i class="fa-solid fa-user nav-fa-icon"></i>' nav_item_url=teacher_profile_url %}
+        <div class="nav-item">
+          <button class="btn btn-secondary" onclick="window.open('/admin', '_blank');">Chuyển đến trang admin <i class="fa-solid fa-forward nav-fa-icon"></i></button>
+        </div>
+      </ul>
+    </div>
+    <form class="d-flex nav-item">
+      <button class="btn btn-danger" onclick="location.href='{{auth_logout_url}}'">Đăng xuất <i class="fa-solid fa-right-from-bracket nav-fa-icon"></i></button>
+    </form>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>

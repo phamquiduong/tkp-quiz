@@ -40,12 +40,16 @@
     ::-webkit-scrollbar-thumb {
       background: #FF0000;
     }
+
+    #main {
+      margin-top: 82px;
+    }
   </style>
 </head>
 
 <body>
-  <nav class="shadow-3 mb-3"> {% block navigation %} {% endblock navigation %} </nav>
-  <div id="root"> {% block main %} {%endblock main %} </div>
+  {% block navigation %} {% endblock navigation %}
+  <div id="main">{% block main %} {%endblock main %}</div>
 </body>
 
 <script>
