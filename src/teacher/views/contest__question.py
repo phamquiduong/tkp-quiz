@@ -1,12 +1,9 @@
 import pandas as pd
-from django.contrib.auth import get_user_model
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_GET, require_POST
 
-from contest.models import Contest
+from contest.models import Answer, Contest, Question
 from teacher.decorator.require_teacher import require_teacher
-
-User = get_user_model()
 
 
 @require_teacher
@@ -15,7 +12,7 @@ def contest__question__list_view(request, contest__id: int):
     contest = Contest.objects.get(id=contest__id)
     context = {
         'contest': contest,
-        'questions': User.objects.filter(contest=contest),
+        'questions': Question.objects.filter(contest=contest),
     }
     return render(request, 'teacher/contest-question.html', context)
 
@@ -29,14 +26,14 @@ def contest__question__import_view(request, contest__id: int):
     data_frame = pd.read_excel(file, index_col=False, dtype=str)
 
     if request.POST.get('is_delete_old', None):
-        User.objects.filter(contest=contest).delete()
+        Question.objects.filter(contest=contest).delete()
 
     for _, row in data_frame.iterrows():
         _email = row['Email']
         _password = row['Mật khẩu']
         _full_name = row['Họ và tên']
         try:
-            User.objects.create_user(       # type: ignore
+            Question.objects.create_user(       # type: ignore
                 email=_email,
                 password=_password,
                 full_name=_full_name,
@@ -51,5 +48,5 @@ def contest__question__import_view(request, contest__id: int):
 @require_teacher
 @require_POST
 def contest__question__delete_view(_, contest__id: int, question__id: int):
-    User.objects.get(id=question__id).delete()
+    Question.objects.get(id=question__id).delete()
     return redirect('teacher_contest__question__list', contest__id=contest__id)

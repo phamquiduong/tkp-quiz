@@ -1,5 +1,5 @@
 <li class="nav-item">
-  <a class="nav-link me-3 {% if path == nav_item_path %}active{% endif %}" href="{% if path != nav_item_path or is_back is True %} {{nav_item_url}} {% else %} # {% endif %}">
+  <a class="nav-link me-3 {% if path == nav_item_path %}active{% endif %}" href="{{nav_item_url}}">
     {% if path == nav_item_path and is_back is True %}<i class="fa-solid fa-backward me-2"></i>{% endif %} {{ nav_item_name}}
   </a>
 </li>

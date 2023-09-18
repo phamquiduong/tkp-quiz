@@ -1,14 +1,14 @@
 <style>
-  #searchClassRoomInput:focus {
+  #searchContestInput:focus {
     box-shadow: none;
   }
 </style>
 
-<!-- Search class_room -->
+<!-- Search contest -->
 <div style="position: fixed; right: 40px; bottom: 120px">
   <div class="input-group">
-    <input type="text" class="form-control text-center rounded-start-pill" style="width: 70px;" id="searchClassRoomInput" required>
-    <button class="btn btn-outline-primary rounded-end-pill p-2" type="button" id="button-addon2" onclick="searchClassRoomHandler()">
+    <input type="text" class="form-control text-center rounded-start-pill" style="width: 70px;" id="searchContestInput" required>
+    <button class="btn btn-outline-primary rounded-end-pill p-2" type="button" id="button-addon2" onclick="searchContestHandler()">
       <i class="fa-solid fa-magnifying-glass"></i>
     </button>
   </div>
@@ -16,15 +16,15 @@
 
 <script>
   let params = new URLSearchParams(document.location.search)
-  var searchInput = document.getElementById('searchClassRoomInput')
-  searchInput.value = params.get('class_room__name_filter')
+  var searchInput = document.getElementById('searchContestInput')
+  searchInput.value = params.get('contest__name_filter')
   searchInput.focus()
 
-  const searchClassRoomHandler = () => {
-    location.href = `{% url 'teacher_class_room__list_create' %}${searchInput.value ? `?class_room__name_filter=${searchInput.value}` : ''}`
+  const searchContestHandler = () => {
+    location.href = `{% url 'teacher_contest__list_create' %}${searchInput.value ? `?contest__name_filter=${searchInput.value}` : ''}`
   }
 
   searchInput.addEventListener("keypress", (event) => {
-    if (event.key === "Enter") searchClassRoomHandler();
+    if (event.key === "Enter") searchContestHandler();
   })
 </script>
