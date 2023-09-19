@@ -61,10 +61,9 @@
     let window = baseOpenWindowHandler(url)
     let timer = setInterval(() => {
       if (window.closed) {
-        clearInterval(timer);
         location.reload();
       }
-    }, 1000);
+    }, 500);
   }
 </script>
 

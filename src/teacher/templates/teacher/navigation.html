@@ -5,7 +5,7 @@
 {% url 'auth_logout' as auth_logout_url %}
 
 <style>
-  @media only screen and (max-width: 1060px) {
+  @media only screen and (max-width: 1100px) {
     .nav-fa-icon {
       display: none;
     }
@@ -20,14 +20,14 @@
         {% include 'teacher/common/nav-item.html' with path=path is_back=is_back nav_item_path='class_room' nav_item_name='Quản lý lớp học <i class="fa-solid fa-people-group nav-fa-icon"></i>' nav_item_url=teacher_class_room__list_create_url %}
         {% include 'teacher/common/nav-item.html' with path=path is_back=is_back nav_item_path='contest' nav_item_name='Quản lý cuộc thi <i class="fa-solid fa-feather-pointed nav-fa-icon"></i>' nav_item_url=teacher_contest_url %}
         {% include 'teacher/common/nav-item.html' with path=path is_back=is_back nav_item_path='profile' nav_item_name='Trang cá nhân <i class="fa-solid fa-user nav-fa-icon"></i>' nav_item_url=teacher_profile_url %}
-        <div class="nav-item">
-          <button class="btn btn-secondary" onclick="window.open('/admin', '_blank');">Chuyển đến trang admin <i class="fa-solid fa-user-tie"></i></button>
-        </div>
       </ul>
+      <div class="nav-item ms-3">
+        <button class="btn btn-secondary" onclick="window.open('/admin', '_blank');">Chuyển đến trang admin <i class="fa-solid fa-user-tie nav-fa-icon"></i></button>
+      </div>
     </div>
-    <form class="d-flex nav-item">
+    <div class="d-flex nav-item">
       <button class="btn btn-danger" onclick="location.href='{{auth_logout_url}}'">Đăng xuất <i class="fa-solid fa-right-from-bracket nav-fa-icon"></i></button>
-    </form>
+    </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>

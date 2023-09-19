@@ -9,32 +9,23 @@ Giáo viên - Quản lý học sinh
 {% endblock navigation %}
 
 {% block main %}
+{% if not questions %}
 <div class="container pt-4 pb-3 mb-4 mt-4 border rounded">
-  {% if students %}
-  <table class="table table-striped table-hover table-bordered">
-    <thead>
-      <tr class="text-center align-middle table-info">
-        <th>Email</th>
-        <th>Họ và tên</th>
-        <th>Tên</th>
-        <th style="width: 100px;">Có đang hoạt động</th>
-        <th style="width: 150px;">Ngày tham gia</th>
-        <th style="width: 150px;">Lần đăng nhập cuối</th>
-        <th style="width: 100px;">Đổi mật khẩu</th>
-        <th style="width: 100px;">Chỉnh sửa</th>
-        <th style="width: 70px;">Xóa</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for student in students %}
-      {% include 'teacher/common/class_room-student-item.html' with student=student %}
-      {% endfor %}
-    <tbody>
-  </table>
-  {% else %}
   <h6 class="text-center">Không có câu hỏi nào <i class="fa-solid fa-face-sad-tear" style="color: black;"></i></h6>
-  {% endif %}
 </div>
+{% endif %}
+
+{% for question in questions %}
+<div class="container pt-4 pb-3 mb-4 mt-4 border rounded">
+  <h6>{{ question.content }}</h6>
+  <hr>
+  <ul class="list-group">
+    {% for answer in question.answer_set.all %}
+    <li class="list-group-item {% if answer.is_correct %} active {% endif %}" aria-current="true">{{ answer.content }}</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endfor %}
 
 {% include 'teacher/common/class_room-student-delete.html' }
 {% include 'teacher/common/class_room-student-import.html' }

@@ -7,7 +7,7 @@ def home_view(request):
     if not request.user.is_authenticated:
         return redirect('auth_login')
 
-    if request.user.is_superuser:
+    if request.user.is_teacher():
         return redirect('teacher_home')
 
     return redirect('student_home')

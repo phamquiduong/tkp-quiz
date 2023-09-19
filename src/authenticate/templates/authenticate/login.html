@@ -10,7 +10,7 @@
 {% block main %}
 {% if request.user.is_authenticated %}
 <script>
-  window.location.href = "{% url 'home' %}";
+  window.location.href = "{% url 'auth_home' %}";
 </script>
 {% endif %}
 

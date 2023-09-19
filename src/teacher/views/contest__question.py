@@ -2,7 +2,7 @@ import pandas as pd
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_GET, require_POST
 
-from contest.models import Answer, Contest, Question
+from contest.models import Contest, Question
 from teacher.decorator.require_teacher import require_teacher
 
 
