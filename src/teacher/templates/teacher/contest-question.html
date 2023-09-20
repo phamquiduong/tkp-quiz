@@ -22,7 +22,7 @@ Giáo viên - Quản lý học sinh
       <h6>{{ question.content }}</h6>
       {% if question.image %} <img src="{{question.image.url}}" class="rounded" height="200px" alt="Tải hỉnh ảnh lỗi.. Vui lòng load lại trang hoặc cập nhật hình ảnh mới"> {% endif %}
     </div>
-    <div>
+    <div class="ms-3" style="min-width: 100px;">
       <button type="button" class="btn btn-secondary me-3" onclick="updateQuestionHandler(event, '/admin/contest/question/{{question.id}}/change/')">
         <i class="fa-solid fa-pen-to-square"></i>
       </button>
@@ -39,7 +39,7 @@ Giáo viên - Quản lý học sinh
         <input class="form-check-input me-1" type="checkbox" {% if answer.is_correct %} checked {% endif %} disabled>
         {{ answer.content }}
       </div>
-      <div>
+      <div class="ms-3" style="min-width: 100px;">
         <button type="button" class="btn btn-secondary me-3" onclick="updateAnswerHandler(event, '/admin/contest/answer/{{answer.id}}/change/')">
           <i class="fa-solid fa-pen-to-square"></i>
         </button>

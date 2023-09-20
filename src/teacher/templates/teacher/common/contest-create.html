@@ -20,20 +20,21 @@
             <input type="text" class="form-control text-center" value="{{ form.name.value|default:'' }}" name="name" required>
           </div>
           <div class="input-group mb-3">
-            <span class="input-group-text" style="width: 155px;">Thời gian bắt đầu</span>
-            {% include 'teacher/common/datetime-picker.html' with name='start_time' %}
-          </div>
-          <div class="input-group mb-3">
-            <span class="input-group-text" style="width: 155px;">Thời gian kết thúc</span>
-            {% include 'teacher/common/datetime-picker.html' with name='end_time' %}
-          </div>
-          <div class="input-group mb-3">
             <span class="input-group-text" style="width: 155px;">Hệ số</span>
             <select class="form-select" name="coefficient" required>
               <option value="1">Hệ số 1</option>
               <option value="2">Hệ số 2</option>
               <option value="3">Hệ số 3</option>
             </select>
+          </div>
+          <hr>
+          <div class="input-group mb-3">
+            <span class="input-group-text" style="width: 155px;">Thời gian bắt đầu</span>
+            {% include 'teacher/common/datetime-picker.html' with name='start_time' %}
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text" style="width: 155px;">Thời gian kết thúc</span>
+            {% include 'teacher/common/datetime-picker.html' with name='end_time' %}
           </div>
           {% include 'form.html' %}
           <button type="submit" style="display: none;" id="createClassRoomSubmitBtn"></button>
