@@ -1,0 +1,75 @@
+<!-- Add new class_room button -->
+<div style="position: fixed; right: 40px; bottom: 50px;">
+  <button class="btn btn-primary btn-rounded p-3 rounded-pill shadow" data-bs-toggle="modal" data-bs-target="#createClassRoomModal" id="createClassRoomShowModalBtn">
+    <i class="fas fa-circle-plus me-2"></i> Thêm
+  </button>
+</div>
+
+<!-- Add new class_room modal -->
+<div class="modal modal-lg fade" id="createClassRoomModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">Thêm câu hỏi mới</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="needs-validation" method="POST" action="{% url 'teacher_class_room__list_create' %}">
+          <div class="input-group">
+            <span class="input-group-text">Câu hỏi</span>
+            <textarea class="form-control" required></textarea>
+          </div>
+          <hr>
+          <div class="input-group mb-2">
+            <span class="input-group-text bg-primary text-white" id="createQuestionAnswerA">Đáp án A</span>
+            <textarea class="form-control"></textarea>
+          </div>
+          <div class="input-group mb-2">
+            <span class="input-group-text" id="createQuestionAnswerB">Đáp án B</span>
+            <textarea class="form-control"></textarea>
+          </div>
+          <div class="input-group mb-2">
+            <span class="input-group-text" id="createQuestionAnswerC">Đáp án C</span>
+            <textarea class="form-control"></textarea>
+          </div>
+          <div class="input-group mb-2">
+            <span class="input-group-text" id="createQuestionAnswerD">Đáp án D</span>
+            <textarea class="form-control"></textarea>
+          </div>
+          <hr>
+          <div class="input-group">
+            <span class="input-group-text">Đáp án đúng</span>
+            <select class="form-select" onchange="selectAnswerHandler(this.value)">
+              <option value="A" selected>Đáp án A</option>
+              <option value="B">Đáp án B</option>
+              <option value="C">Đáp án C</option>
+              <option value="D">Đáp án D</option>
+            </select>
+          </div>
+          {% include 'form.html' %}
+          <button type="submit" style="display: none;" id="createClassRoomSubmitBtn"></button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+        <button type="button" class="btn btn-primary" onclick="document.getElementById('createClassRoomSubmitBtn').click()">Thêm câu hỏi</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var createQuestionAnswerList = {
+    'createQuestionAnswerA': document.getElementById('createQuestionAnswerA'),
+    'createQuestionAnswerB': document.getElementById('createQuestionAnswerB'),
+    'createQuestionAnswerC': document.getElementById('createQuestionAnswerC'),
+    'createQuestionAnswerD': document.getElementById('createQuestionAnswerD'),
+  }
+
+  const selectAnswerHandler = (value) => {
+    for (item_key in createQuestionAnswerList) {
+      createQuestionAnswerList[item_key].classList.remove('bg-primary', 'text-white')
+    }
+    createQuestionAnswerList[`createQuestionAnswer${value}`].classList.add('bg-primary', 'text-white')
+  }
+</script>

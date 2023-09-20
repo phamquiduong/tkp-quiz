@@ -12,6 +12,7 @@ services:
       - ../.env:/.env
       - ../.database:/.database
       - ../.static:/.static
+      - ../.media:/.media
     command: bash -c "cd src &&
                       python manage.py migrate &&
                       python manage.py collectstatic --noinput &&
