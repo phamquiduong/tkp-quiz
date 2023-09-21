@@ -28,6 +28,7 @@ def contest__list_create_view(request):
     if request.method == 'POST':
         data = request.POST.dict()
         data['name'] = data.get('name', '').lower()
+        data['name'][0] = data['name'][0].upper()
         data['author'] = request.user
         form = ContestForm(data)
         if form.is_valid():

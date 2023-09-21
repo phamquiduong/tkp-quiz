@@ -9,7 +9,7 @@ Giáo viên - Trang chủ
 {% endblock navigation %}
 
 {% block main %}
-Hướng dẫn sử dụng phần mềm
+Xin chào {{user.full_name|default:user.name|default:user.email}}
 {% endblock main %}
 
 {% block style %}
