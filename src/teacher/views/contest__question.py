@@ -27,10 +27,10 @@ def contest__question__list_create_view(request, contest__id: int):
                 form['errors']['Đáp án'] = ('Phải có ít nhất 1 đáp án có nội dung',)
             if data.get('ans_correct', None) not in ('A', 'B', 'C', 'D'):
                 form['errors']['Đáp án đúng'] = ('Đáp án đúng không hợp lệ',)
-            if (data['ans_correct'] == 'A' and not data.get('ans_A', None)
-                or data['ans_correct'] == 'B' and not data.get('ans_B', None)
-                or data['ans_correct'] == 'C' and not data.get('ans_C', None)
-                    or data['ans_correct'] == 'D' and not data.get('ans_D', None)):
+            if ((data['ans_correct'] == 'A' and not data.get('ans_A', None))
+                or (data['ans_correct'] == 'B' and not data.get('ans_B', None))
+                or (data['ans_correct'] == 'C' and not data.get('ans_C', None))
+                    or (data['ans_correct'] == 'D' and not data.get('ans_D', None))):
                 form['errors']['__all__'] = ((f"Bạn chọn đáp án đúng là {data['ans_correct']}."
                                               f"Tuy nhiên đán án {data['ans_correct']} không có dữ liệu"),)
             return form

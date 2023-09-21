@@ -10,17 +10,17 @@ Giáo viên - Quản lý học sinh
 
 {% block main %}
 {% if not questions %}
-<div class="container pt-4 pb-3 mb-4 mt-4 border rounded">
+<div class="container pt-4 pb-3 mb-4 mt-4 border rounded bg-body">
   <h6 class="text-center">Không có câu hỏi nào <i class="fa-solid fa-face-sad-tear" style="color: black;"></i></h6>
 </div>
 {% endif %}
 
-<div class="container pt-4 pb-3 mb-4 mt-4 border rounded">
+<div class="container pt-4 pb-3 mb-4 mt-4 border rounded bg-body">
   {% for question in questions %}
   <div class="card ms-4 me-4 mb-4 shadow-sm 100w">
     <div class="card-header d-flex">
       <div class="me-auto">
-        <p>{{ question.content }}</p>
+        <h6>{{ question.content }}</h6>
         {% if question.image %}<img src="{{question.image.url}}" class="rounded" height="200px" alt="Tải hỉnh ảnh lỗi.. Vui lòng load lại trang hoặc cập nhật hình ảnh mới"> {% endif %}
       </div>
       <div class="ms-3" style="min-width: 100px;">
@@ -35,9 +35,11 @@ Giáo viên - Quản lý học sinh
     <div class="card-body">
       <ul class="list-group list-group-flush">
         {% for answer in question.answer_set.all %}
-        <li class="d-flex list-group-item aria-current=" true">
+        <li class="d-flex list-group-item">
+          <div class="text-primary" style="min-width: 30px;">
+            {% if answer.is_correct %} <i class="fa-solid fa-circle-check"></i> {% endif %}
+          </div>
           <div class="me-auto">
-            <input class="form-check-input me-1" type="checkbox" {% if answer.is_correct %} checked {% endif %} disabled>
             {{ answer.content }}
           </div>
           <div class="ms-3" style="min-width: 100px;">
@@ -64,10 +66,6 @@ Giáo viên - Quản lý học sinh
   .card {
     animation: fade 0.2s linear;
     transition: 0.3s;
-  }
-
-  .card:hover {
-    box-shadow: 0 0 0 0.35rem rgba(13, 110, 253, .25) !important;
   }
 </style>
 {% endblock style %}
