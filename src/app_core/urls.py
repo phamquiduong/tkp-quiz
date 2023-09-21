@@ -1,9 +1,11 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, re_path
+from django.views.generic.base import RedirectView
 
 urlpatterns = [
+    re_path(r'^favicon\.ico$', RedirectView.as_view(url='/static/logo.jpg', permanent=True)),
     path('admin/', admin.site.urls),
     path('', include('authenticate.urls')),
     path('student/', include('student.urls')),
