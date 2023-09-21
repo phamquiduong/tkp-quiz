@@ -12,7 +12,7 @@ class Contest(models.Model):
         (3, 'Hệ số 3'),
     ]
 
-    name = models.CharField(max_length=255, verbose_name='Tên cuộc thi')
+    name = models.CharField(max_length=255, unique=True, verbose_name='Tên cuộc thi')
     coefficient = models.PositiveSmallIntegerField(choices=COEFFICIENT, default=1, verbose_name='Hệ số')
 
     start_time = models.DateTimeField(verbose_name='Thời gian bắt đầu')
@@ -43,11 +43,12 @@ class Question(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        img = Image.open(self.image.path)
-        if img.height > 200:
-            new_img = (200*img.width//img.height, 200)
-            img = img.resize(new_img)
-            img.save(self.image.path)
+        if self.image:
+            img = Image.open(self.image.path)
+            if img.height > 200:
+                new_img = (200*img.width//img.height, 200)
+                img = img.resize(new_img)
+                img.save(self.image.path)
 
     class Meta:
         verbose_name = "Câu hỏi"
@@ -68,11 +69,12 @@ class Answer(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        img = Image.open(self.image.path)
-        if img.height > 200:
-            new_img = (200*img.width//img.height, 200)
-            img = img.resize(new_img)
-            img.save(self.image.path)
+        if self.image:
+            img = Image.open(self.image.path)
+            if img.height > 200:
+                new_img = (200*img.width//img.height, 200)
+                img = img.resize(new_img)
+                img.save(self.image.path)
 
     class Meta:
         verbose_name = "Câu trả lời"

@@ -1,12 +1,12 @@
-<!-- Add new class_room button -->
+<!-- Add new question button -->
 <div style="position: fixed; right: 40px; bottom: 50px;">
-  <button class="btn btn-primary btn-rounded p-3 rounded-pill shadow" data-bs-toggle="modal" data-bs-target="#createClassRoomModal" id="createClassRoomShowModalBtn">
+  <button class="btn btn-primary btn-rounded p-3 rounded-pill shadow" data-bs-toggle="modal" data-bs-target="#createContestQuestionModal" id="createContestQuestionShowModalBtn">
     <i class="fas fa-circle-plus me-2"></i> Thêm
   </button>
 </div>
 
-<!-- Add new class_room modal -->
-<div class="modal modal-lg fade" id="createClassRoomModal" tabindex="-1">
+<!-- Add new question modal -->
+<div class="modal modal-lg fade" id="createContestQuestionModal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -14,49 +14,54 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form class="needs-validation" method="POST" action="{% url 'teacher_class_room__list_create' %}">
+        <form class="needs-validation" method="POST" action="{% url 'teacher_contest__question__list_create' contest__id=contest.id %}">
           <div class="input-group">
             <span class="input-group-text">Câu hỏi</span>
-            <textarea class="form-control" required></textarea>
+            <textarea class="form-control" name="question_content" required>{{form.question_content.value|default:''}}</textarea>
           </div>
           <hr>
           <div class="input-group mb-2">
             <span class="input-group-text bg-primary text-white" id="createQuestionAnswerA">Đáp án A</span>
-            <textarea class="form-control"></textarea>
+            <textarea class="form-control" name="ans_A">{{form.ans_A.value|default:''}}</textarea>
           </div>
           <div class="input-group mb-2">
             <span class="input-group-text" id="createQuestionAnswerB">Đáp án B</span>
-            <textarea class="form-control"></textarea>
+            <textarea class="form-control" name="ans_B">{{form.ans_B.value|default:''}}</textarea>
           </div>
           <div class="input-group mb-2">
             <span class="input-group-text" id="createQuestionAnswerC">Đáp án C</span>
-            <textarea class="form-control"></textarea>
+            <textarea class="form-control" name="ans_C">{{form.ans_C.value|default:''}}</textarea>
           </div>
           <div class="input-group mb-2">
             <span class="input-group-text" id="createQuestionAnswerD">Đáp án D</span>
-            <textarea class="form-control"></textarea>
+            <textarea class="form-control" name="ans_D">{{form.ans_D.value|default:''}}</textarea>
           </div>
           <hr>
           <div class="input-group">
             <span class="input-group-text">Đáp án đúng</span>
-            <select class="form-select" onchange="selectAnswerHandler(this.value)">
-              <option value="A" selected>Đáp án A</option>
-              <option value="B">Đáp án B</option>
-              <option value="C">Đáp án C</option>
-              <option value="D">Đáp án D</option>
+            <select class="form-select" id="createQuestionAnswerCorrect" name="ans_correct" onchange="selectAnswerHandler()">
+              <option value="A" {% if form.ans_correct.value == 'A' %}selected{% endif %}>Đáp án A</option>
+              <option value="B" {% if form.ans_correct.value == 'B' %}selected{% endif %}>Đáp án B</option>
+              <option value="C" {% if form.ans_correct.value == 'C' %}selected{% endif %}>Đáp án C</option>
+              <option value="D" {% if form.ans_correct.value == 'D' %}selected{% endif %}>Đáp án D</option>
             </select>
           </div>
           {% include 'form.html' %}
-          <button type="submit" style="display: none;" id="createClassRoomSubmitBtn"></button>
+          <button type="submit" style="display: none;" id="createContestQuestionSubmitBtn"></button>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-        <button type="button" class="btn btn-primary" onclick="document.getElementById('createClassRoomSubmitBtn').click()">Thêm câu hỏi</button>
+        <button type="button" class="btn btn-primary" onclick="document.getElementById('createContestQuestionSubmitBtn').click()">Thêm câu hỏi</button>
       </div>
     </div>
   </div>
 </div>
+
+<!-- Re-open modal when have error -->
+{% if form.errors %}
+<script>document.getElementById('createContestQuestionShowModalBtn').click()</script>
+{% endif %}
 
 <script>
   var createQuestionAnswerList = {
@@ -66,10 +71,13 @@
     'createQuestionAnswerD': document.getElementById('createQuestionAnswerD'),
   }
 
-  const selectAnswerHandler = (value) => {
+  const selectAnswerHandler = () => {
+    value = document.getElementById('createQuestionAnswerCorrect').value;
     for (item_key in createQuestionAnswerList) {
       createQuestionAnswerList[item_key].classList.remove('bg-primary', 'text-white')
     }
     createQuestionAnswerList[`createQuestionAnswer${value}`].classList.add('bg-primary', 'text-white')
   }
+
+  selectAnswerHandler()
 </script>

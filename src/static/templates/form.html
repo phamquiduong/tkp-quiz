@@ -1,17 +1,18 @@
 {% csrf_token %}
 
 {% if form.errors %}
+<hr>
 <div class="alert alert-warning" role="alert">
-    {% for key, errors in form.errors.items %}
-    {% if key != '__all__' %} {{ key.label|default:key }} {% endif %}
-    {% for error in errors %}
-    <ul class="list-unstyled">
-        <li>
-            <i class="fas fa-question-circle me-2 text-warning"></i>
-            {{ error }}
-        </li>
-    </ul>
-    {% endfor %}
-    {% endfor %}
+  {% for key, errors in form.errors.items %}
+  {% if key != '__all__' %} {{ key.label|default:key }} {% endif %}
+  {% for error in errors %}
+  <ul class="list-unstyled">
+    <li>
+      <i class="fas fa-question-circle me-2 text-warning"></i>
+      {{ error }}
+    </li>
+  </ul>
+  {% endfor %}
+  {% endfor %}
 </div>
 {% endif %}
