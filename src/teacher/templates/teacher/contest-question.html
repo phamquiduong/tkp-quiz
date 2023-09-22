@@ -9,15 +9,14 @@ Giáo viên - Quản lý học sinh
 {% endblock navigation %}
 
 {% block main %}
-{% if not questions %}
-<div class="container pt-4 pb-3 mb-4 mt-4 border rounded bg-body">
-  <h6 class="text-center">Không có câu hỏi nào <i class="fa-solid fa-face-sad-tear" style="color: black;"></i></h6>
-</div>
-{% endif %}
 
 <div class="container pt-4 pb-3 mb-4 mt-4 border rounded bg-body">
+  {% if not questions %}
+  <h6 class="text-center">Không có câu hỏi nào <i class="fa-solid fa-face-sad-tear" style="color: black;"></i></h6>
+  {% endif %}
+
   {% for question in questions %}
-  <div class="card ms-4 me-4 mb-4 shadow-sm 100w">
+  <div class="card ms-4 me-4 mb-4 shadow-sm 100w" style="min-width: 300px;">
     <div class="card-header d-flex">
       <div class="me-auto">
         <h6>{{ question.content }}</h6>
