@@ -5,7 +5,7 @@ from django.urls import include, path, re_path
 from django.views.generic.base import RedirectView
 
 urlpatterns = [
-    re_path(r'^favicon\.ico$', RedirectView.as_view(url='/static/logo.jpg', permanent=True)),
+    re_path(r'^favicon\.ico$', RedirectView.as_view(url='/static/favicon.ico', permanent=True)),
     path('admin/', admin.site.urls),
     path('', include('authenticate.urls')),
     path('student/', include('student.urls')),
