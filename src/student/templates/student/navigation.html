@@ -1,0 +1,35 @@
+{% url 'student_home' as student_home_url %}
+{% url 'auth_logout' as auth_logout_url %}
+
+<style>
+  .nav-link {
+    width: 190px;
+  }
+
+  @media only screen and (max-width: 1200px) {
+    .nav-fa-icon {
+      display: none;
+    }
+
+    .nav-link {
+      width: auto;
+    }
+  }
+</style>
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary shadow" style="position: fixed; top:0; z-index: 10; width: 100%; min-width: 200px">
+  <div class="container-fluid">
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav nav-underline">
+        {% include 'student/common/nav-item.html' with path=path is_back=is_back nav_item_path='home' nav_item_name='Trang chủ <i class="fa-solid fa-house nav-fa-icon"></i>' nav_item_url=student_home_url %}
+        {% include 'student/common/nav-item.html' with path=path is_back=is_back nav_item_path='profile' nav_item_name='Trang cá nhân <i class="fa-solid fa-user nav-fa-icon"></i>' nav_item_url='#' %}
+      </ul>
+    </div>
+    <div class="d-flex nav-item">
+      <button class="btn btn-danger" onclick="location.href='{{auth_logout_url}}'">Đăng xuất <i class="fa-solid fa-right-from-bracket nav-fa-icon"></i></button>
+    </div>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
