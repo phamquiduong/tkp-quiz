@@ -9,11 +9,27 @@ Giáo viên - Quản lý lớp học
 {% endblock navigation %}
 
 {% block main %}
+<!-- Display class list -->
 <div class="container pt-4 pb-3 mb-4 mt-4 border rounded bg-body">
   {% if classes_room %}
   <div class="d-flex flex-wrap">
     {% for class_room in classes_room %}
-    {% include 'teacher/common/class_room-item.html' with class_room=class_room %}
+    <div class="card ms-4 me-4 mb-4 shadow-sm" style="width: 275px;" onclick="location.href=`{% url 'teacher_class_room__student__list' class_room__id=class_room.id %}`">
+      <div class="card-header">
+        <h5>{{ class_room.name }}</h5>
+      </div>
+      <div class="card-body">
+        <div class="text-end">
+          <button type="button" class="btn btn-secondary me-3" onclick="updateClassHandler(event, '/admin/authenticate/classroom/{{class_room.id}}/change/')">
+            <i class="fa-solid fa-pen-to-square me-2"></i> Sửa
+          </button>
+          <button type="button" class="btn btn-danger float-end delete-class-btn"
+            onclick="deleteClassRoomHanlder(event, `{% url 'teacher_class_room__delete' class_room__id=class_room.id %}`, '{{class_room.name}}')">
+            <i class="fa-solid fa-trash me-2"></i> Xóa
+          </button>
+        </div>
+      </div>
+    </div>
     {% endfor %}
   </div>
   {% else %}
@@ -21,9 +37,70 @@ Giáo viên - Quản lý lớp học
   {% endif %}
 </div>
 
-{% include 'teacher/common/class_room-search.html' %}
-{% include 'teacher/common/class_room-create.html' %}
-{% include 'teacher/common/class_room-delete.html' %}
+<!-- Search class_room -->
+<div style="position: fixed; right: 40px; bottom: 120px">
+  <div class="input-group">
+    <input type="text" class="form-control text-center rounded-start-pill" style="width: 70px;" id="searchClassRoomInput" required>
+    <button class="btn btn-outline-primary rounded-end-pill p-2" type="button" id="button-addon2" onclick="searchClassRoomHandler()">
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </button>
+  </div>
+</div>
+
+<!-- Add new class_room button -->
+<div style="position: fixed; right: 40px; bottom: 50px;">
+  <button class="btn btn-primary btn-rounded p-3 rounded-pill shadow" data-bs-toggle="modal" data-bs-target="#createClassRoomModal" id="createClassRoomShowModalBtn">
+    <i class="fas fa-circle-plus me-2"></i> Thêm
+  </button>
+</div>
+<!-- Add new class_room modal -->
+<div class="modal fade" id="createClassRoomModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">Thêm lớp học mới</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="needs-validation" method="POST" action="{% url 'teacher_class_room__list_create' %}">
+          <div class="input-group mb-3">
+            <span class="input-group-text" style="width: 115px;">Tên lớp học</span>
+            <input type="text" class="form-control text-center" value="{{ form.name.value|default:'' }}" name="name" required>
+          </div>
+          {% include 'form.html' %}
+          <button type="submit" style="display: none;" id="createClassRoomSubmitBtn"></button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+        <button type="button" class="btn btn-primary" onclick="document.getElementById('createClassRoomSubmitBtn').click()">Thêm lớp học</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete class hidden form -->
+<form style="display: none;" method="POST" id="deleteClassRoomForm">{% csrf_token %}</form>
+<!-- Delete class modal -->
+<button data-bs-toggle="modal" data-bs-target="#deleteClassRoomModal" id="deleteClassRoomShowModalBtn" style="display: none;"></button>
+<div class="modal fade" id="deleteClassRoomModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">Xóa lớp học</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Bạn đang thực hiện lệnh xóa lớp "<span class="fw-medium" id="deleteClassRoomName"></span>"</p>
+        <p>Sau khi thực hiện xong, bạn sẽ <mark>không thể khôi phục lại</mark> dữ liệu này nữa.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+        <button type="button" class="btn btn-danger" id="deleteClassRoomSubmitBtn">Xóa lớp học</button>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock main %}
 
 {% block style %}
@@ -37,14 +114,48 @@ Giáo viên - Quản lý lớp học
     box-shadow: 0 0 0 0.35rem rgba(13, 110, 253, .25) !important;
     cursor: pointer;
   }
+
+  #searchClassRoomInput:focus {
+    box-shadow: none;
+  }
 </style>
 {% endblock style %}
 
 {% block script %}
 <script>
+  // Update class handler
   const updateClassHandler = (event, url) => {
     event.stopPropagation()
     openWindowAndReloadPage(url)
   }
+
+  // Search class handler
+  let params = new URLSearchParams(document.location.search)
+  var searchInput = document.getElementById('searchClassRoomInput')
+  searchInput.value = params.get('class_room__name_filter')
+  searchInput.focus()
+  searchInput.addEventListener("keypress", (event) => {
+    if (event.key === "Enter") searchClassRoomHandler();
+  })
+  const searchClassRoomHandler = () => {
+    location.href = `{% url 'teacher_class_room__list_create' %}${searchInput.value ? `?class_room__name_filter=${searchInput.value}` : ''}`
+  }
+
+  // Delete class Handler
+  var deleteClassRoomName = document.getElementById('deleteClassRoomName')
+  var deleteClassRoomSubmitBtn = document.getElementById('deleteClassRoomSubmitBtn')
+  var deleteClassRoomForm = document.getElementById('deleteClassRoomForm')
+  var deleteClassRoomShowModalBtn = document.getElementById('deleteClassRoomShowModalBtn')
+  const deleteClassRoomHanlder = (event, url, name) => {
+    event.stopPropagation();
+    deleteClassRoomName.innerHTML = name
+    deleteClassRoomForm.action = url
+    deleteClassRoomSubmitBtn.addEventListener("click", () => { deleteClassRoomForm.submit() })
+    deleteClassRoomShowModalBtn.click()
+  }
 </script>
+{% if form.errors %}
+<!-- Re-open modal when have error -->
+<script>document.getElementById('createClassRoomShowModalBtn').click()</script>
+{% endif %}
 {% endblock script %}

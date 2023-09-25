@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
 {% block title %}
-Giáo viên - Trang chủ
+Học sinh - Kết quả thi
 {% endblock title %}
 
 {% block navigation %}
-{% include 'student/navigation.html' with path='home' %}
+{% include 'student/navigation.html' %}
 {% endblock navigation %}
 
 {% block main %}
@@ -18,7 +18,7 @@ Giáo viên - Trang chủ
   <p>Tổng số câu hỏi của bài thi: <span class='fw-medium'>{{result.contest.get_num_questions}}</span></p>
   <p>Điểm số đạt được: <span class='fw-medium'>{{result.get_score|floatformat:1}}</span></p>
   <hr>
-  <p>Bạn đã thi xong, vui lòng quay về lại trang chủ, hoặc đăng xuất tài khoản</p>
+  <p>Bạn đã thi xong, vui lòng quay về lại <a href="{% url 'student_home' %}">trang chủ</a>, hoặc <a class="text-danger" href="{% url 'auth_logout' %}">đăng xuất</a> tài khoản</p>
 </div>
 {% endblock main %}
 
