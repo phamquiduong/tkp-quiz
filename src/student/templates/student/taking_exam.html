@@ -11,21 +11,21 @@ Học sinh - Thi
 {% block main %}
 <div class="container pt-4 pb-3 mb-4 mt-4 border rounded bg-body">
   {% if not questions %}
-  <h6 class="text-center">Không có câu hỏi nào <i class="fa-solid fa-face-sad-tear" style="color: black;"></i>. Vui lòng liên hệ lại với giáo viên cho thi để được giải quyết</h6>
+  <h6 class="text-center">Không có câu hỏi nào <i class="fa-solid fa-face-sad-tear"></i>. Vui lòng liên hệ lại với giáo viên cho thi để được giải quyết</h6>
   {% endif %}
   <form method="POST" action="{% url 'student_save_exam_result' contest__id=contest.id %}">
     {% for question in questions %}
-    <div class="card ms-4 me-4 mb-4 shadow-sm 100w" style="min-width: 300px;">
+    <div class="card ms-4 me-4 mb-4 shadow-sm 100w load-fade">
       <div class="card-header">
         <h6>{{ question.content }}</h6>
-        {% if question.image %}<img src="{{question.image.url}}" class="rounded" height="200px" alt="Tải hỉnh ảnh lỗi.. Vui lòng load lại trang hoặc cập nhật hình ảnh mới"> {% endif %}
+        {% if question.image %}<img src="{{question.image.url}}" class="rounded" alt="Tải hỉnh ảnh lỗi.. Vui lòng load lại trang hoặc liên hệ với giáo viên"> {% endif %}
       </div>
       <div class="card-body">
         <ul class="list-group list-group-flush">
           {% for answer in question.answer_set.all %}
           <li class="list-group-item form-check">
             <input type="radio" class="form-check-input" value="answer_{{answer.id}}" id="answer_{{answer.id}}" name="question_{{question.id}}" required>
-            <label class="form-check-label ps-2 pe-2" for="answer_{{answer.id}}">{{ answer.content }}</label>
+            <label class="form-check-label ps-2 pe-2 hover-hightlight" for="answer_{{answer.id}}">{{ answer.content }}</label>
           </li>
           {% endfor %}
         </ul>
@@ -40,18 +40,12 @@ Học sinh - Thi
 
 {% block style %}
 <style>
-  .form-check-label {
-    transition: 0.1s;
-  }
-
-  .form-check-label:hover {
-    cursor: pointer;
-    box-shadow: 0 0 0 0.35rem rgba(13, 110, 253, .25) !important;
-  }
-
   .card {
-    animation: fade 0.2s linear;
-    transition: 0.1s;
+    min-width: 300px;
+  }
+
+  img {
+    height: 200px;
   }
 </style>
 {% endblock style %}
@@ -61,13 +55,13 @@ Học sinh - Thi
   var contestTimeCounter = document.getElementById('contestTimeCounter')
   var contestEndTime = new Date("{{contest.end_time|date:'c'}}")
 
+  // Calc delta time
   var now = new Date()
   var diffTime = (contestEndTime - now) / 1000
   var diffMins = Math.round(diffTime / 60)
   var diffSecs = Math.round(diffTime % 60)
 
-  contestTimeCounter.textContent = `${diffMins} phút ${diffSecs} giây`;
-
+  // Re-update delta time
   setInterval(() => {
     now = new Date()
     diffTime = (contestEndTime - now) / 1000
@@ -75,13 +69,17 @@ Học sinh - Thi
     diffSecs = Math.round(diffTime % 60)
   }, 100000)
 
+  // Initialize time counter
+  contestTimeCounter.textContent = `${diffMins} : ${diffSecs}`;
+
+  // Update time counter
   setInterval(() => {
     diffSecs -= 1
     if (diffSecs < 0) {
       diffSecs = 59
       diffMins -= 1
     }
-    contestTimeCounter.textContent = `${diffMins} phút ${diffSecs} giây`;
+    contestTimeCounter.textContent = `${diffMins} : ${diffSecs}`;
   }, 1000)
 </script>
 {% endblock script %}

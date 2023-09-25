@@ -9,13 +9,14 @@ Học sinh - Trang chủ
 {% endblock navigation %}
 
 {% block main %}
+<!-- Contest present -->
 <div class="container pt-4 pb-3 mb-4 mt-4 border rounded bg-body">
   {% if contests_present %}
   <h5>Các cuộc thi đang diễn ra <i class="fa-solid fa-hourglass-half ms-1"></i></h5>
   <hr>
   <div class="d-flex flex-wrap">
     {% for contest, result in contests_present %}
-    <div class="card ms-4 me-4 mb-4 shadow-sm" style="width: 380px;" {% if not result %} onclick="location.href=`{% url 'student_taking_exam' contest__id=contest.id %}`" {% endif %}>
+    <div class="card ms-4 me-4 mb-4 shadow-sm load-fade hover-hightlight" {% if not result %} onclick="location.href=`{% url 'student_taking_exam' contest__id=contest.id %}`" {% endif %}>
       <h5 class=" card-header">{{ contest.name }}</h5>
       <div class="card-body">
         <ul>
@@ -41,13 +42,14 @@ Học sinh - Trang chủ
   {% endif %}
 </div>
 
+<!-- Contest past -->
 <div class="container pt-4 pb-3 mb-4 mt-4 border rounded bg-body">
   {% if contests_past %}
   <h5>Các cuộc thi đã diễn ra <i class="fa-solid fa-hourglass-end ms-1"></i></h5>
   <hr>
   <div class="d-flex flex-wrap">
     {% for contest, result in contests_past %}
-    <div class="card ms-4 me-4 mb-4 shadow-sm" style="width: 380px;">
+    <div class="card ms-4 me-4 mb-4 shadow-sm load-fade hover-hightlight">
       <h5 class=" card-header">{{ contest.name }}</h5>
       <div class="card-body">
         <ul>
@@ -77,13 +79,7 @@ Học sinh - Trang chủ
 {% block style %}
 <style>
   .card {
-    animation: fade 0.2s linear;
-    transition: 0.1s;
-  }
-
-  .card:hover {
-    box-shadow: 0 0 0 0.35rem rgba(13, 110, 253, .25) !important;
-    cursor: pointer;
+    width: 380px;
   }
 </style>
 {% endblock style %}

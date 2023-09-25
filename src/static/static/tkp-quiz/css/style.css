@@ -1,0 +1,71 @@
+/* Disabled text selection */
+html {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+body {
+  min-width: 320px;
+}
+
+
+/* Fade animation */
+@keyframes fade {
+  from {
+    transform: translateY(2px);
+    opacity: 0;
+  }
+}
+
+.load-fade {
+  animation: fade 0.2s linear;
+}
+
+
+/* Hightlight */
+.hover-hightlight {
+  transition: 0.2s;
+}
+
+.hover-hightlight:hover {
+  box-shadow: 0 0 0 0.35rem rgba(13, 110, 253, .25) !important;
+  cursor: pointer;
+}
+
+
+/* Main root */
+#main {
+  margin-top: 82px;
+}
+
+
+/* Navigation bar */
+.navbar {
+  position: fixed;
+  top: 0;
+  z-index: 10;
+  width: 100%;
+  min-width: 320px
+}
+
+.nav-link {
+  width: 190px;
+}
+
+@media only screen and (max-width: 1200px) {
+  .nav-fa-icon {
+    display: none;
+  }
+
+  .nav-link {
+    width: auto;
+  }
+
+  .nav-username {
+    display: none !important;
+  }
+}

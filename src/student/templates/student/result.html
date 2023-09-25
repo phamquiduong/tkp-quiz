@@ -9,7 +9,7 @@ Học sinh - Kết quả thi
 {% endblock navigation %}
 
 {% block main %}
-<div class="container pt-4 pb-3 mb-4 mt-4 border rounded bg-body">
+<div class="container pt-4 pb-3 mb-4 mt-4 border rounded bg-body shadow">
   <h5>Kết quả thi</h5>
   <hr>
   <p>Thí sinh: <span class='fw-medium'>{{user.full_name|default:user.name|default:user.email}}</span></p>
@@ -22,5 +22,12 @@ Học sinh - Kết quả thi
 </div>
 {% endblock main %}
 
-{% block style %}{% endblock style %}
+{% block style %}
+<style>
+  .container {
+    max-width: 600px;
+  }
+</style>
+{% endblock style %}
+
 {% block script %}{% endblock script %}

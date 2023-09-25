@@ -4,17 +4,15 @@
 Đăng nhập
 {% endblock title %}
 
-{% block navigation %}
-{% endblock navigation %}
+{% block navigation %}{% endblock navigation %}
 
 {% block main %}
+
 {% if request.user.is_authenticated %}
-<script>
-  window.location.href = "{% url 'auth_home' %}";
-</script>
+<script>window.location.href = "{% url 'auth_home' %}"</script>
 {% endif %}
 
-<form class="container border p-4" style="max-width: 450px;" method="POST">
+<form class="container border p-4 bg-body shadow" method="POST">
   <h3 class="mb-4 text-center">Đăng nhập</h3>
 
   <div class="form-floating mb-4">
@@ -35,9 +33,11 @@
 {% endblock main %}
 
 {% block style %}
-<style></style>
+<style>
+  .container {
+    max-width: 450px;
+  }
+</style>
 {% endblock style %}
 
-{% block script %}
-<script></script>
-{% endblock script %}
+{% block script %}{% endblock script %}

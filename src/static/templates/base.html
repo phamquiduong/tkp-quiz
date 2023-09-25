@@ -8,62 +8,27 @@
 
   <!-- Bootstrap -->
   <link href="/static/bootstrap-5.3.2-dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="/static//bootstrap-5.3.2-dist/js/bootstrap.min.js"></script>
+  <script src="/static/bootstrap-5.3.2-dist/js/bootstrap.min.js"></script>
 
   <!-- Font Awesome -->
   <link href="/static/fontawesome-free-6.4.2-web/css/fontawesome.min.css" rel="stylesheet">
   <link href="/static/fontawesome-free-6.4.2-web/css/brands.min.css" rel="stylesheet">
   <link href="/static/fontawesome-free-6.4.2-web/css/solid.min.css" rel="stylesheet">
 
-  <!-- Base CSS -->
-  <style>
-    /* Disabled text selection */
-    html {
-      -webkit-touch-callout: none;
-      -webkit-user-select: none;
-      -khtml-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
-
-    /* Fade animation */
-    @keyframes fade {
-      from {
-        transform: translateY(2px);
-        opacity: 0;
-      }
-    }
-  </style>
+  <!-- TKP Base -->
+  <link href="/static/tkp-quiz/css/style.css" rel="stylesheet">
+  <script src="/static/tkp-quiz/js/script.js"></script>
 
   <!-- Custom CSS -->
   {% block style %}{% endblock style %}
 </head>
 
-<body class="bg-body-tertiary" style="min-width: 320px;">
+<body class="bg-body-secondary">
   <!-- Navigation bar -->
   {% block navigation %} {% endblock navigation %}
 
   <!-- Web main content -->
-  <div id="main" style="margin-top: 82px;">{% block main %} {%endblock main %}</div>
-
-  <!-- Common JavaScript -->
-  <script>
-    // Open window
-    const baseOpenWindowHandler = (url) => {
-      return window.open(url, '', 'width=600,height=700')
-    }
-
-    // Open Window and reload page when window closed
-    const openWindowAndReloadPage = (url) => {
-      let window = baseOpenWindowHandler(url)
-      let timer = setInterval(() => {
-        if (window.closed) {
-          location.reload();
-        }
-      }, 500);
-    }
-  </script>
+  <div id="main">{% block main %} {%endblock main %}</div>
 
   <!-- Custom JavaScript -->
   {% block script %} {% endblock script %}

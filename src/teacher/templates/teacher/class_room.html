@@ -14,7 +14,7 @@ Giáo viên - Quản lý lớp học
   {% if classes_room %}
   <div class="d-flex flex-wrap">
     {% for class_room in classes_room %}
-    <div class="card ms-4 me-4 mb-4 shadow-sm" style="width: 275px;" onclick="location.href=`{% url 'teacher_class_room__student__list' class_room__id=class_room.id %}`">
+    <div class="load-fade hover-hightlight card ms-4 me-4 mb-4 shadow-sm" style="width: 275px;" onclick="location.href=`{% url 'teacher_class_room__student__list' class_room__id=class_room.id %}`">
       <div class="card-header">
         <h5>{{ class_room.name }}</h5>
       </div>
@@ -105,16 +105,6 @@ Giáo viên - Quản lý lớp học
 
 {% block style %}
 <style>
-  .card {
-    animation: fade 0.2s linear;
-    transition: 0.1s;
-  }
-
-  .card:hover {
-    box-shadow: 0 0 0 0.35rem rgba(13, 110, 253, .25) !important;
-    cursor: pointer;
-  }
-
   #searchClassRoomInput:focus {
     box-shadow: none;
   }
