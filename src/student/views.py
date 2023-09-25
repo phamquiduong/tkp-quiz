@@ -18,6 +18,12 @@ def home_view(request):
 @require_student
 def taking_exam_view(request, contest__id: int):
     now = timezone.now()
-    contest = Contest.objects.filter(id=contest__id, start_time__lte=now, end_time__gte=now).first()
+    contest = Contest.objects.get(id=contest__id, start_time__lte=now, end_time__gte=now)
     questions = Question.objects.filter(contest=contest)
-    return render(request, 'student/taking_exam.html', {'questions': questions})
+
+    context = {
+        'contest': contest,
+        'questions': questions,
+    }
+
+    return render(request, 'student/taking_exam.html', context)
