@@ -1,39 +1,37 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary shadow">
   <div class="container-fluid">
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav nav-underline">
-        <li class="nav-item">
-          <a class="nav-link text-center {% if path == 'home' %}active{% endif %}" href="{% url 'teacher_home' %}">
+      <ul class="navbar-nav nav-pills">
+        <li class="nav-item me-2">
+          <a class="nav-link text-center {% if path == 'home' %}active text-light{% endif %}" href="{% url 'teacher_home' %}">
             Trang chủ <i class="fa-solid fa-house nav-fa-icon"></i>
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link text-center {% if path == 'class_room' %}active{% endif %}" href="{% url 'teacher_class_room__list_create' %}">
+        <li class="nav-item me-2">
+          <a class="nav-link text-center {% if path == 'class_room' %}active text-light{% endif %}" href="{% url 'teacher_class_room__list_create' %}">
             {% if path == 'class_room' and is_back is True %}<i class="fa-solid fa-backward me-2"></i>{% endif %}
             Quản lý lớp học <i class="fa-solid fa-people-group nav-fa-icon"></i>
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link text-center {% if path == 'contest' %}active{% endif %}" href="{% url 'teacher_contest__list_create' %}">
+        <li class="nav-item me-2">
+          <a class="nav-link text-center {% if path == 'contest' %}active text-light{% endif %}" href="{% url 'teacher_contest__list_create' %}">
             {% if path == 'contest' and is_back is True %}<i class="fa-solid fa-backward me-2"></i>{% endif %}
             Quản lý cuộc thi <i class="fa-solid fa-feather-pointed nav-fa-icon"></i>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-center {% if path == 'profile' %}active{% endif %}" href="{% url 'teacher_profile' %}">
-            Trang cá nhân <i class="fa-solid fa-user nav-fa-icon"></i>
+          <a class="nav-link text-center {% if path == 'profile' %}active text-light{% endif %}" href="{% url 'teacher_profile' %}">
+            Xem kết quả <i class="fa-solid fa-square-poll-vertical"></i>
           </a>
         </li>
-        <li class="nav-item">
-          <button class="btn btn-secondary" onclick="window.open('/admin', '_blank');">
-            Chuyển đến trang admin <i class="fa-solid fa-user-tie nav-fa-icon"></i>
-          </button>
-        </li>
       </ul>
+      <div class="nav-item text-center ms-4">
+        <button class="btn btn-secondary" onclick="window.open('/admin', '_blank');"> Chuyển đến trang admin <i class="fa-solid fa-user-tie nav-fa-icon"></i> </button>
+      </div>
       <hr>
     </div>
     <div class="d-flex nav-item">
-      <button class="btn btn-danger" onclick="location.href=`{% url 'auth_logout' %}`">Đăng xuất <i class="fa-solid fa-right-from-bracket nav-fa-icon"></i></button>
+      <button class="btn btn-danger" onclick="location.href=`{% url 'auth_logout' %}`">Đăng xuất <i class="fa-solid fa-right-from-bracket"></i></button>
     </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
