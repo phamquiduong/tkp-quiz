@@ -23,6 +23,9 @@ class Contest(models.Model):
     def __str__(self) -> str:
         return f'{self.name}'
 
+    def get_num_questions(self):
+        return Question.objects.filter(contest=self).count()
+
     class Meta:
         verbose_name = "Bài kiểm tra"
         verbose_name_plural = "Bài kiểm tra"

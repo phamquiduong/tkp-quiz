@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}
+Giáo viên - Trang chủ
+{% endblock title %}
+
+{% block navigation %}
+{% include 'student/navigation.html' with path='home' %}
+{% endblock navigation %}
+
+{% block main %}
+<div class="container pt-4 pb-3 mb-4 mt-4 border rounded bg-body">
+  <h5>Kết quả thi</h5>
+  <hr>
+  <p>Thí sinh: <span class='fw-medium'>{{user.full_name|default:user.name|default:user.email}}</span></p>
+  <p>Bài thi: <span class='fw-medium'>{{result.contest}}</span></p>
+  <p>Số câu trả lời đúng: <span class='fw-medium'>{{result.num_correct}}</span></p>
+  <p>Tổng số câu hỏi của bài thi: <span class='fw-medium'>{{result.contest.get_num_questions}}</span></p>
+  <p>Điểm số đạt được: <span class='fw-medium'>{{result.get_score|floatformat:1}}</span></p>
+  <hr>
+  <p>Bạn đã thi xong, vui lòng quay về lại trang chủ, hoặc đăng xuất tài khoản</p>
+</div>
+{% endblock main %}
+
+{% block style %}{% endblock style %}
+{% block script %}{% endblock script %}

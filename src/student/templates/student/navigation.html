@@ -41,9 +41,9 @@
       </div>
       {% if path == 'taking_exam' %}
       <div class="d-flex align-items-center border border-secondary rounded-pill ps-4 pe-4 me-3">
-        Cuộc thi sẽ kết thúc sau:	&nbsp; <span id="contestTimeCounter"></span>
+        Cuộc thi sẽ kết thúc sau: &nbsp; <span id="contestTimeCounter"></span>
       </div>
-      <button class="btn btn-primary">Nộp bài <i class="fa-solid fa-thumbs-up"></i></button>
+      <button class="btn btn-primary" onclick="document.getElementById('contestSubmitBtn').click()">Nộp bài <i class="fa-solid fa-thumbs-up"></i></button>
       {% else %}
       <button class="btn btn-danger" onclick="location.href='{{auth_logout_url}}'">Đăng xuất <i class="fa-solid fa-right-from-bracket nav-fa-icon"></i></button>
       {% endif %}

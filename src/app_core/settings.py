@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'static',
     'authenticate',
     'contest',
+    'result',
     'student',
     'teacher',
 ]

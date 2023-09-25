@@ -13,25 +13,28 @@ Giáo viên - Quản lý học sinh
   {% if not questions %}
   <h6 class="text-center">Không có câu hỏi nào <i class="fa-solid fa-face-sad-tear" style="color: black;"></i>. Vui lòng liên hệ lại với giáo viên cho thi để được giải quyết</h6>
   {% endif %}
-
-  {% for question in questions %}
-  <form class="card ms-4 me-4 mb-4 shadow-sm 100w" style="min-width: 300px;">
-    <div class="card-header">
-      <h6>{{ question.content }}</h6>
-      {% if question.image %}<img src="{{question.image.url}}" class="rounded" height="200px" alt="Tải hỉnh ảnh lỗi.. Vui lòng load lại trang hoặc cập nhật hình ảnh mới"> {% endif %}
+  <form method="POST" action="{% url 'student_save_exam_result' contest__id=contest.id %}">
+    {% for question in questions %}
+    <div class="card ms-4 me-4 mb-4 shadow-sm 100w" style="min-width: 300px;">
+      <div class="card-header">
+        <h6>{{ question.content }}</h6>
+        {% if question.image %}<img src="{{question.image.url}}" class="rounded" height="200px" alt="Tải hỉnh ảnh lỗi.. Vui lòng load lại trang hoặc cập nhật hình ảnh mới"> {% endif %}
+      </div>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+          {% for answer in question.answer_set.all %}
+          <li class="list-group-item form-check">
+            <input type="radio" class="form-check-input" value="answer_{{answer.id}}" id="answer_{{answer.id}}" name="question_{{question.id}}" required>
+            <label class="form-check-label ps-2 pe-2" for="answer_{{answer.id}}">{{ answer.content }}</label>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <button type="submit" id="contestSubmitBtn" style="display: none;"></button>
+      {% include 'form.html' %}
     </div>
-    <div class="card-body">
-      <ul class="list-group list-group-flush">
-        {% for answer in question.answer_set.all %}
-        <li class="list-group-item form-check">
-          <input type="radio" class="form-check-input" id="answer_{{answer.id}}" name="question_{{question.id}}">
-          <label class="form-check-label ps-2 pe-2" for="answer_{{answer.id}}">{{ answer.content }}</label>
-        </li>
-        {% endfor %}
-      </ul>
-    </div>
+    {% endfor %}
   </form>
-  {% endfor %}
 </div>
 {% endblock main %}
 

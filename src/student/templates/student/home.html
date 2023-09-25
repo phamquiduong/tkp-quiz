@@ -11,11 +11,11 @@ Giáo viên - Trang chủ
 {% block main %}
 <div class="container pt-4 pb-3 mb-4 mt-4 border rounded bg-body">
   {% if contests_present %}
-  <h5>Các cuộc thi đang diễn ra</h5>
+  <h5>Các cuộc thi đang diễn ra <i class="fa-solid fa-hourglass-half ms-1"></i></h5>
   <hr>
   <div class="d-flex flex-wrap">
-    {% for contest in contests_present %}
-    <div class="card ms-4 me-4 mb-4 shadow-sm" style="width: 380px;" onclick="location.href=`{% url 'student_taking_exam' contest__id=contest.id %}`">
+    {% for contest, result in contests_present %}
+    <div class="card ms-4 me-4 mb-4 shadow-sm" style="width: 380px;" {% if not result %} onclick="location.href=`{% url 'student_taking_exam' contest__id=contest.id %}`" {% endif %}>
       <h5 class=" card-header">{{ contest.name }}</h5>
       <div class="card-body">
         <ul>
@@ -30,6 +30,39 @@ Giáo viên - Trang chủ
           </ul>
           <li>Bài thi hệ số: <span class="fw-medium">{{contest.coefficient}}</span></li>
           <li>Được tạo bởi: <span class="fw-medium">{{contest.author.full_name|default:contest.author.name|default:contest.author.email}}</span></li>
+          {% if result %}<li>Điểm số: {{result.get_score}}</li>{% endif %}
+        </ul>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <h6 class="text-center">Không có cuộc thi nào <i class="fa-solid fa-face-sad-tear"></i></h6>
+  {% endif %}
+</div>
+
+<div class="container pt-4 pb-3 mb-4 mt-4 border rounded bg-body">
+  {% if contests_past %}
+  <h5>Các cuộc thi đã diễn ra <i class="fa-solid fa-hourglass-end ms-1"></i></h5>
+  <hr>
+  <div class="d-flex flex-wrap">
+    {% for contest, result in contests_past %}
+    <div class="card ms-4 me-4 mb-4 shadow-sm" style="width: 380px;">
+      <h5 class=" card-header">{{ contest.name }}</h5>
+      <div class="card-body">
+        <ul>
+          <li>Thời gian <i class="fa-regular fa-clock"></i></li>
+          <ul>
+            <li>
+              Bắt đầu: <span class="fw-medium">{{contest.start_time|date:"H:i d/m/Y"}}</span>
+            </li>
+            <li>
+              Kết thúc: <span class="fw-medium">{{contest.end_time|date:"H:i d/m/Y"}}</span>
+            </li>
+          </ul>
+          <li>Bài thi hệ số: <span class="fw-medium">{{contest.coefficient}}</span></li>
+          <li>Được tạo bởi: <span class="fw-medium">{{contest.author.full_name|default:contest.author.name|default:contest.author.email}}</span></li>
+          {% if result %}<li>Điểm số: {{result.get_score}}</li>{% endif %}
         </ul>
       </div>
     </div>
