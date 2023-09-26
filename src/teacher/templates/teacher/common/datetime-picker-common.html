@@ -39,7 +39,8 @@
   }
 
   const updateDay = (daySelect, monthSelect, yearSelect, hourSelect, minuteSelect, dateTimePicker) => {
-    let currentDaySelect = parseInt(daySelect.value) || NOW.getDay()
+    let currentDaySelect = parseInt(daySelect.value) || NOW.getDate()
+    console.log(NOW.getDay())
     let currentMonthSelect = parseInt(monthSelect.value)
     let currentYearSelect = parseInt(yearSelect.value)
 
