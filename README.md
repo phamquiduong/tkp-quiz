@@ -40,14 +40,19 @@ python manage.py migrate
 ```
 
 ### Thu thập static files
-Xóa thư mục static files nếu có
-```bash
-# Với hệ điều hành Windows. Chạy lệnh sau xác nhận lại bằng cách nhấn ENTER
-rmdir ../.static/
-```
+Xóa thư mục static files (nếu có)
+- Với hệ điều hành Windows
+    ```bash
+    rmdir ../.static/
+    ```
 Thu thập lại static files mới
 ```bash
 python manage.py collectstatic --noinput
+```
+
+Tạo tài khoản superuser (giáo viên)
+```bash
+python manage.py createsuperuser
 ```
 
 ## Chạy server
