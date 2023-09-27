@@ -252,7 +252,8 @@ Giáo viên - Quản lý cuộc thi
     if (event.key === "Enter") searchContestHandler();
   })
   const searchContestHandler = () => {
-    location.href = `{% url 'teacher_contest__list_create' %}${searchInput.value ? `?contest__name_filter=${searchInput.value}` : ''}`
+    let searchInputValue = searchInput.value ? `?contest__name_filter=${searchInput.value}` : ''
+    location.href = `{% url 'teacher_contest__list_create' %}${searchInputValue}`
   }
 
   // Update contest handler

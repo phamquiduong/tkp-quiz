@@ -11,8 +11,8 @@ class ClassRoom(models.Model):
         return f'{self.name}'
 
     class Meta:
-        verbose_name = "Lớp học"
-        verbose_name_plural = "Lớp học"
+        verbose_name = "Quản lý lớp học"
+        verbose_name_plural = "Quản ly lớp học"
 
 
 class UserManager(BaseUserManager):

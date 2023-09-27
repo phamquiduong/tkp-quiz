@@ -140,8 +140,8 @@ Giáo viên - Quản lý học sinh
     'createQuestionAnswerD': document.getElementById('createQuestionAnswerD'),
   }
   const selectAnswerHandler = () => {
-    value = document.getElementById('createQuestionAnswerCorrect').value;
-    for (item_key in createQuestionAnswerList) {
+    let value = document.getElementById('createQuestionAnswerCorrect').value;
+    for (let item_key in createQuestionAnswerList) {
       createQuestionAnswerList[item_key].classList.remove('bg-primary', 'text-white')
     }
     createQuestionAnswerList[`createQuestionAnswer${value}`].classList.add('bg-primary', 'text-white')
@@ -149,7 +149,8 @@ Giáo viên - Quản lý học sinh
   selectAnswerHandler()
 
   //Update and delete questin answer handler
-  const updateQuestionHandler = updateAnswerHandler = deleteQuestionHanlder = deleteAnswerHanlder = (event, url) => {
+  var updateQuestionHandler, updateAnswerHandler, deleteQuestionHanlder, deleteAnswerHanlder
+  updateQuestionHandler = updateAnswerHandler = deleteQuestionHanlder = deleteAnswerHanlder = (event, url) => {
     event.stopPropagation()
     openWindowAndReloadPage(url)
   }

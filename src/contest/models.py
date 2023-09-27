@@ -6,14 +6,14 @@ User = get_user_model()
 
 
 class Contest(models.Model):
-    COEFFICIENT = [
+    COEFFICIENTS = [
         (1, 'Hệ số 1'),
         (2, 'Hệ số 2'),
         (3, 'Hệ số 3'),
     ]
 
     name = models.CharField(max_length=255, unique=True, verbose_name='Tên cuộc thi')
-    coefficient = models.PositiveSmallIntegerField(choices=COEFFICIENT, default=1, verbose_name='Hệ số')
+    coefficient = models.PositiveSmallIntegerField(choices=COEFFICIENTS, default=1, verbose_name='Hệ số')
 
     start_time = models.DateTimeField(verbose_name='Thời gian bắt đầu')
     end_time = models.DateTimeField(verbose_name='Thời gian kết thúc')

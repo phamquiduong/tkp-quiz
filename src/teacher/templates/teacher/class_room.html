@@ -128,7 +128,8 @@ Giáo viên - Quản lý lớp học
     if (event.key === "Enter") searchClassRoomHandler();
   })
   const searchClassRoomHandler = () => {
-    location.href = `{% url 'teacher_class_room__list_create' %}${searchInput.value ? `?class_room__name_filter=${searchInput.value}` : ''}`
+    let seachInputValue = searchInput.value ? `?class_room__name_filter=${searchInput.value}` : ''
+    location.href = `{% url 'teacher_class_room__list_create' %}${seachInputValue}`
   }
 
   // Delete class Handler
