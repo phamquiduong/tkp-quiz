@@ -12,7 +12,7 @@ class ClassRoom(models.Model):
 
     class Meta:
         verbose_name = "Quản lý lớp học"
-        verbose_name_plural = "Quản ly lớp học"
+        verbose_name_plural = "Quản lý lớp học"
 
 
 class UserManager(BaseUserManager):
