@@ -25,7 +25,7 @@ Học sinh - Thi
           {% for answer in question.answer_set.all %}
           <li class="list-group-item form-check">
             <input type="radio" class="form-check-input" value="answer_{{answer.id}}" id="answer_{{answer.id}}" name="question_{{question.id}}" required>
-            <label class="form-check-label ps-2 pe-2 hover-hightlight" for="answer_{{answer.id}}">{{ answer.content }}</label>
+            <label class="form-check-label ps-2 pe-2 w-100 hover-hightlight" for="answer_{{answer.id}}">{{ answer.content }}</label>
           </li>
           {% endfor %}
         </ul>

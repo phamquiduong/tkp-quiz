@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}
+Giáo viên - Kết quả thi
+{% endblock title %}
+
+{% block navigation %}
+{% include 'teacher/navigation.html' with path='result' %}
+{% endblock navigation %}
+
+{% block main %}
+<!-- Select quiz result -->
+<div class="container pt-4 pb-3 mb-4 mt-4 border rounded bg-body">
+  <h5 class="mb-3">Chọn lớp học và cuộc thi</h5>
+  <form class="input-group" method="GET">
+    <!-- Select class room -->
+    <select class="form-select text-center" name="class_room__id" required>
+      <option disabled selected value id="class_room_default"> -- Vui lòng chọn lớp học -- </option>
+      {% for class_room in class_rooms %}
+      <option value="{{class_room.id}}" id="class_room_{{class_room.id}}">{{class_room.name}}</option>
+      {% endfor %}
+    </select>
+
+    <!-- Select contest -->
+    <select class="form-select text-center" name="contest__id" required>
+      <option disabled selected value id="contest_default"> -- Vui lòng chọn cuộc thi -- </option>
+      {% for contest in contests %}
+      <option value="{{contest.id}}" id="contest_{{contest.id}}">{{contest.name}}</option>
+      {% endfor %}
+    </select>
+
+    <button type="submit" class="btn btn-primary">Xem kết quả <i class="fa-solid fa-magnifying-glass ms-2"></i></button>
+  </form>
+
+  <hr>
+
+  <!-- Show quiz result -->
+  {% if results %}
+  <h5 class="mt-4 mb-3">Kết quả</h5>
+  <table class="table table-striped table-hover table-bordered">
+    <caption>Kết quả thi</caption>
+    <thead>
+      <tr class="text-center align-middle table-info">
+        <th>Họ và tên</th>
+        <th style="width: 20%;">Số câu trả lời đúng</th>
+        <th style="width: 20%;">Điểm số</th>
+      </tr>
+    </thead>
+    <tbody class="load-fade">
+      {% for result in results %}
+      <tr>
+        <td>{{result.user.full_name|default:result.user.name|default:result.user.email}}</td>
+        <td class="text-center">{{result.num_correct}}</td>
+        <td class="text-center">{{result.get_score}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <h6>Không có dữ liệu nào <i class="fa-solid fa-face-sad-tear"></i></h6>
+  {% endif %}
+</div>
+{% endblock main %}
+
+{% block style %}{% endblock style %}
+
+{% block script %}
+<script>
+  let params = new URLSearchParams(document.location.search)
+
+  // Select class room
+  let class_room__id = params.get('class_room__id')
+  if (class_room__id) document.getElementById(`class_room_${class_room__id}`).selected = true
+
+  // Select contest
+  let contest__id = params.get('contest__id')
+  if (contest__id) document.getElementById(`contest_${contest__id}`).selected = true
+</script>
+{% endblock script %}

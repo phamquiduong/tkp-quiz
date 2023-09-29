@@ -6,7 +6,7 @@ from teacher.views.class_room__student import (class_room__student__delete_view,
 from teacher.views.contest import contest__delete_view, contest__list_create_view
 from teacher.views.contest__question import contest__question__delete_view, contest__question__list_create_view
 from teacher.views.home import home_view
-from teacher.views.profile import profile_view
+from teacher.views.result import result_view
 
 urlpatterns = [
     path('', home_view, name='teacher_home'),
@@ -29,5 +29,5 @@ urlpatterns = [
     path('contest/<int:contest__id>/question/<int:question__id>/delete', contest__question__delete_view,
          name='teacher_contest__question__delete'),
 
-    path('profile', profile_view, name='teacher_profile'),
+    path('result', result_view, name='teacher_result'),
 ]
