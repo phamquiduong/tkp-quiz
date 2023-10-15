@@ -29,7 +29,7 @@ cp .env.example .env
 cd src/
 ```
 
-### Tự động tạo migrations file
+### Tự động tạo migrations file (chỉ hỗ trợ code, không thực hiện khi deploy)
 ```bash
 python manage.py makemigrations
 ```
@@ -39,21 +39,14 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
-### Thu thập static files
-Xóa thư mục static files (nếu có)
-- Với hệ điều hành Windows
-    ```bash
-    rmdir ../.static/
-    ```
-Thu thập lại static files mới
-```bash
-python manage.py collectstatic --noinput
-```
 
-Tạo tài khoản superuser (giáo viên)
+### Tạo tài khoản superuser (giáo viên)
 ```bash
 python manage.py createsuperuser
 ```
+Sau đó điền các thông tin đăng nhập
+#### Lưu ý: `Mật khẩu` khi gõ sẽ không hiện trên terminal
+
 
 ## Chạy server
 ```bash
@@ -62,6 +55,7 @@ python manage.py runserver 0.0.0.0:80
 ### Lưu ý:
 - 0.0.0.0 là địa chỉ máy tính
 - 80 là cổng để chạy
+
 
 ### Giờ các bạn có thể vào `localhost` trên trình duyệt để sử dụng trang web
 
