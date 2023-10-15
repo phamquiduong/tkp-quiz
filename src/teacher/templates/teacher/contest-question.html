@@ -97,10 +97,10 @@ Giáo viên - Quản lý học sinh
           <div class="input-group">
             <span class="input-group-text">Đáp án đúng</span>
             <select class="form-select" id="createQuestionAnswerCorrect" name="ans_correct" onchange="selectAnswerHandler()">
-              <option value="A" selected="{% if form.ans_correct.value == 'A' %}selected{% endif %}">Đáp án A</option>
-              <option value="B" selected="{% if form.ans_correct.value == 'B' %}selected{% endif %}">Đáp án B</option>
-              <option value="C" selected="{% if form.ans_correct.value == 'C' %}selected{% endif %}">Đáp án C</option>
-              <option value="D" selected="{% if form.ans_correct.value == 'D' %}selected{% endif %}">Đáp án D</option>
+              <option value="A" {% if form.ans_correct.value == 'A' %}selected{% endif %}>Đáp án A</option>
+              <option value="B" {% if form.ans_correct.value == 'B' %}selected{% endif %}>Đáp án B</option>
+              <option value="C" {% if form.ans_correct.value == 'C' %}selected{% endif %}>Đáp án C</option>
+              <option value="D" {% if form.ans_correct.value == 'D' %}selected{% endif %}>Đáp án D</option>
             </select>
           </div>
           {% include 'form.html' %}
