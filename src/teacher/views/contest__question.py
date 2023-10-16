@@ -1,8 +1,18 @@
+import re
+
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_http_methods, require_POST
+from docx import Document
 
 from contest.models import Answer, Contest, Question
 from teacher.decorator.require_teacher import require_teacher
+
+ANSWERS = 'A', 'B', 'C', 'D'
+
+ANSWER_RE = r'[\t\n\s\r]*#*[AaBbCcDd][:\.][\t\n\s\r]*'
+
+QUESTION_RE = r'[\t\n\s\r]*(câu|question)[\t\n\s\r]*\d+[:\.][\t\n\s\r]*'
+IGNORE_QUESTIONS_SPLIT = ('', 'câu', 'question')
 
 
 @require_teacher
@@ -58,4 +68,35 @@ def contest__question__list_create_view(request, contest__id: int):
 @require_POST
 def contest__question__delete_view(_, contest__id: int, question__id: int):
     Question.objects.get(id=question__id).delete()
+    return redirect('teacher_contest__question__list_create', contest__id=contest__id)
+
+
+@require_teacher
+@require_POST
+def contest__question__import_view(request, contest__id: int):
+    contest = Contest.objects.get(id=contest__id)
+
+    if request.POST.get('is_delete_old', None):
+        Question.objects.filter(contest=contest).delete()
+
+    document = Document(request.FILES['contestQuestionFile'])
+    text = '\n'.join(para.text for para in document.paragraphs)
+    questions = re.split(QUESTION_RE, text, flags=re.I)
+    questions = (question for question in questions if question.lower() not in IGNORE_QUESTIONS_SPLIT)
+
+    for question in questions:
+        ans_correct = 'A'
+        for answer in ANSWERS:
+            if f"#{answer.lower()}." in question.lower():
+                ans_correct = answer
+                break
+
+        question_content = re.split(ANSWER_RE, question)
+        if len(question_content) == 5:
+            question = Question.objects.create(contest=contest, content=question_content[0])
+            Answer.objects.create(question=question, content=question_content[1], is_correct=ans_correct == 'A')
+            Answer.objects.create(question=question, content=question_content[2], is_correct=ans_correct == 'B')
+            Answer.objects.create(question=question, content=question_content[3], is_correct=ans_correct == 'C')
+            Answer.objects.create(question=question, content=question_content[4], is_correct=ans_correct == 'D')
+
     return redirect('teacher_contest__question__list_create', contest__id=contest__id)

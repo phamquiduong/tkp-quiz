@@ -15,10 +15,10 @@ def home_view(request):
     contests = Contest.objects
 
     contests_present = contests.filter(start_time__lte=now, end_time__gte=now)
-    contests_present = ((contest, results.filter(contest=contest).first()) for contest in contests_present)
+    contests_present = list((contest, results.filter(contest=contest).first()) for contest in contests_present)
 
     contests_past = contests.filter(end_time__lte=now)
-    contests_past = ((contest, results.filter(contest=contest).first()) for contest in contests_past)
+    contests_past = list((contest, results.filter(contest=contest).first()) for contest in contests_past)
 
     context = {
         'contests_present': contests_present,

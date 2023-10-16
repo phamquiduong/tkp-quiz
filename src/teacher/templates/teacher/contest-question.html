@@ -18,7 +18,7 @@ Giáo viên - Quản lý học sinh
   <div class="card ms-4 me-4 mb-4 shadow-sm 100w" style="min-width: 300px;">
     <div class="card-header d-flex">
       <div class="me-auto">
-        <h6>{{ question.content }}</h6>
+        <h6><u>Câu {{forloop.counter}}:</u> {{ question.content|linebreaksbr }}</h6>
         {% if question.image %}<img src="{{question.image.url}}" class="rounded" alt="Tải hỉnh ảnh lỗi.. Vui lòng load lại trang hoặc cập nhật hình ảnh mới"> {% endif %}
       </div>
       <div class="ms-3" style="min-width: 100px;">
@@ -38,7 +38,7 @@ Giáo viên - Quản lý học sinh
             {% if answer.is_correct %} <i class="fa-solid fa-circle-check"></i> {% endif %}
           </div>
           <div class="me-auto">
-            {{ answer.content }}
+            {{ answer.content|linebreaksbr }}
           </div>
           <div class="ms-3" style="min-width: 100px;">
             <button type="button" class="btn btn-secondary me-3" onclick="updateAnswerHandler(event, '/admin/contest/answer/{{answer.id}}/change/')">
@@ -56,9 +56,45 @@ Giáo viên - Quản lý học sinh
   {% endfor %}
 </div>
 
+<!-- Import question -->
+<div style="position: fixed; right: 40px; bottom: 120px;">
+  <button class="btn btn-primary btn-rounded p-3 rounded-pill shadow" data-bs-toggle="modal" data-bs-target="#importContestQuestionModal" id="createContestQuestionShowModalBtn">
+    <i class="fa-solid fa-file-import"></i> Nhập
+  </button>
+</div>
+<!-- Import question modal -->
+<div class="modal modal-lg fade" id="importContestQuestionModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">Nhập đề thi</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="needs-validation" method="POST" action="{% url 'teacher_contest__question__import' contest__id=contest.id %}" enctype="multipart/form-data">
+          <div>
+            <label for="formFile" class="form-label">Chọn file</label>
+            <input class="form-control" name="contestQuestionFile" type="file" id="formFile" accept=".docx" required>
+          </div>
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" id="deleteOldStudent" name="is_delete_old">
+            <label class="form-check-label" for="deleteOldStudent">Xóa danh sách cũ</label>
+          </div>
+          <button type="submit" style="display: none;" id="importContestQuestionSubmitBtn"></button>
+          {% include 'form.html' %}
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+        <button type="button" class="btn btn-primary" onclick="document.getElementById('importContestQuestionSubmitBtn').click()">Nhập file</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Add new question button -->
 <div style="position: fixed; right: 40px; bottom: 50px;">
-  <button class="btn btn-primary btn-rounded p-3 rounded-pill shadow" data-bs-toggle="modal" data-bs-target="#createContestQuestionModal" id="createContestQuestionShowModalBtn">
+  <button class="btn btn-secondary btn-rounded p-3 rounded-pill shadow" data-bs-toggle="modal" data-bs-target="#createContestQuestionModal" id="createContestQuestionShowModalBtn">
     <i class="fas fa-circle-plus me-2"></i> Thêm
   </button>
 </div>

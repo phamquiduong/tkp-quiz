@@ -11,9 +11,9 @@ Học sinh - Trang chủ
 {% block main %}
 <!-- Contest present -->
 <div class="container pt-4 pb-3 mb-4 mt-4 border rounded bg-body">
-  {% if contests_present %}
   <h5>Các cuộc thi đang diễn ra <i class="fa-solid fa-hourglass-half ms-1"></i></h5>
   <hr>
+  {% if contests_present %}
   <div class="d-flex flex-wrap">
     {% for contest, result in contests_present %}
     <div class="card ms-4 me-4 mb-4 shadow-sm load-fade hover-hightlight" {% if not result %} onclick="location.href=`{% url 'student_taking_exam' contest__id=contest.id %}`" {% endif %}>
@@ -44,9 +44,9 @@ Học sinh - Trang chủ
 
 <!-- Contest past -->
 <div class="container pt-4 pb-3 mb-4 mt-4 border rounded bg-body">
-  {% if contests_past %}
   <h5>Các cuộc thi đã diễn ra <i class="fa-solid fa-hourglass-end ms-1"></i></h5>
   <hr>
+  {% if contests_past %}
   <div class="d-flex flex-wrap">
     {% for contest, result in contests_past %}
     <div class="card ms-4 me-4 mb-4 shadow-sm load-fade hover-hightlight">

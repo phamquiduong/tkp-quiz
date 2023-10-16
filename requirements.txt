@@ -11,3 +11,6 @@ Pillow
 # Excel reader
 pandas
 openpyxl
+
+# Microsoft word reader
+python-docx
