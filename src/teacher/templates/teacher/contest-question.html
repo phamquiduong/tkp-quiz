@@ -72,7 +72,7 @@ Giáo viên - Quản lý học sinh
       </div>
       <div class="modal-body">
         <form class="needs-validation" method="POST" action="{% url 'teacher_contest__question__import' contest__id=contest.id %}" enctype="multipart/form-data">
-          <div>
+          <div class="mb-3">
             <label for="formFile" class="form-label">Chọn file</label>
             <input class="form-control" name="contestQuestionFile" type="file" id="formFile" accept=".docx" required>
           </div>

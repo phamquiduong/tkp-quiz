@@ -69,3 +69,9 @@ def save_exam_result_view(request, contest__id: int):
     result.save()
 
     return render(request, 'student/result.html', {'result': result})
+
+
+@require_student
+def change_password(request):
+    # TODO: Change password for request user
+    return render(request, 'student/change_password.html')
