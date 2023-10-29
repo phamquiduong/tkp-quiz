@@ -9,7 +9,7 @@ from teacher.decorator.require_teacher import require_teacher
 
 ANSWERS = 'A', 'B', 'C', 'D'
 
-ANSWER_RE = r'[\t\n\s\r]*#*[AaBbCcDd][:\.][\t\n\s\r]*'
+ANSWER_RE = r'[\t\n\s\r]+#*[ABCD][\.][\t\n\s\r]*'
 
 QUESTION_RE = r'[\t\n\s\r]*(câu|question)[\t\n\s\r]*\d+[:\.][\t\n\s\r]*'
 IGNORE_QUESTIONS_SPLIT = ('', 'câu', 'question')
