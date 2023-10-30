@@ -1,3 +1,4 @@
+from django.db.models import Count, OuterRef
 from django.shortcuts import redirect, render
 from django.utils import timezone
 from django.views.decorators.http import require_GET, require_POST
@@ -11,14 +12,13 @@ from student.decorator.require_student import require_student
 @require_student
 def home_view(request):
     now = timezone.now()
-    results = Result.objects.filter(user=request.user)
-    contests = Contest.objects
+    results = Result.objects.filter(user=request.user, contest__id=OuterRef('id'))
+    contests = Contest.objects.annotate(
+        num_question=Count('question'),
+        num_correct=results.values('num_correct')[:1])
 
     contests_present = contests.filter(start_time__lte=now, end_time__gte=now)
-    contests_present = list((contest, results.filter(contest=contest).first()) for contest in contests_present)
-
     contests_past = contests.filter(end_time__lte=now)
-    contests_past = list((contest, results.filter(contest=contest).first()) for contest in contests_past)
 
     context = {
         'contests_present': contests_present,

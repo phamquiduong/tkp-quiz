@@ -15,12 +15,12 @@ Học sinh - Trang chủ
   <hr>
   {% if contests_present %}
   <div class="d-flex flex-wrap">
-    {% for contest, result in contests_present %}
-    <div class="card ms-4 me-4 mb-4 shadow-sm load-fade hover-hightlight" {% if not result %} onclick="location.href=`{% url 'student_taking_exam' contest__id=contest.id %}`" {% endif %}>
+    {% for contest in contests_present %}
+    <div class="card ms-4 me-4 mb-4 shadow-sm load-fade {% if not contest.num_correct %}hover-hightlight{% endif %}" {% if not contest.num_correct %}
+      onclick="location.href=`{% url 'student_taking_exam' contest__id=contest.id %}`" {% endif %}>
       <h5 class=" card-header">{{ contest.name }}</h5>
-      <div class="card-body">
-        <ul>
-          <li>Thời gian <i class="fa-regular fa-clock"></i></li>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Thời gian <i class="fa-regular fa-clock"></i>
           <ul>
             <li>
               Bắt đầu: <span class="fw-medium">{{contest.start_time|date:"H:i d/m/Y"}}</span>
@@ -29,11 +29,12 @@ Học sinh - Trang chủ
               Kết thúc: <span class="fw-medium">{{contest.end_time|date:"H:i d/m/Y"}}</span>
             </li>
           </ul>
-          <li>Bài thi hệ số: <span class="fw-medium">{{contest.coefficient}}</span></li>
-          <li>Được tạo bởi: <span class="fw-medium">{{contest.author.full_name|default:contest.author.name|default:contest.author.email}}</span></li>
-          {% if result %}<li>Điểm số: {{result.get_score}}</li>{% endif %}
-        </ul>
-      </div>
+        </li>
+        <li class="list-group-item">Hệ số: <span class="fw-medium">{{contest.coefficient}}</span></li>
+        <li class="list-group-item">Được tạo bởi: <span class="fw-medium">{{contest.author.full_name|default:contest.author.name|default:contest.author.email}}</span></li>
+        <li class="list-group-item">Bài thi có <span class="fw-medium">{{contest.num_question}}</span> câu hỏi</li>
+        {% if contest.num_correct %}<li class="list-group-item bg-success text-white">Bạn đã hoàn thành với <span class="fw-medium">{{contest.num_correct}}</span> câu trả lời đúng</li>{% endif %}
+      </ul>
     </div>
     {% endfor %}
   </div>
@@ -48,12 +49,11 @@ Học sinh - Trang chủ
   <hr>
   {% if contests_past %}
   <div class="d-flex flex-wrap">
-    {% for contest, result in contests_past %}
-    <div class="card ms-4 me-4 mb-4 shadow-sm load-fade hover-hightlight">
+    {% for contest in contests_past %}
+    <div class="card ms-4 me-4 mb-4 shadow-sm load-fade">
       <h5 class=" card-header">{{ contest.name }}</h5>
-      <div class="card-body">
-        <ul>
-          <li>Thời gian <i class="fa-regular fa-clock"></i></li>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Thời gian <i class="fa-regular fa-clock"></i>
           <ul>
             <li>
               Bắt đầu: <span class="fw-medium">{{contest.start_time|date:"H:i d/m/Y"}}</span>
@@ -62,11 +62,12 @@ Học sinh - Trang chủ
               Kết thúc: <span class="fw-medium">{{contest.end_time|date:"H:i d/m/Y"}}</span>
             </li>
           </ul>
-          <li>Bài thi hệ số: <span class="fw-medium">{{contest.coefficient}}</span></li>
-          <li>Được tạo bởi: <span class="fw-medium">{{contest.author.full_name|default:contest.author.name|default:contest.author.email}}</span></li>
-          {% if result %}<li>Điểm số: {{result.get_score}}</li>{% endif %}
-        </ul>
-      </div>
+        </li>
+        <li class="list-group-item">Hệ số: <span class="fw-medium">{{contest.coefficient}}</span></li>
+        <li class="list-group-item">Được tạo bởi: <span class="fw-medium">{{contest.author.full_name|default:contest.author.name|default:contest.author.email}}</span></li>
+        <li class="list-group-item">Bài thi có <span class="fw-medium">{{contest.num_question}}</span> câu hỏi</li>
+        {% if contest.num_correct %}<li class="list-group-item bg-success text-white">Bạn đã hoàn thành với <span class="fw-medium">{{contest.num_correct}}</span> câu trả lời đúng</li>{% endif %}
+      </ul>
     </div>
     {% endfor %}
   </div>
