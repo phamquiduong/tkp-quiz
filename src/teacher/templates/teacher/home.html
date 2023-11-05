@@ -9,12 +9,113 @@ Giáo viên - Trang chủ
 {% endblock navigation %}
 
 {% block main %}
+<div class="col-2 border p-4 fixed-top bg-body rounded" style="top:82px; right: 20px; left:auto; height: 85%; overflow-y: scroll;">
+  <h6>Mục lục</h6>
+  <hr>
+  <ol type="I">
+    <li><a href="#class-doc">Quản lý lớp học</a><br>
+      <ol>
+        <li><a href="#class-doc-1">Danh sách lớp học</a></li>
+        <li><a href="#class-doc-2">Một lớp học cụ thể</a> <br>
+          <ol type="a">
+            <li><a href="#class-doc-1-a">Thông tin chi tiết</a></li>
+            <li><a href="#class-doc-1-b">Sửa thông tin</a></li>
+            <li><a href="#class-doc-1-c">Xóa lớp học</a></li>
+          </ol>
+        </li>
+        <li><a href="#class-doc-3">Tìm kiếm lớp học</a></li>
+        <li><a href="#class-doc-4">Thêm lớp học mới</a></li>
+      </ol>
+    </li>
+    <li>Quản lý học sinh</li>
+  </ol>
+</div>
+<div class="row" style="max-width: 98%;">
+  <div class="col-7 bg-body p-4 rounded m-auto">
+    <h4>Hướng dẫn sử dụng website TKP-Quiz</h4>
+    <hr>
 
-<iframe width="1120" height="630" src="https://www.youtube.com/embed/Dul6h8gy4Gc?si=SkNQogT_MJ7W_zzW" title="YouTube video player" frameborder="0"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    <h5 id="class-doc" class="scroll-m-top">I - Quản lý lớp học</h5>
+    <img src="/static/teacher/imgs/home/class.png" width="75%">
+    <figure class="text-center">
+      <figcaption class="blockquote-footer">Tổng quan về tính năng</figcaption>
+    </figure>
+    <br>
+
+    <h6 id="class-doc-1" class="scroll-m-top">1, Danh sách lớp học</h6>
+    <p class="ms-2">Đây là nơi hiển thị toàn bộ danh sách lớp học hiện có.</p>
+
+    <h6 id="class-doc-2" class="scroll-m-top">2, Trong một lớp học cụ thể</h6>
+    <div class="ms-2">
+      <h6 id="class-doc-1-a" class="scroll-m-top">a. <u>Thông tin chi tiết</u></h6>
+      <p>Khi di chuột đến lớp học sẽ sáng lên và khi click vào lớp học cụ thể thì sẽ chuyển sang trang <a href="#student-doc">quản lý học sinh</a></p>
+
+      <h6 id="class-doc-1-b" class="scroll-m-top">b. <u>Sửa thông tin</h6></u>
+      Khi click vào nút này sẽ hiện ra cửa sổ thông tin lớp học. Giờ bạn có thể thay đổi tên của lớp học và nhấn nút <b>lưu lại</b> để lưu thông tin. <br>
+      <p><mark><b>Lưu ý:</b> Sau khi nhấn dấu <b>X</b> và đóng cửa sổ chỉnh sửa mới cập nhật thông tin ở ở màn hình chính.</mark></p>
+      <img src="/static/teacher/imgs/home/class-edit.png" width="40%">
+      <figure class="text-center">
+        <figcaption class="blockquote-footer">Thay đổi thông tin lớp học</figcaption>
+      </figure>
+
+      <h6 id="class-doc-1-c" class="scroll-m-top">c. <u>Xóa lớp học</u></h6>
+      Khi click vào nút này sẽ hiện ra pop-up rằng bạn chắc chắn với việc xóa dữ liệu hay không?<br>
+      Nếu có nhấn nút <b>Xóa lớp học</b>. Khi bạn chắc chắn với điều này, lớp học và học sinh lớp đó sẽ bị xóa vĩnh viễn
+      <img src="/static/teacher/imgs/home/class-del.png" width="40%">
+      <figure class="text-center">
+        <figcaption class="blockquote-footer">Xóa lớp học</figcaption>
+      </figure>
+    </div>
+
+    <h6 id="class-doc-3" class="scroll-m-top">3, Tìm kiếm lớp học</h6>
+    <div class="ms-2">
+      Sau khi điền <b>tên lớp học</b> vào ô tìm kiếm. Thì bạn có thể nhấn nút <i class="fa-solid fa-magnifying-glass"></i> hoặc nhấn phím <b>ENTER</b> để bắt đầu tìm kiếm
+      <img src="/static/teacher/imgs/home/class-search.png">
+      <figure class="text-center">
+        <figcaption class="blockquote-footer">Tìm kiếm lớp học</figcaption>
+      </figure>
+    </div>
+
+    <h6 id="class-doc-4" class="scroll-m-top">4, Thêm lớp học mới</h6>
+    <div class="ms-2">
+      Sau khi nhấn vào nút <b>Thêm lớp học</b> trên màn hình sẽ có một pop-up hiện ra để điền thông tin lớp học mới. <br>
+      Giờ bạn điền <b>tên lớp học</b> vào và nhấn nút <b>Thêm lớp học</b> để thêm lớp học mới.
+      <p><mark><b>Lưu ý:</b> Tên lớp học sẽ tự động viết hoa sau khi thêm để đảm bảo tính đúng đắn của dữ liệu. Ví dụ <b>10b1</b> -> <b>10B1</b></mark></p>
+      <img src="/static/teacher/imgs/home/class-add.png">
+      <figure class="text-center">
+        <figcaption class="blockquote-footer">Thêm lớp học mới</figcaption>
+      </figure>
+    </div>
+
+    <br>
+    <h5 id="student-doc" class="scroll-m-top">II - Quản lý học sinh</h5>
+  </div>
+</div>
+
+
+
 
 {% endblock main %}
 
-{% block style %}{% endblock style %}
+{% block style %}
+<style>
+  img {
+    display: block;
+    margin: auto;
+  }
+
+  .blockquote-footer {
+    margin-top: 0px;
+  }
+
+  .scroll-m-top {
+    scroll-margin-top: 63px;
+  }
+
+  ol>li {
+    margin-top: 10px;
+  }
+</style>
+{% endblock style %}
 
 {% block script %}{% endblock script %}

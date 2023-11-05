@@ -1,7 +1,8 @@
+from django.contrib.auth import login
 from django.db.models import Count, OuterRef
 from django.shortcuts import redirect, render
 from django.utils import timezone
-from django.views.decorators.http import require_GET, require_POST
+from django.views.decorators.http import require_GET, require_http_methods, require_POST
 
 from contest.models import Answer, Contest, Question
 from result.models import Result
@@ -71,7 +72,16 @@ def save_exam_result_view(request, contest__id: int):
     return render(request, 'student/result.html', {'result': result})
 
 
+@require_http_methods(["GET", "POST"])
 @require_student
 def change_password(request):
-    # TODO: Change password for request user
+    if request.method == 'POST':
+        user = request.user
+        password = request.POST.get('password', None)
+        if password is not None:
+            user.set_password(password)
+            user.save()
+            login(request, user)
+            return redirect('student_change_password')
+
     return render(request, 'student/change_password.html')
