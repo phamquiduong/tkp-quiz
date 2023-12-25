@@ -9,78 +9,84 @@ Học sinh - Trang chủ
 {% endblock navigation %}
 
 {% block main %}
-<!-- Contest present -->
-<div class="container pt-4 pb-3 mb-4 mt-4 border rounded bg-body">
-  <h5>Các cuộc thi đang diễn ra <i class="fa-solid fa-hourglass-half ms-1"></i></h5>
-  <hr>
-  {% if contests_present %}
-  <div class="d-flex flex-wrap">
-    {% for contest in contests_present %}
-    <div class="card ms-4 me-4 mb-4 shadow-sm load-fade {% if not contest.num_correct %}hover-hightlight{% endif %}" {% if not contest.num_correct %}
-      onclick="location.href=`{% url 'student_taking_exam' contest__id=contest.id %}`" {% endif %}>
-      <h5 class=" card-header">{{ contest.name }}</h5>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">Thời gian <i class="fa-regular fa-clock"></i>
-          <ul>
-            <li>
-              Bắt đầu: <span class="fw-medium">{{contest.start_time|date:"H:i d/m/Y"}}</span>
-            </li>
-            <li>
-              Kết thúc: <span class="fw-medium">{{contest.end_time|date:"H:i d/m/Y"}}</span>
-            </li>
-          </ul>
-        </li>
-        <li class="list-group-item">Hệ số: <span class="fw-medium">{{contest.coefficient}}</span></li>
-        <li class="list-group-item">Được tạo bởi: <span class="fw-medium">{{contest.author.full_name|default:contest.author.name|default:contest.author.email}}</span></li>
-        <li class="list-group-item">Bài thi có <span class="fw-medium">{{contest.num_question}}</span> câu hỏi</li>
-        {% if contest.num_correct %}<li class="list-group-item bg-success text-white">Bạn đã hoàn thành với <span class="fw-medium">{{contest.num_correct}}</span> câu trả lời đúng</li>{% endif %}
-      </ul>
-    </div>
-    {% endfor %}
-  </div>
-  {% else %}
-  <h6 class="text-center">Không có cuộc thi nào <i class="fa-solid fa-face-sad-tear"></i></h6>
-  {% endif %}
-</div>
 
-<!-- Contest past -->
-<div class="container pt-4 pb-3 mb-4 mt-4 border rounded bg-body">
-  <h5>Các cuộc thi đã diễn ra <i class="fa-solid fa-hourglass-end ms-1"></i></h5>
-  <hr>
-  {% if contests_past %}
-  <div class="d-flex flex-wrap">
-    {% for contest in contests_past %}
-    <div class="card ms-4 me-4 mb-4 shadow-sm load-fade">
-      <h5 class=" card-header">{{ contest.name }}</h5>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">Thời gian <i class="fa-regular fa-clock"></i>
-          <ul>
-            <li>
-              Bắt đầu: <span class="fw-medium">{{contest.start_time|date:"H:i d/m/Y"}}</span>
-            </li>
-            <li>
-              Kết thúc: <span class="fw-medium">{{contest.end_time|date:"H:i d/m/Y"}}</span>
-            </li>
-          </ul>
-        </li>
-        <li class="list-group-item">Hệ số: <span class="fw-medium">{{contest.coefficient}}</span></li>
-        <li class="list-group-item">Được tạo bởi: <span class="fw-medium">{{contest.author.full_name|default:contest.author.name|default:contest.author.email}}</span></li>
-        <li class="list-group-item">Bài thi có <span class="fw-medium">{{contest.num_question}}</span> câu hỏi</li>
-        {% if contest.num_correct %}<li class="list-group-item bg-success text-white">Bạn đã hoàn thành với <span class="fw-medium">{{contest.num_correct}}</span> câu trả lời đúng</li>{% endif %}
-      </ul>
-    </div>
-    {% endfor %}
-  </div>
-  {% else %}
+{% if not contests_join and not contests_joined %}
+<div class="container">
   <h6 class="text-center">Không có cuộc thi nào <i class="fa-solid fa-face-sad-tear"></i></h6>
-  {% endif %}
 </div>
+{% endif %}
+
+{% for contest in contests_join %}
+<div class="container rounded border bg-body p-3 mb-4">
+  <h5>{{contest.name}}</h5>
+  <hr>
+  <div class="d-flex">
+    <div class="flex-grow-1">
+      <table>
+        <tr>
+          <td>Từ:</td>
+          <td class="text-end fw-medium">{{contest.start_time|date:"H:i d/m/Y"}}</td>
+        </tr>
+        <tr>
+          <td>Đến:</td>
+          <td class="text-end fw-medium">{{contest.end_time|date:"H:i d/m/Y"}}</td>
+        </tr>
+        <tr>
+          <td>Hệ số:</td>
+          <td class="text-end fw-medium">{{contest.coefficient}}</td>
+        </tr>
+        <tr>
+          <td>Số câu:</td>
+          <td class="text-end fw-medium">{{contest.num_question}}</td>
+        </tr>
+      </table>
+    </div>
+    <div>
+      <a href="{% url 'student_taking_exam' contest__id=contest.id %}" class="btn btn-primary">
+        Làm bài<br><i class="fa-solid fa-up-right-from-square"></i>
+      </a>
+    </div>
+  </div>
+</div>
+{% endfor %}
+
+{% for contest in contests_joined %}
+<div class="container rounded border bg-body p-3 mb-4">
+  <h5>{{contest.name}}</h5>
+  <hr>
+  <div class="d-flex">
+    <div class="flex-grow-1">
+      <table>
+        <tr>
+          <td>Từ:</td>
+          <td class="text-end fw-medium">{{contest.start_time|date:"H:i d/m/Y"}}</td>
+        </tr>
+        <tr>
+          <td>Đến:</td>
+          <td class="text-end fw-medium">{{contest.end_time|date:"H:i d/m/Y"}}</td>
+        </tr>
+        <tr>
+          <td>Hệ số:</td>
+          <td class="text-end fw-medium">{{contest.coefficient}}</td>
+        </tr>
+        <tr>
+          <td>Đúng:</td>
+          <td class="text-end fw-medium">{{contest.num_correct}}/{{contest.num_question}}</td>
+        </tr>
+      </table>
+    </div>
+    <div>
+      <button disabled class="btn btn-primary">Đã hoàn<br>thành <i class="fa-solid fa-check"></i></button>
+    </div>
+  </div>
+</div>
+{% endfor %}
 {% endblock main %}
 
 {% block style %}
 <style>
-  .card {
-    width: 380px;
+  .container {
+    max-width: 575px;
   }
 </style>
 {% endblock style %}

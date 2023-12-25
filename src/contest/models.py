@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.utils import timezone
 from PIL import Image
 
 User = get_user_model()
@@ -25,6 +26,16 @@ class Contest(models.Model):
 
     def get_num_questions(self):
         return Question.objects.filter(contest=self).count()
+
+    def get_status(self):
+        now = timezone.now()
+        if self.start_time < self.end_time < now:
+            return 'Đã'
+        if self.start_time <= now <= self.end_time:
+            return 'Đang'
+        if now < self.start_time < self.end_time:
+            return 'Sắp'
+        return 'Không hợp lệ'
 
     class Meta:
         verbose_name = "Bài kiểm tra"

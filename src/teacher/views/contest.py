@@ -12,7 +12,7 @@ from teacher.decorator.require_teacher import require_teacher
 @require_http_methods(['GET', 'POST'])
 @require_teacher
 def contest__list_create_view(request):
-    contests = Contest.objects.all().order_by('name')
+    contests = Contest.objects.all().order_by('-start_time')
     now = timezone.now()
 
     contest__name_filter: str | None = request.GET.get('contest__name_filter', None)
@@ -20,9 +20,11 @@ def contest__list_create_view(request):
         contests = contests.filter(name__contains=contest__name_filter.lower())
 
     context: dict[str, Any] = {
+        'contests': contests,
         'contests_past': contests.filter(end_time__lt=now),
         'contests_present': contests.filter(start_time__lte=now, end_time__gte=now),
         'contests_future': contests.filter(start_time__gt=now),
+        'contest__name_filter': request.GET.get('contest__name_filter', None),
     }
 
     if request.method == 'POST':

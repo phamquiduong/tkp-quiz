@@ -10,39 +10,46 @@ Học sinh - Thi
 {% endblock navigation %}
 
 {% block main %}
-<div class="container pt-4 pb-3 mb-4 mt-4 border rounded bg-body">
-  {% if not questions %}
-  <h6 class="text-center">Không có câu hỏi nào <i class="fa-solid fa-face-sad-tear"></i>. Vui lòng liên hệ lại với giáo viên cho thi để được giải quyết</h6>
-  {% endif %}
-  <form method="POST" action="{% url 'student_save_exam_result' contest__id=contest.id %}">
-    {% for question in questions|shuffle %}
-    <div class="card ms-4 me-4 mb-4 shadow-sm 100w load-fade">
-      <div class="card-header">
-        <h6><u>Câu {{forloop.counter}}:</u> {{ question.content|linebreaksbr }}</h6>
-        {% if question.image %}<img src="{{question.image.url}}" class="rounded" alt="Tải hỉnh ảnh lỗi.. Vui lòng load lại trang hoặc liên hệ với giáo viên"> {% endif %}
-      </div>
-      <div class="card-body">
-        <ul class="list-group list-group-flush">
-          {% for answer in question.answer_set.all|shuffle %}
-          <li class="list-group-item form-check">
-            <input type="radio" class="form-check-input" value="answer_{{answer.id}}" id="answer_{{answer.id}}" name="question_{{question.id}}" required>
-            <label class="form-check-label ps-2 w-100 hover-hightlight" for="answer_{{answer.id}}">{{ answer.content|linebreaksbr }}</label>
-          </li>
-          {% endfor %}
-        </ul>
-      </div>
-      <button type="submit" id="contestSubmitBtn" style="display: none;"></button>
-      {% include 'form.html' %}
-    </div>
-    {% endfor %}
-  </form>
+{% if questions %}
+<form method="POST" action="{% url 'student_save_exam_result' contest__id=contest.id %}" id="questionForm">
+  {% csrf_token %}
+  {% for question in questions|shuffle %}
+  <div class="container rounded border bg-body p-3 mb-4 load-fade">
+    <h6><u>Câu {{forloop.counter}}:</u> {{ question.content|linebreaksbr }}</h6>
+    <hr>
+    {% if question.image %}<img src="{{question.image.url}}" class="rounded">
+    <hr>{% endif %}
+    <table class="table table-hover">
+      <tbody>
+        {% for answer in question.answer_set.all|shuffle %}
+        <tr onclick="document.getElementById('answer_{{answer.id}}').checked = true">
+          <td class="fit-content">
+            <input type="radio" class="form-check-input" value="answer_{{answer.id}}" id="answer_{{answer.id}}"
+              name="question_{{question.id}}">
+          </td>
+          <td>{{answer.content|linebreaksbr }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endfor %}
+</form>
+
+{% else %}
+<div class="container">
+  <h6 class="text-center">
+    Không có câu hỏi nào <i class="fa-solid fa-face-sad-tear"></i>.
+    Vui lòng liên hệ lại với giáo viên cho thi để được giải quyết
+  </h6>
 </div>
+{% endif %}
 {% endblock main %}
 
 {% block style %}
 <style>
-  .card {
-    min-width: 300px;
+  .container {
+    max-width: 700px;
   }
 
   img {
@@ -63,14 +70,6 @@ Học sinh - Thi
   var diffMins = Math.round(diffTime / 60)
   var diffSecs = Math.round(diffTime % 60)
 
-  // Re-update delta time
-  setInterval(() => {
-    now = new Date()
-    diffTime = (contestEndTime - now) / 1000
-    diffMins = Math.round(diffTime / 60)
-    diffSecs = Math.round(diffTime % 60)
-  }, 100000)
-
   // Initialize time counter
   contestTimeCounter.textContent = `${diffMins} : ${diffSecs}`;
 
@@ -81,11 +80,8 @@ Học sinh - Thi
       diffSecs = 59
       diffMins -= 1
     }
+    if (diffMins === 0 && diffSecs === 0) document.getElementById('questionForm').submit()
     contestTimeCounter.textContent = `${diffMins} : ${diffSecs}`;
   }, 1000)
-
-  window.onbeforeunload = function () {
-    return "Câu trả lời của bạn sẽ không được lưu";
-  };
 </script>
 {% endblock script %}

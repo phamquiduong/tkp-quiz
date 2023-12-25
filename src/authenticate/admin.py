@@ -21,7 +21,7 @@ class MyUserCreationForm(UserCreationForm):
 class MyUserAdmin(UserAdmin):
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        (_('Personal info'), {'fields': ('full_name', 'name', 'class_room')}),
+        (_('Personal info'), {'fields': ('full_name', 'class_room')}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser')}),
     )
     add_fieldsets = (

@@ -18,12 +18,12 @@ def home_view(request):
         num_question=Count('question'),
         num_correct=results.values('num_correct')[:1])
 
-    contests_present = contests.filter(start_time__lte=now, end_time__gte=now)
-    contests_past = contests.filter(end_time__lte=now)
+    contests_join = contests.filter(start_time__lte=now, end_time__gte=now, num_correct__isnull=True)
+    contests_joined = contests.filter(num_correct__isnull=False).order_by('-start_time')
 
     context = {
-        'contests_present': contests_present,
-        'contests_past': contests_past,
+        'contests_join': contests_join,
+        'contests_joined': contests_joined,
     }
     return render(request, 'student/home.html', context)
 
@@ -63,9 +63,11 @@ def save_exam_result_view(request, contest__id: int):
     result = Result(user=request.user, contest=contest, num_correct=0)
 
     for question_id, in questions:
-        answer_id = request.POST.get(f'question_{question_id}', None).replace('answer_', '')
-        if Answer.objects.get(id=int(answer_id)).is_correct:
-            result.num_correct += 1
+        awser = request.POST.get(f'question_{question_id}', None)
+        if awser is not None:
+            answer_id = awser.replace('answer_', '')
+            if Answer.objects.get(id=int(answer_id)).is_correct:
+                result.num_correct += 1
 
     result.save()
 

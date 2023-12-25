@@ -8,10 +8,9 @@ html {
   user-select: none;
 }
 
-body {
+body .navbar {
   min-width: 320px;
 }
-
 
 /* Fade animation */
 @keyframes fade {
@@ -42,25 +41,24 @@ body {
   margin-top: 82px;
 }
 
-
-/* Navigation bar */
-.navbar {
-  position: fixed;
-  top: 0;
-  z-index: 10;
-  width: 100%;
-  min-width: 320px
+.fit-content {
+  width: 1%;
+  white-space: nowrap;
+  text-align: center;
 }
 
-.nav-link {
-  width: 190px;
-}
-
-@media only screen and (max-width: 1200px) {
-  .nav-link {
-    width: auto;
+@media only screen and (max-width: 576px) {
+  .fit-content {
+    width: 50px;
+    white-space: normal;
   }
+}
 
+ul>.nav-item {
+  width: 200px;
+}
+
+@media only screen and (max-width: 500px) {
   .nav-username {
     display: none !important;
   }

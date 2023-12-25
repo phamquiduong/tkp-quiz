@@ -12,14 +12,17 @@ from teacher.decorator.require_teacher import require_teacher
 def result_view(request):
     context = {
         'class_rooms': ClassRoom.objects.all().order_by('name'),
-        'contests': Contest.objects.all().order_by('name')
+        'contests': Contest.objects.all().filter(author=request.user).order_by('-start_time')
     }
 
     try:
         context['results'] = Result.objects.filter(
             user__class_room__id=int(request.GET.get('class_room__id', None)),
             contest__id=int(request.GET.get('contest__id', None)),
-        ).order_by('user__name', 'user__full_name', 'user__email')
+        ).order_by('user__email')
+
+        if request.GET.get('sort_by_point', '') == 'true':
+            context['results'] = context['results'].order_by('-num_correct')
     except Exception:
         pass
 

@@ -16,7 +16,10 @@ def class_room__list_create_view(request):
     if class_room__name_filter:
         classes_room = classes_room.filter(name__contains=class_room__name_filter.upper())
 
-    context: dict[str, Any] = {'classes_room': classes_room}
+    context: dict[str, Any] = {
+        'classes_room': classes_room,
+        'class_room__name_filter': request.GET.get('class_room__name_filter', None)
+    }
 
     if request.method == 'POST':
         data = request.POST.dict()

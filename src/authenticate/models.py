@@ -22,7 +22,6 @@ class UserManager(BaseUserManager):
         email = self.normalize_email(email)
 
         extra_fields['full_name'] = extra_fields.get('full_name', None) or email.split('@')[0]
-        extra_fields['name'] = extra_fields['full_name'].split()[-1]
 
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
@@ -41,8 +40,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     email = models.EmailField(_('email address'), unique=True)
 
-    name = models.CharField(max_length=30, null=True, blank=True, verbose_name="Tên")
-    full_name = models.CharField(max_length=255, null=True, blank=True, verbose_name="Họ và tên")
+    full_name = models.CharField(max_length=255, verbose_name="Họ và tên")
 
     is_staff = models.BooleanField(default=False, verbose_name="Truy cập được trang quản trị")
     is_active = models.BooleanField(default=True, verbose_name="Trạng thái hoạt động")
@@ -56,7 +54,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     def __str__(self):
-        return f"{self.name or self.full_name or self.email} - {'Giáo viên' if self.is_superuser else 'Học sinh'}"
+        return f"{self.email} - {'Giáo viên' if self.is_superuser else 'Học sinh'}"
 
     def is_teacher(self):
         return self.is_superuser

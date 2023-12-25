@@ -8,6 +8,6 @@ def home_view(request):
         return redirect('auth_login')
 
     if request.user.is_teacher():
-        return redirect('teacher_home')
+        return redirect('teacher_class_room__list_create')
 
     return redirect('student_home')

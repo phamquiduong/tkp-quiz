@@ -12,30 +12,47 @@
 <script>window.location.href = "{% url 'auth_home' %}"</script>
 {% endif %}
 
-<form class="container border p-4 bg-body shadow rounded" method="POST">
-  <h3 class="mb-4 text-center">Đăng nhập</h3>
-
-  <div class="form-floating mb-4">
-    <input type="email" class="form-control" id="floatingEmailInput" placeholder="name@email.com" name="username" required>
-    <label for="floatingEmailInput">Địa chỉ email</label>
-  </div>
-  <div class="form-floating mb-4">
-    <input type="password" class="form-control" id="floatingPasswordInput" placeholder="Mật khẩu" name="password" required>
-    <label for="floatingPasswordInput">Mật khẩu</label>
+<div class="container border p-4 bg-body shadow rounded">
+  <div class="text-center">
+    <img src="/static/tkp-quiz/img/favicon.ico" width="150px">
+    <h5 class="mt-2">Trường THPT Trần Kỳ Phong</h5>
   </div>
 
-  {% include 'form.html' %}
+  <form method="POST" class="mt-5">
+    <div class="form-floating mb-3">
+      <input type="email" class="form-control" id="floatingEmailInput" placeholder="name@email.com" name="username"
+        required>
+      <label for="floatingEmailInput">Địa chỉ email</label>
+    </div>
+    <div class="form-floating mb-3">
+      <input type="password" class="form-control" id="floatingPasswordInput" placeholder="Mật khẩu" name="password"
+        required>
+      <label for="floatingPasswordInput">Mật khẩu</label>
+    </div>
 
-  <div class="d-grid gap-2">
-    <button type="submit" class="btn btn-primary">Đăng nhập</button>
-  </div>
-</form>
+    {% include 'form.html' %}
+
+    <div class="d-grid gap-2">
+      <button type="submit" class="btn btn-primary">Đăng nhập</button>
+    </div>
+  </form>
+</div>
 {% endblock main %}
 
 {% block style %}
 <style>
   .container {
-    max-width: 450px;
+    max-width: 475px;
+  }
+
+  @media screen and (max-width: 475px) {
+    .container {
+      height: 100vh;
+    }
+
+    #main {
+      margin-top: 0;
+    }
   }
 </style>
 {% endblock style %}

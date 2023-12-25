@@ -1,16 +1,16 @@
 # Python
-python-dotenv
+python-dotenv==1.0.0
 
 # Django
-django
-pylint_django
+django==4.2.8
+pylint_django==2.5.5
 
 # Image handling
-Pillow
+Pillow==10.1.0
 
 # Excel reader
-pandas
-openpyxl
+pandas==2.1.4
+openpyxl==3.1.2
 
 # Microsoft word reader
-python-docx
+python-docx==1.1.0

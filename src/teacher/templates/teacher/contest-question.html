@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-Giáo viên - Quản lý học sinh
+TKP Quiz | Câu hỏi
 {% endblock title %}
 
 {% block navigation %}
@@ -9,60 +9,87 @@ Giáo viên - Quản lý học sinh
 {% endblock navigation %}
 
 {% block main %}
+<div class="container mb-5 d-flex">
+  <div class="flex-grow-1">
+    <a class="btn btn-secondary" href="{% url 'teacher_contest__list_create' %}">
+      <i class="fa-solid fa-backward"></i> Quay lại
+    </a>
+  </div>
+
+  <div class="ms-4">
+    <button type="button" class="btn btn-secondary me-4"
+      onclick="updateContestHandler(event, '/admin/contest/contest/{{contest.id}}/change/')">
+      Cập nhật <i class="fa-solid fa-pen-to-square"></i>
+    </button>
+    <button class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#createContestQuestionModal"
+      id="createContestQuestionShowModalBtn">
+      Thêm mới
+    </button>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#importContestQuestionModal">
+      Nhập từ file <i class="fa-solid fa-file-import"></i>
+    </button>
+  </div>
+</div>
+
 <div class="container pt-4 pb-3 mb-4 mt-4 border rounded bg-body">
-  {% if not questions %}
+  {% if questions %}
+  <h5 class="mb-4">Câu hỏi cho đề thi: {{contest.name}}</h5>
+  {% for question in questions %}
+
+  <table class="table table-hover load-fade mb-4">
+    <thead class="table-light">
+      <tr class="align-middle">
+        <th class="fit-content">Câu {{forloop.counter}}</th>
+        <th>{{ question.content|linebreaksbr }}</th>
+        <td class="fit-content">
+          <button type="button" class="btn btn-secondary me-3"
+            onclick="updateQuestionHandler(event, '/admin/contest/question/{{question.id}}/change/')">
+            <i class="fa-solid fa-pen-to-square"></i>
+          </button>
+        </td>
+        <td class="fit-content">
+          <button type="button" class="btn btn-danger float-end delete-class-btn"
+            onclick="deleteQuestionHanlder(event, '/admin/contest/question/{{question.id}}/delete/')">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      {% if question.image %}
+      <tr>
+        <td></td>
+        <td colspan="3"><img src="{{question.image.url}}" class="rounded" </td>
+      </tr>
+      {% endif %}
+      {% for answer in question.answer_set.all %}
+      <tr class="align-middle">
+        <td class="fit-content">
+          <input class="form-check-input" type="checkbox" disabled {% if answer.is_correct %}checked {% endif %}>
+        </td>
+        <td>{{ answer.content|linebreaksbr }}</td>
+        <td class="fit-content">
+          <button type="button" class="btn btn-secondary me-3"
+            onclick="updateAnswerHandler(event, '/admin/contest/answer/{{answer.id}}/change/')">
+            <i class="fa-solid fa-pen-to-square"></i>
+          </button>
+        </td>
+        <td class="fit-content">
+          <button type="button" class="btn btn-danger float-end delete-class-btn"
+            onclick="deleteAnswerHanlder(event, '/admin/contest/answer/{{answer.id}}/delete/')">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endfor %}
+  {% else %}
   <h6 class="text-center">Không có câu hỏi nào <i class="fa-solid fa-face-sad-tear" style="color: black;"></i></h6>
   {% endif %}
-
-  {% for question in questions %}
-  <div class="card ms-4 me-4 mb-4 shadow-sm 100w" style="min-width: 300px;">
-    <div class="card-header d-flex">
-      <div class="me-auto">
-        <h6><u>Câu {{forloop.counter}}:</u> {{ question.content|linebreaksbr }}</h6>
-        {% if question.image %}<img src="{{question.image.url}}" class="rounded" alt="Tải hỉnh ảnh lỗi.. Vui lòng load lại trang hoặc cập nhật hình ảnh mới"> {% endif %}
-      </div>
-      <div class="ms-3" style="min-width: 100px;">
-        <button type="button" class="btn btn-secondary me-3" onclick="updateQuestionHandler(event, '/admin/contest/question/{{question.id}}/change/')">
-          <i class="fa-solid fa-pen-to-square"></i>
-        </button>
-        <button type="button" class="btn btn-danger float-end delete-class-btn" onclick="deleteQuestionHanlder(event, '/admin/contest/question/{{question.id}}/delete/')">
-          <i class="fa-solid fa-trash"></i>
-        </button>
-      </div>
-    </div>
-    <div class="card-body">
-      <ul class="list-group list-group-flush">
-        {% for answer in question.answer_set.all %}
-        <li class="d-flex list-group-item">
-          <div class="text-primary" style="min-width: 30px;">
-            {% if answer.is_correct %} <i class="fa-solid fa-circle-check"></i> {% endif %}
-          </div>
-          <div class="me-auto">
-            {{ answer.content|linebreaksbr }}
-          </div>
-          <div class="ms-3" style="min-width: 100px;">
-            <button type="button" class="btn btn-secondary me-3" onclick="updateAnswerHandler(event, '/admin/contest/answer/{{answer.id}}/change/')">
-              <i class="fa-solid fa-pen-to-square"></i>
-            </button>
-            <button type="button" class="btn btn-danger float-end delete-class-btn" onclick="deleteAnswerHanlder(event, '/admin/contest/answer/{{answer.id}}/delete/')">
-              <i class="fa-solid fa-trash"></i>
-            </button>
-          </div>
-        </li>
-        {% endfor %}
-      </ul>
-    </div>
-  </div>
-  {% endfor %}
 </div>
 
-<!-- Import question -->
-<div style="position: fixed; right: 40px; bottom: 120px;">
-  <button class="btn btn-primary btn-rounded p-3 rounded-pill shadow" data-bs-toggle="modal" data-bs-target="#importContestQuestionModal" id="createContestQuestionShowModalBtn">
-    <i class="fa-solid fa-file-import"></i> Nhập
-  </button>
-</div>
-<!-- Import question modal -->
 <div class="modal modal-lg fade" id="importContestQuestionModal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -71,7 +98,8 @@ Giáo viên - Quản lý học sinh
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form class="needs-validation" method="POST" action="{% url 'teacher_contest__question__import' contest__id=contest.id %}" enctype="multipart/form-data">
+        <form class="needs-validation" method="POST"
+          action="{% url 'teacher_contest__question__import' contest__id=contest.id %}" enctype="multipart/form-data">
           <div class="mb-3">
             <label for="formFile" class="form-label">Chọn file</label>
             <input class="form-control" name="contestQuestionFile" type="file" id="formFile" accept=".docx" required>
@@ -86,18 +114,13 @@ Giáo viên - Quản lý học sinh
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-        <button type="button" class="btn btn-primary" onclick="document.getElementById('importContestQuestionSubmitBtn').click()">Nhập file</button>
+        <button type="button" class="btn btn-primary"
+          onclick="document.getElementById('importContestQuestionSubmitBtn').click()">Nhập file</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Add new question button -->
-<div style="position: fixed; right: 40px; bottom: 50px;">
-  <button class="btn btn-secondary btn-rounded p-3 rounded-pill shadow" data-bs-toggle="modal" data-bs-target="#createContestQuestionModal" id="createContestQuestionShowModalBtn">
-    <i class="fas fa-circle-plus me-2"></i> Thêm
-  </button>
-</div>
 <!-- Add new question modal -->
 <div class="modal modal-lg fade" id="createContestQuestionModal" tabindex="-1">
   <div class="modal-dialog">
@@ -107,10 +130,12 @@ Giáo viên - Quản lý học sinh
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form class="needs-validation" method="POST" action="{% url 'teacher_contest__question__list_create' contest__id=contest.id %}">
+        <form class="needs-validation" method="POST"
+          action="{% url 'teacher_contest__question__list_create' contest__id=contest.id %}">
           <div class="input-group">
             <span class="input-group-text">Câu hỏi</span>
-            <textarea class="form-control" name="question_content" required>{{form.question_content.value|default:''}}</textarea>
+            <textarea class="form-control" name="question_content"
+              required>{{form.question_content.value|default:''}}</textarea>
           </div>
           <hr>
           <div class="input-group mb-2">
@@ -132,11 +157,12 @@ Giáo viên - Quản lý học sinh
           <hr>
           <div class="input-group">
             <span class="input-group-text">Đáp án đúng</span>
-            <select class="form-select" id="createQuestionAnswerCorrect" name="ans_correct" onchange="selectAnswerHandler()">
-              <option value="A" {% if form.ans_correct.value == 'A' %}selected{% endif %}>Đáp án A</option>
-              <option value="B" {% if form.ans_correct.value == 'B' %}selected{% endif %}>Đáp án B</option>
-              <option value="C" {% if form.ans_correct.value == 'C' %}selected{% endif %}>Đáp án C</option>
-              <option value="D" {% if form.ans_correct.value == 'D' %}selected{% endif %}>Đáp án D</option>
+            <select class="form-select" id="createQuestionAnswerCorrect" name="ans_correct"
+              onchange="selectAnswerHandler()">
+              <option value="A" selected="{% if form.ans_correct.value == 'A' %}selected{% endif %}">Đáp án A</option>
+              <option value="B" selected="{% if form.ans_correct.value == 'B' %}selected{% endif %}">Đáp án B</option>
+              <option value="C" selected="{% if form.ans_correct.value == 'C' %}selected{% endif %}">Đáp án C</option>
+              <option value="D" selected="{% if form.ans_correct.value == 'D' %}selected{% endif %}">Đáp án D</option>
             </select>
           </div>
           {% include 'form.html' %}
@@ -145,7 +171,8 @@ Giáo viên - Quản lý học sinh
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-        <button type="button" class="btn btn-primary" onclick="document.getElementById('createContestQuestionSubmitBtn').click()">Thêm câu hỏi</button>
+        <button type="button" class="btn btn-primary"
+          onclick="document.getElementById('createContestQuestionSubmitBtn').click()">Thêm câu hỏi</button>
       </div>
     </div>
   </div>
@@ -187,6 +214,12 @@ Giáo viên - Quản lý học sinh
   //Update and delete questin answer handler
   var updateQuestionHandler, updateAnswerHandler, deleteQuestionHanlder, deleteAnswerHanlder
   updateQuestionHandler = updateAnswerHandler = deleteQuestionHanlder = deleteAnswerHanlder = (event, url) => {
+    event.stopPropagation()
+    openWindowAndReloadPage(url)
+  }
+
+  // Update Contest Handler
+  const updateContestHandler = (event, url) => {
     event.stopPropagation()
     openWindowAndReloadPage(url)
   }

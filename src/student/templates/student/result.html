@@ -12,8 +12,8 @@ Học sinh - Kết quả thi
 <div class="container pt-4 pb-3 mb-4 mt-4 border rounded bg-body shadow">
   <h5>Kết quả thi</h5>
   <hr>
-  <p>Thí sinh: <span class='fw-medium'>{{user.full_name|default:user.name|default:user.email}}</span></p>
-  <p>Bài thi: <span class='fw-medium'>{{result.contest}}</span></p>
+  <p>Thí sinh: <span class='fw-medium'>{{user.full_name}}</span></p>
+  <p>Bài thi: <span class='fw-medium'>{{result.contest.name}}</span></p>
   <p>Số câu trả lời đúng: <span class='fw-medium'>{{result.num_correct}}</span></p>
   <p>Tổng số câu hỏi của bài thi: <span class='fw-medium'>{{result.contest.get_num_questions}}</span></p>
   <p>Điểm số đạt được: <span class='fw-medium'>{{result.get_score|floatformat:1}}</span></p>

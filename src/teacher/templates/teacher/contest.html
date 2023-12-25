@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-Giáo viên - Quản lý cuộc thi
+TKP Quiz | Cuộc thi
 {% endblock title %}
 
 {% block navigation %}
@@ -9,163 +9,79 @@ Giáo viên - Quản lý cuộc thi
 {% endblock navigation %}
 
 {% block main %}
-{% include 'teacher/common/datetime-picker-common.html' %}
-
-{% if not contests_present and not contests_future and not contests_past %}
-<div class="container pt-4 pb-3 mb-4 mt-4 border rounded bg-body">
-  <h6 class="text-center">Không có cuộc thi nào <i class="fa-solid fa-face-sad-tear" style="color: black;"></i></h6>
-</div>
-{% endif %}
-
-<!-- Contest present -->
-{% if contests_present %}
-<div class="container pt-4 pb-3 mb-4 mt-4 border rounded bg-body">
-  <h5>Cuộc thi đang diễn ra <i class="fa-solid fa-hourglass-half ms-1"></i></h5>
-  <hr>
-  <div class="d-flex flex-wrap">
-    {% for contest in contests_present %}
-    <div class="load-fade hover-hightlight card ms-4 me-4 mb-4 shadow-sm" style="width: 380px;" onclick="location.href=`{% url 'teacher_contest__question__list_create' contest__id=contest.id %}`">
-      <div class="card-header">
-        <h5>{{ contest.name }}</h5>
-      </div>
-      <div class="card-body">
-        <ul>
-          <li>Thời gian <i class="fa-regular fa-clock"></i></li>
-          <ul>
-            <li>
-              Bắt đầu: <span class="fw-medium">{{contest.start_time|date:"H:i d/m/Y"}}</span>
-            </li>
-            <li>
-              Kết thúc: <span class="fw-medium">{{contest.end_time|date:"H:i d/m/Y"}}</span>
-            </li>
-          </ul>
-          <li>Bài thi hệ số: <span class="fw-medium">{{contest.coefficient}}</span></li>
-          <li>Số câu hỏi: <span class="fw-medium">{{contest.get_num_questions}}</span></li>
-          <li>Được tạo bởi: <span class="fw-medium">{{contest.author.full_name|default:contest.author.name|default:contest.author.email}}</span></li>
-        </ul>
-        <hr>
-        <div class="text-end">
-          <button type="button" class="btn btn-secondary me-3" onclick="updateContestHandler(event, '/admin/contest/contest/{{contest.id}}/change/')">
-            <i class="fa-solid fa-pen-to-square me-2"></i> Sửa
-          </button>
-          <button type="button" class="btn btn-danger float-end delete-class-btn"
-            onclick="deleteContestHanlder(event, `{% url 'teacher_contest__delete' contest__id=contest.id %}`, '{{contest.name}}')">
-            <i class="fa-solid fa-trash me-2"></i> Xóa
-          </button>
-        </div>
-      </div>
+<div class="container mb-5 d-flex">
+  <form class="flex-grow-1">
+    <div class="input-group">
+      <input type="text" class="form-control text-center" placeholder="Tìm kiếm tên cuộc thi"
+        name="contest__name_filter" value="{{ contest__name_filter|default:'' }}" id="searchContestInput" autofocus>
+      <button class="btn btn-primary" type="submit">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
     </div>
-    {% endfor %}
-  </div>
-</div>
-{% endif %}
+  </form>
 
-<!-- Contest future -->
-{% if contests_future %}
-<div class="container pt-4 pb-3 mb-4 mt-4 border rounded bg-body">
-  <h5>Cuộc thi sắp diễn ra <i class="fa-solid fa-hourglass-start ms-1"></i></h5>
-  <hr>
-  <div class="d-flex flex-wrap">
-    {% for contest in contests_future %}
-    <div class="load-fade hover-hightlight card ms-4 me-4 mb-4 shadow-sm" style="width: 380px;" onclick="location.href=`{% url 'teacher_contest__question__list_create' contest__id=contest.id %}`">
-      <div class="card-header">
-        <h5>{{ contest.name }}</h5>
-      </div>
-      <div class="card-body">
-        <ul>
-          <li>Thời gian <i class="fa-regular fa-clock"></i></li>
-          <ul>
-            <li>
-              Bắt đầu: <span class="fw-medium">{{contest.start_time|date:"H:i d/m/Y"}}</span>
-            </li>
-            <li>
-              Kết thúc: <span class="fw-medium">{{contest.end_time|date:"H:i d/m/Y"}}</span>
-            </li>
-          </ul>
-          <li>Bài thi hệ số: <span class="fw-medium">{{contest.coefficient}}</span></li>
-          <li>Số câu hỏi: <span class="fw-medium">{{contest.get_num_questions}}</span></li>
-          <li>Được tạo bởi: <span class="fw-medium">{{contest.author.full_name|default:contest.author.name|default:contest.author.email}}</span></li>
-        </ul>
-        <hr>
-        <div class="text-end">
-          <button type="button" class="btn btn-secondary me-3" onclick="updateContestHandler(event, '/admin/contest/contest/{{contest.id}}/change/')">
-            <i class="fa-solid fa-pen-to-square me-2"></i> Sửa
-          </button>
-          <button type="button" class="btn btn-danger float-end delete-class-btn"
-            onclick="deleteContestHanlder(event, `{% url 'teacher_contest__delete' contest__id=contest.id %}`, '{{contest.name}}')">
-            <i class="fa-solid fa-trash me-2"></i> Xóa
-          </button>
-        </div>
-      </div>
-    </div>
-    {% endfor %}
-  </div>
-</div>
-{% endif %}
-
-<!-- Contest past -->
-{% if contests_past %}
-<div class="container pt-4 pb-3 mb-4 mt-4 border rounded bg-body">
-  <h5>Cuộc thi đã diễn ra <i class="fa-solid fa-hourglass-end ms-1"></i></h5>
-  <hr>
-  <div class="d-flex flex-wrap">
-    {% for contest in contests_past %}
-    <div class="load-fade hover-hightlight card ms-4 me-4 mb-4 shadow-sm" style="width: 380px;" onclick="location.href=`{% url 'teacher_contest__question__list_create' contest__id=contest.id %}`">
-      <div class="card-header">
-        <h5>{{ contest.name }}</h5>
-      </div>
-      <div class="card-body">
-        <ul>
-          <li>Thời gian <i class="fa-regular fa-clock"></i></li>
-          <ul>
-            <li>
-              Bắt đầu: <span class="fw-medium">{{contest.start_time|date:"H:i d/m/Y"}}</span>
-            </li>
-            <li>
-              Kết thúc: <span class="fw-medium">{{contest.end_time|date:"H:i d/m/Y"}}</span>
-            </li>
-          </ul>
-          <li>Bài thi hệ số: <span class="fw-medium">{{contest.coefficient}}</span></li>
-          <li>Số câu hỏi: <span class="fw-medium">{{contest.get_num_questions}}</span></li>
-          <li>Được tạo bởi: <span class="fw-medium">{{contest.author.full_name|default:contest.author.name|default:contest.author.email}}</span></li>
-        </ul>
-        <hr>
-        <div class="text-end">
-          <button type="button" class="btn btn-secondary me-3" onclick="updateContestHandler(event, '/admin/contest/contest/{{contest.id}}/change/')">
-            <i class="fa-solid fa-pen-to-square me-2"></i> Sửa
-          </button>
-          <button type="button" class="btn btn-danger float-end delete-class-btn"
-            onclick="deleteContestHanlder(event, `{% url 'teacher_contest__delete' contest__id=contest.id %}`, '{{contest.name}}')">
-            <i class="fa-solid fa-trash me-2"></i> Xóa
-          </button>
-        </div>
-      </div>
-    </div>
-    {% endfor %}
-  </div>
-</div>
-{% endif %}
-
-
-<!-- Search contest -->
-<div style="position: fixed; right: 40px; bottom: 120px">
-  <div class="input-group">
-    <input type="text" class="form-control text-center rounded-start-pill" style="width: 70px;" id="searchContestInput" required>
-    <button class="btn btn-outline-primary rounded-end-pill p-2" type="button" id="button-addon2" onclick="searchContestHandler()">
-      <i class="fa-solid fa-magnifying-glass"></i>
+  <div class="ms-4">
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createContestModal"
+      id="createContestShowModalBtn">Thêm mới
     </button>
   </div>
 </div>
 
-
-<!-- Add new contest button -->
-<div style="position: fixed; right: 40px; bottom: 50px;">
-  <button class="btn btn-primary btn-rounded p-3 rounded-pill shadow" data-bs-toggle="modal" data-bs-target="#createClassRoomModal" id="createClassRoomShowModalBtn">
-    <i class="fas fa-circle-plus me-2"></i> Thêm
-  </button>
+<div class="container py-4 rounded bg-body">
+  {% if contests %}
+  <h5 class="mb-4">Danh sách cuộc thi</h5>
+  <table class="table table-hover">
+    <thead>
+      <tr class="align-middle">
+        <th class="text-center">ID</th>
+        <th>Tên cuộc thi</th>
+        <th class="fit-content">Hệ số</th>
+        <th class="text-center">Trình trạng</th>
+        <th>Bắt đầu</th>
+        <th>Kết thúc</th>
+        <th class="fit-content">Số câu hỏi</th>
+        <th class="fit-content">Câu hỏi</th>
+        <th class="fit-content">Chỉnh sửa</th>
+        <th class="fit-content">Xóa</th>
+      </tr>
+    </thead>
+    <tbody class="load-fade">
+      {% for contest in contests %}
+      <tr class="align-middle">
+        <td class="text-center">{{contest.id}}</td>
+        <td>{{contest.name}}</td>
+        <td class="fit-content">{{contest.coefficient}}</td>
+        <td class="text-center">{{contest.get_status}}</td>
+        <td>{{contest.start_time|date:"H:i d/m/Y"}}</td>
+        <td>{{contest.end_time|date:"H:i d/m/Y"}}</td>
+        <td class="fit-content">{{contest.get_num_questions}}</td>
+        <td class="fit-content">
+          <a class="btn btn-primary" href="{% url 'teacher_contest__question__list_create' contest__id=contest.id %}">
+            <i class="fa-solid fa-question"></i>
+          </a>
+        </td>
+        <td class="fit-content">
+          <button type="button" class="btn btn-secondary"
+            onclick="updateContestHandler(event, '/admin/contest/contest/{{contest.id}}/change/')">
+            <i class="fa-solid fa-pen-to-square"></i>
+          </button>
+        </td>
+        <td class="fit-content">
+          <button type="button" class="btn btn-danger float-end delete-class-btn"
+            onclick="deleteContestHanlder(event, `{% url 'teacher_contest__delete' contest__id=contest.id %}`, '{{contest.name}}')">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <h6 class="text-center">Không có cuộc thi nào <i class="fa-solid fa-face-sad-tear"></i></h6>
+  {% endif %}
 </div>
-<!-- Add new contest modal -->
-<div class="modal fade modal-lg" id="createClassRoomModal" tabindex="-1">
+
+<div class="modal fade modal-lg" id="createContestModal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -175,25 +91,27 @@ Giáo viên - Quản lý cuộc thi
       <div class="modal-body">
         <form class="needs-validation" method="POST" action="{% url 'teacher_contest__list_create' %}">
           <div class="input-group mb-3">
-            <span class="input-group-text" style="width: 115px;">Tên cuộc thi</span>
-            <input type="text" class="form-control text-center" value="{{ form.name.value|default:'' }}" name="name" required>
+            <span class="input-group-text"">Tên cuộc thi</span>
+            <input type=" text" class="form-control text-center" value="{{ form.name.value|default:'' }}" name="name"
+              required>
           </div>
           <div class="input-group mb-3">
-            <span class="input-group-text" style="width: 155px;">Hệ số</span>
-            <select class="form-select" name="coefficient" required>
+            <span class="input-group-text">Hệ số</span>
+            <select class="form-select text-center" name="coefficient" required>
               <option value="1">Hệ số 1</option>
               <option value="2">Hệ số 2</option>
               <option value="3">Hệ số 3</option>
             </select>
           </div>
-          <hr>
           <div class="input-group mb-3">
-            <span class="input-group-text" style="width: 155px;">Thời gian bắt đầu</span>
-            {% include 'teacher/common/datetime-picker.html' with name='start_time' %}
+            <span class="input-group-text">Bắt đầu</span>
+            <input type="datetime-local" class="form-control text-center" name="start_time"
+              value="{{ form.start_time.value|default:'' }}" required>
           </div>
           <div class="input-group mb-3">
-            <span class="input-group-text" style="width: 155px;">Thời gian kết thúc</span>
-            {% include 'teacher/common/datetime-picker.html' with name='end_time' %}
+            <span class="input-group-text">Kết thúc</span>
+            <input type="datetime-local" class="form-control text-center" name="end_time"
+              value="{{ form.end_time.value|default:'' }}">
           </div>
           {% include 'form.html' %}
           <button type="submit" style="display: none;" id="createClassRoomSubmitBtn"></button>
@@ -201,18 +119,15 @@ Giáo viên - Quản lý cuộc thi
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-        <button type="button" class="btn btn-primary" onclick="document.getElementById('createClassRoomSubmitBtn').click()">Thêm cuộc thi</button>
+        <button type="button" class="btn btn-primary"
+          onclick="document.getElementById('createClassRoomSubmitBtn').click()">Thêm cuộc thi</button>
       </div>
     </div>
   </div>
 </div>
 
-
-<!-- Delete contest button -->
-<button data-bs-toggle="modal" data-bs-target="#deleteContestModal" id="deleteContestShowModalBtn" style="display: none;"></button>
-<!-- Delete contest hidden form -->
-<form style="display: none;" method="POST" id="deleteContestForm">{% csrf_token %}</form>
-<!-- Delete contest modal  -->
+<button data-bs-toggle="modal" data-bs-target="#deleteContestModal" id="deleteContestShowModalBtn" hidden></button>
+<form method="POST" id="deleteContestForm" hidden>{% csrf_token %}</form>
 <div class="modal fade" id="deleteContestModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -238,24 +153,15 @@ Giáo viên - Quản lý cuộc thi
   #searchContestInput:focus {
     box-shadow: none;
   }
+
+  .input-group-text {
+    width: 115px;
+  }
 </style>
 {% endblock style %}
 
 {% block script %}
 <script>
-  // Search contest handler
-  let params = new URLSearchParams(document.location.search)
-  var searchInput = document.getElementById('searchContestInput')
-  searchInput.value = params.get('contest__name_filter')
-  searchInput.focus()
-  searchInput.addEventListener("keypress", (event) => {
-    if (event.key === "Enter") searchContestHandler();
-  })
-  const searchContestHandler = () => {
-    let searchInputValue = searchInput.value ? `?contest__name_filter=${searchInput.value}` : ''
-    location.href = `{% url 'teacher_contest__list_create' %}${searchInputValue}`
-  }
-
   // Update contest handler
   const updateContestHandler = (event, url) => {
     event.stopPropagation()
@@ -277,7 +183,6 @@ Giáo viên - Quản lý cuộc thi
 </script>
 
 {% if form.errors %}
-<!-- Re-open modal when have error -->
-<script>document.getElementById('createClassRoomShowModalBtn').click()</script>
+<script>document.getElementById('createContestShowModalBtn').click()</script>
 {% endif %}
 {% endblock script %}

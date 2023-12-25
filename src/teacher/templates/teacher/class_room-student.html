@@ -2,29 +2,44 @@
 {% load static %}
 
 {% block title %}
-Giáo viên - Quản lý học sinh
+TKP Quiz | Học sinh
 {% endblock title %}
 
 {% block navigation %}
-{% include 'teacher/navigation.html' with path='class_room' is_back=True %}
+{% include 'teacher/navigation.html' with path='class_room' %}
 {% endblock navigation %}
 
 {% block main %}
-<div class="container pt-4 pb-3 mb-4 mt-4 border rounded bg-body">
+<div class="container mb-5 d-flex">
+  <div class="flex-grow-1">
+    <a class="btn btn-secondary" href="{% url 'teacher_class_room__list_create' %}">
+      <i class="fa-solid fa-backward"></i> Quay lại
+    </a>
+  </div>
+
+  <div class="ms-4">
+    <button type="button" class="btn btn-secondary me-4"
+      onclick="updateClassHandler(event, '/admin/authenticate/classroom/{{class_room.id}}/change/')">
+      Cập nhật <i class="fa-solid fa-pen-to-square"></i>
+    </button>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#importStudentModal">
+      Nhập danh sách <i class="fa-solid fa-file-import"></i>
+    </button>
+  </div>
+</div>
+
+<div class="container py-4 rounded bg-body">
   {% if students %}
-  <table class="table table-striped table-hover table-bordered">
-    <caption>Danh sách học sinh</caption>
+  <h5 class="mb-4">Danh sách học sinh lớp {{class_room.name}}</h5>
+  <table class="table table-hover">
     <thead>
-      <tr class="text-center align-middle table-info">
+      <tr class="align-middle">
         <th>Email</th>
         <th>Họ và tên</th>
-        <th>Tên</th>
-        <th style="width: 100px;">Có đang hoạt động</th>
-        <th style="width: 150px;">Ngày tham gia</th>
-        <th style="width: 150px;">Lần đăng nhập cuối</th>
-        <th style="width: 100px;">Đổi mật khẩu</th>
-        <th style="width: 100px;">Chỉnh sửa</th>
-        <th style="width: 70px;">Xóa</th>
+        <th class="fit-content">Hoạt động</th>
+        <th class="fit-content">Đổi mật khẩu</th>
+        <th class="fit-content">Chỉnh sửa</th>
+        <th class="fit-content">Xóa</th>
       </tr>
     </thead>
     <tbody class="load-fade">
@@ -32,22 +47,24 @@ Giáo viên - Quản lý học sinh
       <tr class="align-middle">
         <td>{{student.email}}</td>
         <td>{{student.full_name}}</td>
-        <td class="text-center">{{student.name}}</td>
-        <td class="text-center"><input class="form-check-input" type="checkbox" disabled {% if student.is_active %} checked {% endif %}></td>
-        <td>{{student.date_joined|date:"H:i d/m/Y"}}</td>
-        <td>{{student.last_login|date:"H:i d/m/Y"}}</td>
         <td class="text-center">
-          <button class="btn btn-secondary" onclick="baseOpenWindowHandler(`/admin/authenticate/user/${'{{student.id}}'}/password/`);"">
+          <input class="form-check-input" type="checkbox" disabled {% if student.is_active %}checked {% endif %}>
+        </td>
+        <td class="text-center">
+          <button class="btn btn-secondary"
+            onclick="baseOpenWindowHandler(`/admin/authenticate/user/${'{{student.id}}'}/password/`);"">
             <i class=" fa-solid fa-key"></i>
           </button>
         </td>
         <td class="text-center">
-          <button class="btn btn-secondary" onclick="openWindowAndReloadPage(`/admin/authenticate/user/${'{{student.id}}'}/change/`);"">
+          <button class="btn btn-secondary"
+            onclick="openWindowAndReloadPage(`/admin/authenticate/user/${'{{student.id}}'}/change/`);"">
             <i class=" fa-solid fa-pen-to-square"></i>
           </button>
         </td>
         <td class="text-center">
-          <button class="btn btn-danger" onclick="deleteStudentHanlder(`{% url 'teacher_class_room__student__delete' class_room__id=class_room.id student__id=student.id %}`, '{{student.email}}')">
+          <button class="btn btn-danger"
+            onclick="deleteStudentHanlder(`{% url 'teacher_class_room__student__delete' class_room__id=class_room.id student__id=student.id %}`, '{{student.email}}')">
             <i class="fa-solid fa-user-slash"></i>
           </button>
         </td>
@@ -60,13 +77,6 @@ Giáo viên - Quản lý học sinh
   {% endif %}
 </div>
 
-<!-- Student import button -->
-<div style="position: fixed; right: 40px; bottom: 50px;">
-  <button class="btn btn-primary btn-rounded p-3 rounded-pill shadow" data-bs-toggle="modal" data-bs-target="#importStudentModal">
-    <i class="fa-solid fa-file-import me-2"></i> Nhập
-  </button>
-</div>
-<!-- Student import modal -->
 <div class="modal fade" id="importStudentModal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -75,13 +85,15 @@ Giáo viên - Quản lý học sinh
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form class="needs-validation" method="POST" enctype="multipart/form-data" action="{% url 'teacher_class_room__student__import' class_room__id=class_room.id %}">
+        <form class="needs-validation" method="POST" enctype="multipart/form-data"
+          action="{% url 'teacher_class_room__student__import' class_room__id=class_room.id %}">
           <div class="mb-3">
             <label for="formFile" class="form-label">
               Nhập danh sách học sinh bằng file excel -
               <a href="{% static 'teacher/documents/Mẫu danh sách học sinh.xlsx' %}">ấn để tải file mẫu</a>
             </label>
-            <input class="form-control" type="file" id="formFile" name="student_file" required accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+            <input class="form-control" type="file" id="formFile" name="student_file" required
+              accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
           </div>
           <div class="form-check form-switch">
             <input class="form-check-input" type="checkbox" role="switch" id="deleteOldStudent" name="is_delete_old">
@@ -93,18 +105,16 @@ Giáo viên - Quản lý học sinh
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-        <button type="button" class="btn btn-primary" onclick="document.getElementById('importStudentSubmitBtn').click()">Nhập danh sách</button>
+        <button type="button" class="btn btn-primary"
+          onclick="document.getElementById('importStudentSubmitBtn').click()">Nhập danh sách</button>
       </div>
     </div>
   </div>
 </div>
 
 
-<!-- Delete student button -->
-<button data-bs-toggle="modal" data-bs-target="#deleteStudentModal" id="deleteStudentShowModalBtn" style="display: none;"></button>
-<!-- Delete student hidden form -->
-<form style="display: none;" method="POST" id="deleteStudentForm">{% csrf_token %}</form>
-<!-- Delete student modal -->
+<button data-bs-toggle="modal" data-bs-target="#deleteStudentModal" id="deleteStudentShowModalBtn" hidden></button>
+<form hidden" method="POST" id="deleteStudentForm">{% csrf_token %}</form>
 <div class="modal fade" id="deleteStudentModal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -140,4 +150,9 @@ Giáo viên - Quản lý học sinh
     deleteStudentSubmitBtn.addEventListener("click", () => { deleteStudentForm.submit() })
     deleteStudentShowModalBtn.click()
   }
-</script>{% endblock script %}
+  const updateClassHandler = (event, url) => {
+    event.stopPropagation()
+    openWindowAndReloadPage(url)
+  }
+</script>
+{% endblock script %}
