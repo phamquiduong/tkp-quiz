@@ -6,17 +6,17 @@ services:
       context: ../
       dockerfile: docker/dockerfile
     ports:
-      - 8000:8000
+      - ${PORT}:8000
     volumes:
       - ../src:/src
       - ../.env:/.env
-      - ../.database:/.database
-      - ../.static:/.static
-      - ../.media:/.media
+      - ../db.sqlite3:/db.sqlite3
+      - ../static:/static
+      - ../media:/media
     command: bash -c "cd src &&
                       python manage.py migrate &&
                       python manage.py collectstatic --noinput &&
-                      python manage.py runserver 0.0.0.0:8000"
+                      python manage.py runserver 0.0.0.0:8000 --insecure"
     restart: always
 networks:
   default:
