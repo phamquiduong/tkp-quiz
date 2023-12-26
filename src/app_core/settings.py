@@ -81,10 +81,12 @@ WSGI_APPLICATION = 'app_core.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+DATABASE_ROOT = BASE_DIR / '../database/'
+DATABASE_ROOT.mkdir(parents=True, exist_ok=True)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / '../db.sqlite3',
+        'NAME': DATABASE_ROOT / 'db.sqlite3',
     }
 }
 

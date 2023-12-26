@@ -10,7 +10,7 @@ services:
     volumes:
       - ../src:/src
       - ../.env:/.env
-      - ../db.sqlite3:/db.sqlite3
+      - ../database:/database
       - ../static:/static
       - ../media:/media
     command: bash -c "cd src &&
