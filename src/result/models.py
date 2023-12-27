@@ -15,6 +15,9 @@ class Result(models.Model):
     def get_score(self):
         return self.num_correct / self.contest.get_num_questions() * 10
 
+    def get_score_round(self, ndigits: int = 1):
+        return round(self.get_score(), ndigits)
+
     class Meta:
         verbose_name = "Kết quả cuộc thi"
         verbose_name_plural = "Kết quả cuộc thi"

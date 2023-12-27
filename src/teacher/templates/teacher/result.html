@@ -25,15 +25,28 @@ Giáo viên - Kết quả thi
       {% endfor %}
     </select>
 
-    <input type="hidden" name="sort_by_point" id="sortByPointInput">
+    <input type="hidden" name="sort_by_point" id="sortByPointInput" value="false">
 
     <button type="submit" class="btn btn-primary" id="viewResultBtn">
       Xem kết quả <i class="fa-solid fa-magnifying-glass ms-2"></i>
     </button>
   </form>
+
   <hr>
+
   {% if results %}
-  <h5 class="mt-4 mb-3">Kết quả</h5>
+  <div class="d-flex">
+    <div class="flex-grow-1">
+      <h5 class="mt-4 mb-3">Kết quả</h5>
+    </div>
+    <form class="d-flex align-self-center" method="POST">
+      {% csrf_token %}
+      <input type="hidden" name="class_room__id" value="{{class_room__id}}">
+      <input type="hidden" name="contest__id" value="{{contest__id}}">
+      <button type="submit" class="btn btn-secondary">Tải kết quả <i class="fa-solid fa-download"></i></button>
+    </form>
+  </div>
+
   <table class="table table-hover">
     <thead>
       <tr class="align-middle">
@@ -63,25 +76,30 @@ Giáo viên - Kết quả thi
 </div>
 {% endblock main %}
 
-{% block style %}{% endblock style %}
+{% block style %}
+<style>
+  .container {
+    max-width: 900px;
+  }
+
+  .btn-outline-primary {
+    --bs-btn-hover-bg: #fff;
+    --bs-btn-hover-color: #0d6efd;
+  }
+</style>
+{% endblock style %}
 
 {% block script %}
 <script>
-  let params = new URLSearchParams(document.location.search)
-
-  // Select class room
-  let class_room__id = params.get('class_room__id')
-  if (class_room__id) document.getElementById(`class_room_${class_room__id}`).selected = true
-
-  // Select contest
-  let contest__id = params.get('contest__id')
-  if (contest__id) document.getElementById(`contest_${contest__id}`).selected = true
+  document.getElementById('class_room_{{class_room__id}}').selected = true
+  document.getElementById('contest_{{contest__id}}').selected = true
 
   let sortByPointBtn = document.getElementById('sortByPointBtn')
   let sortByPointInput = document.getElementById('sortByPointInput')
-  let IsSortByPoint = params.get('sort_by_point') === 'true'
+  let IsSortByPoint = '{{sort_by_point}}' === 'True'
 
   sortByPointBtn.classList.add(IsSortByPoint ? 'btn-primary' : 'btn-outline-primary')
+  sortByPointInput.value = IsSortByPoint
 
   sortByPointBtn.addEventListener('click', () => {
     sortByPointInput.value = !IsSortByPoint;

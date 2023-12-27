@@ -14,3 +14,6 @@ openpyxl==3.1.2
 
 # Microsoft word reader
 python-docx==1.1.0
+
+# Vietnamese support
+unidecode==1.3.7
