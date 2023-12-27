@@ -11,5 +11,5 @@ __pycache__/
 # Code generation folder
 /static/
 /media/
-db.sqlite3
-.scannerwork/
+/database/
+/.scannerwork/
