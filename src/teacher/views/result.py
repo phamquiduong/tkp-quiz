@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 from unidecode import unidecode
 
+from app_core.logger import logger
 from authenticate.models import ClassRoom
 from contest.models import Contest
 from result.models import Result
@@ -38,18 +39,17 @@ def result_view(request):
         if request.method == 'POST' and results.exists():
             return __export_excel_file(results)
     except Exception as ex:
-        print(ex)
+        logger.error(f'Error exporting result. Detail: {ex}\n')
 
     return render(request, 'teacher/result.html', context)
 
 
 def __export_excel_file(results: BaseManager[Result]):
     result = results.first()
-    file_name = f'TKP Quiz - Bang diem - {result.user.class_room.name} - {unidecode(result.contest.name)}'
+    file_name = f'TKP Quiz - Ket qua - {result.user.class_room.name} - {unidecode(result.contest.name)}'
 
     df = pd.DataFrame([[result.user.email, result.user.full_name, result.num_correct, result.get_score_round()]
                        for result in results], columns=['Email', 'Họ và tên', 'Số câu đúng', 'Điểm số'])
-    print(file_name)
 
     response = HttpResponse(content_type="application/xlsx; charset=UTF-8")
     response['Content-Disposition'] = f'attachment; filename="{unidecode(file_name)}.xlsx"'

@@ -11,6 +11,7 @@ services:
       - ../src:/src
       - ../.env:/.env
       - ../database:/database
+      - ../logs:/logs
       - ../static:/static
       - ../media:/media
     command: bash -c "cd src &&

@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_GET, require_POST
 
+from app_core.logger import logger
 from authenticate.models import ClassRoom
 from teacher.decorator.require_teacher import require_teacher
 
@@ -42,8 +43,9 @@ def class_room__student__import_view(request, class_room__id: int):
                 full_name=_full_name,
                 class_room=class_room,
             )
-        except Exception:
-            pass
+        except Exception as ex:
+            logger.error(f'Error import:\n{row}')
+            logger.error(f'Detail: {ex}\n')
 
     return redirect('teacher_class_room__student__list', class_room__id=class_room__id)
 
