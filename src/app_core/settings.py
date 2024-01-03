@@ -129,3 +129,42 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'authenticate.User'
 
 LOGIN_REDIRECT_URL = 'auth_home'
+
+
+# Logging configuration
+LOG_FOLDER = BASE_DIR / '../logs'
+LOG_FOLDER.mkdir(parents=True, exist_ok=True)
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'default': {
+            'format': '[%(asctime)s] %(levelname)s [%(pathname)s:%(lineno)s] %(message)s',
+            'datefmt': '%Y-%m-%d %H:%M:%S'
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': os.getenv('LOG_LEVEL'),
+            'class': 'logging.StreamHandler',
+            'formatter': 'default',
+        },
+        'file': {
+            'level': os.getenv('LOG_LEVEL'),
+            'class': 'logging.handlers.RotatingFileHandler',
+            'formatter': 'default',
+            'filename': LOG_FOLDER / 'file.log',
+            'maxBytes': 50000,
+            'backupCount': 5,
+        },
+
+    },
+    'loggers': {
+        'default': {
+            'handlers': os.getenv('LOG_HANDLER', 'console').split(','),
+            'level': os.getenv('LOG_LEVEL'),
+            'propagate': True,
+        }
+    },
+}

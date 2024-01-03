@@ -13,7 +13,7 @@ Ngôn ngữ lập trình | Framework | Cơ sở dữ liệu
 # Cài đặt website
 ## Cài đặt Python 3.11
 > - **Cách 1:** Các bạn ghé [Trang Chủ Python 3.11.7](https://www.python.org/downloads/release/python-3117/). Tiến hành tải và cài đặt.
->   - Lưu ý: Bạn phải tick vào 2 tùy chọn bên dưới của chương trình cài đặt
+>   - **Lưu ý:** Bạn phải tick vào 2 tùy chọn bên dưới của chương trình cài đặt
 >   - Hình minh họa ![Hướng dẫn cài đặt](./README/Hướng%20dẫn%20cài%20đặt%20Python.png)
 > - **Cách 2:** Nếu các bạn đang dùng Windows 10 trở lên. Bạn có thể cài đặt [Python trên Microsoft Store](https://apps.microsoft.com/detail/9NRWMJP3717K)
 >   - Hình minh họa ![Python trên Microsolf Store](./README/Python3.11%20trên%20Store.png)
