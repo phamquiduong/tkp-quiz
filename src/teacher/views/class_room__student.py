@@ -33,10 +33,10 @@ def class_room__student__import_view(request, class_room__id: int):
         User.objects.filter(class_room=class_room).delete()
 
     for _, row in data_frame.iterrows():
-        _email = row['Email']
-        _password = row['Mật khẩu']
-        _full_name = row['Họ và tên']
         try:
+            _email = row['Email']
+            _password = row['Mật khẩu']
+            _full_name = row['Họ và tên']
             User.objects.create_user(       # type: ignore
                 email=_email,
                 password=_password,
@@ -45,7 +45,7 @@ def class_room__student__import_view(request, class_room__id: int):
             )
         except Exception as ex:
             logger.error(f'Error import:\n{row}')
-            logger.error(f'Detail: {ex}\n')
+            logger.error(f'Detail: {type(ex)} {ex}\n')
 
     return redirect('teacher_class_room__student__list', class_room__id=class_room__id)
 

@@ -39,7 +39,7 @@ def result_view(request):
         if request.method == 'POST' and results.exists():
             return __export_excel_file(results)
     except Exception as ex:
-        logger.error(f'Error exporting result. Detail: {ex}\n')
+        logger.error(f'Error exporting result. Detail: {type(ex)} {ex}\n')
 
     return render(request, 'teacher/result.html', context)
 
