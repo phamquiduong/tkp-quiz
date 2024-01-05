@@ -1,7 +1,8 @@
 version: "2.3"
 services:
   # TKP Quiz server
-  tkp-quiz:
+  django:
+    container_name: tkp-quiz_server
     build:
       context: ../
       dockerfile: docker/dockerfile
