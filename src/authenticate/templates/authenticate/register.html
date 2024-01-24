@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}
+Khởi động website
+{% endblock title %}
+
+{% block navigation %}{% endblock navigation %}
+
+{% block main %}
+
+{% if request.user.is_authenticated %}
+<script>window.location.href = "{% url 'auth_home' %}"</script>
+{% endif %}
+
+<div class="container border p-4 bg-body shadow rounded">
+    <div class="text-center">
+        <img src="/static/tkp-quiz/img/favicon.ico" width="150px" height="150px">
+        <h5 class="mt-2">Trường THPT Trần Kỳ Phong</h5>
+    </div>
+
+    <form method="POST" action="{% url 'auth_register' %}" class="mt-5">
+        <div class="alert alert-primary" role="alert">
+            Đây là lần đăng nhập đầu tiên. <br>
+            Vui lòng cung cấp thông tin <b>email</b> và <b>mật khẩu</b> để tạo tài khoản quản trị website
+        </div>
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="floatingEmailInput" placeholder="name@email.com"
+                name="email" required>
+            <label for="floatingEmailInput">Địa chỉ email</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="floatingPasswordInput" placeholder="Mật khẩu"
+                name="password" required>
+            <label for="floatingPasswordInput">Mật khẩu</label>
+        </div>
+
+        {% include 'form.html' %}
+
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary">Khởi động website</button>
+        </div>
+    </form>
+</div>
+{% endblock main %}
+
+{% block style %}
+<style>
+    .container {
+        max-width: 475px;
+    }
+
+    @media screen and (max-width: 475px) {
+        .container {
+            height: 100vh;
+        }
+
+        #main {
+            margin-top: 0;
+        }
+    }
+</style>
+{% endblock style %}
+
+{% block script %}{% endblock script %}
