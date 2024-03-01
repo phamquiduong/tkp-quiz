@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -40,7 +41,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'drf_spectacular',
-    'drf_spectacular_sidecar',  # required for Django collectstatic discoveryF
+    'drf_spectacular_sidecar',  # required for Django collectstatic discovery
 
     'authenticate',
 ]
@@ -128,9 +129,20 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Setup authentication model for django
+
+AUTH_USER_MODEL = 'authenticate.User'
+
+# Django rest framework setup
+
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
 }
+
+# API document setup
 
 SPECTACULAR_SETTINGS = {
     'TITLE': 'Your Project API',
@@ -141,4 +153,16 @@ SPECTACULAR_SETTINGS = {
     'SWAGGER_UI_DIST': 'SIDECAR',  # shorthand to use the sidecar instead
     'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
     'REDOC_DIST': 'SIDECAR',
+}
+
+# JWT authentication configuration
+# https://django-rest-framework-simplejwt.readthedocs.io/en/latest/settings.html
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=60),
+
+    'UPDATE_LAST_LOGIN': True,
+
+    'TOKEN_OBTAIN_SERIALIZER': 'authenticate.serializers.token.CustomTokenObtainPairSerializer',
 }
