@@ -20,7 +20,10 @@ class UserManager(BaseUserManager):
     def create_superuser(self, email, password, **extra_fields):
         extra_fields['is_staff'] = True
         extra_fields['is_active'] = True
-        extra_fields['is_superuser'] = True
+
+        group, _ = Group.objects.get_or_create(title='Administrator', is_teacher=True)
+        extra_fields['group'] = group
+
         return self.create_user(email, password, **extra_fields)
 
 
