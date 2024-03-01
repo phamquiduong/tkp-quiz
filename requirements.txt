@@ -1,5 +1,10 @@
 django
 
+# Django rest framework
 djangorestframework
 markdown       # Markdown support for the browsable API.
 django-filter  # Filtering support
+
+# API documentation
+drf-spectacular
+drf-spectacular[sidecar]
