@@ -3,6 +3,8 @@ from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
+from authenticate.serializers.group import GroupSerializer
+
 User = get_user_model()
 
 
@@ -23,7 +25,10 @@ class RegisterSerializer(serializers.ModelSerializer):
         return User.objects.create_superuser(**validated_data)
 
 
-class UserSerializer(RegisterSerializer):
+class UserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+    group = GroupSerializer()
+
     class Meta:
         model = User
         fields = '__all__'
