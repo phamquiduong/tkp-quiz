@@ -145,8 +145,8 @@ REST_FRAMEWORK = {
 # API document setup
 
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'Your Project API',
-    'DESCRIPTION': 'Your project description',
+    'TITLE': 'TKP Quiz',
+    'DESCRIPTION': 'TKP Quiz API Documentation',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
 
