@@ -38,7 +38,7 @@ class User(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)
 
-    group = models.ForeignKey(Group, on_delete=models.SET_NULL, null=True)
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
