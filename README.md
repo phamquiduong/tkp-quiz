@@ -4,9 +4,9 @@
 <br>
 
 # Development
-Program language | Framework | Database
---- | --- | --- |
-Python 3.11 | FastAPI 3.0 | SQLite3
+Program language | Framework | Database | Migrations
+--- | --- | --- | ---
+Python 3.11 <br> [Python Official](https://www.python.org/downloads/release/python-3118/) <br> [Microsoft Store](https://apps.microsoft.com/detail/9nrwmjp3717k?hl=en-us&gl=US) <br> [Brew](https://formulae.brew.sh/formula/python@3.11) | [FastAPI](https://fastapi.tiangolo.com/) | SQLite3 | [Alembic](https://alembic.sqlalchemy.org/en/latest/)
 
 <br>
 
