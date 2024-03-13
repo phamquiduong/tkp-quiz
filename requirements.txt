@@ -9,3 +9,15 @@ fastapi
 
 # Uvicorn
 uvicorn
+
+# JWT
+python-jose[cryptography]
+
+# Bcrypt
+passlib[bcrypt]
+
+# Email validation
+pydantic[email]
+
+# Fastapi oathu2 form
+python-multipart

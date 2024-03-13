@@ -27,8 +27,10 @@ def upgrade() -> None:
 
     op.create_table(
         'users',
-        sa.Column('email', sa.Unicode(255), primary_key=True),
+        sa.Column('id', sa.Integer(), primary_key=True),
+        sa.Column('email', sa.Unicode(255), nullable=False, unique=True),
         sa.Column('password', sa.Unicode(255), nullable=False),
+        sa.Column('is_teacher', sa.Boolean, default=False),
         sa.Column('group_id', sa.Integer(), nullable=True),
         sa.ForeignKeyConstraint(['group_id'], ['groups.id'])
     )

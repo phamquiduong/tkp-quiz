@@ -1,18 +1,24 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 
 from schemas import Group
 
 
 class UserBase(BaseModel):
-    email: str
+    email: EmailStr
 
 
 class UserCreate(UserBase):
     password: str
 
 
-class User(BaseModel):
-    group: Group | None
+class UserLogin(UserBase):
+    password: str
+
+
+class User(UserBase):
+    id: int
+    is_teacher: bool
+    group: Group | None = None
 
     class Config:
-        orm_mode = True
+        from_attributes = True
