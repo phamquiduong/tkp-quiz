@@ -36,3 +36,21 @@ uvicorn main:app
 > **Note:**
 > * Add flag `--reload` to reload the server after change code
 > * Add flag `--port` to setup port number. Example: `--port 80`
+
+
+<br>
+
+# Project tree
+```bash
+tkp-quiz
+└─ src
+   ├─ dependencies      # Dependencies
+   ├─ helpers           # Python Helpers
+   ├─ models            # Project Models
+   ├─ router            # APIRouter
+   ├─ schemas           # Schemas
+   ├─ services          # Services
+   ├─ config.py         # Config/ Constants for project
+   ├─ database.py       # Database connection
+   └─ main.py           # Project root
+```
