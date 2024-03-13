@@ -1,0 +1,11 @@
+# Migrations
+alembic
+
+# SQLAlchemy
+SQLAlchemy
+
+# FastAPI
+fastapi
+
+# Uvicorn
+uvicorn
